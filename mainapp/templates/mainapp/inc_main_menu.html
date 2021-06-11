@@ -1,0 +1,24 @@
+<ul class="menu">
+
+    <li {% if request.resolver_match.url_name == 'sections' %} class="active" {% endif %} >
+        <a href="{% url 'sections' %}">
+            Разделы
+        </a>
+    </li>
+
+
+    <li {% if request.resolver_match.url_name == 'articles' %} class="active" {% endif %} >
+        <a href="{% url 'articles' %}">
+            Статьи
+        </a>
+    </li>
+
+    <!--  Почему то не работает, скобки ставил - делал аналогично предыдущим
+    <li>
+        <a href="% url 'admin' %">
+            Админка
+        </a>
+    </li>
+    -->
+
+</ul>

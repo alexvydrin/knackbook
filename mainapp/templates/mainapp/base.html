@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %}
+            {{ title|title }}
+        {% endblock %}
+    </title>
+
+    {% block css %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% endblock %}
+
+    {% block js %}
+    {% endblock %}
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+
+        <div class="logo">
+            <a href="{% url 'sections' %}">
+                <img src="{% static 'logo.png' %}" alt="logo">
+            </a>
+        </div>
+
+        {% block menu %}
+        {% endblock %}
+    </div>
+
+    {% block content %}
+
+    {% endblock %}
+
+</div>
+
+{% block footer %}
+    <div class="footer">
+        <p>
+            <a href="#" class="footer_span">
+                Документация проекта
+            </a>
+
+            <a href="#" class="footer_span">
+                github проекта
+            </a>
+
+            Все права защищены &copy;&nbsp;{% now "Y" %} </p>
+    </div>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    Статья
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <a href="#">Изменить статью</a>
+    /
+    <a href="#">Удалить статью</a>
+
+    <hr>
+    <h1>{{ object.title }}</h1>
+    <hr>
+
+    <p>{{ object.content|linebreaks }}</p>
+
+    <br>
+    <!-- теги: -->
+    <br>
+
+    <br>
+    <p>Автор: {{ object.user.last_name }}</p>
+    <p>Создано: {{ object.created|date:"d-E-Y P" }}</p>
+    <p>Изменено: {{ object.edited|date:"d-E-Y P" }}</p>
+
+{% endblock %}

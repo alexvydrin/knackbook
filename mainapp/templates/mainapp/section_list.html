@@ -1,0 +1,22 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    Разделы
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <hr>
+    <h1>Разделы</h1>
+    <hr>
+
+    {% for object in object_list %}
+        <a href="#"> {{ object.name }} </a>
+        <br>
+    {% endfor %}
+
+{% endblock %}
