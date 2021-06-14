@@ -3,6 +3,6 @@
 __pycache__
 venv
 db.sqlite3
-/static/*
+/mainapp/static/*
 /media/*
 .idea

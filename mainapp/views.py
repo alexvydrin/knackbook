@@ -29,7 +29,8 @@ class SectionListView(ListView):  # pylint: disable=too-many-ancestors
     template_name = 'mainapp/section_list.html'
 
     def get_queryset(self):
-        filtered_list = self.model.objects.filter(is_active=True).order_by('name')
+        filtered_list = self.model.objects.filter(is_active=True).order_by(
+            'name')
         return filtered_list
 
 
@@ -39,7 +40,8 @@ class ArticleListView(ListView):  # pylint: disable=too-many-ancestors
     template_name = 'mainapp/article_list.html'
 
     def get_queryset(self):
-        filtered_list = self.model.objects.filter(is_active=True).order_by('-edited', 'title')
+        filtered_list = self.model.objects.filter(is_active=True).order_by(
+            '-edited', 'title')
         return filtered_list
 
 

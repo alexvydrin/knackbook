@@ -5,14 +5,6 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 
-class User(AbstractUser):
-    """Пользователь (На основании стандартного пользователя)"""
-    banned = models.DateTimeField(
-        verbose_name='забанен до',
-        null=True)
-    """дата и время до которого пользователь заблокирован"""
-
-
 class Section(models.Model):
     """Раздел (Тематика, Категория)"""
     name = models.CharField(
