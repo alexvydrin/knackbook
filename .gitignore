@@ -5,4 +5,5 @@ venv
 db.sqlite3
 /mainapp/static/*
 /media/*
+/static/*
 .idea

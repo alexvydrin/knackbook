@@ -26,6 +26,8 @@ with open('knackbook/env.json', 'r') as f:
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = ENV['SECRET_KEY']
     DEBUG_MODE = ENV['DEBUG_MODE']
+    POSTGRE_DB = ENV['POSTGRE_DB']
+    POSTGRE_USER = ENV['POSTGRE_USER']
     POSTGRE_PASSWORD = ENV['POSTGRE_PASSWORD']
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -84,9 +86,9 @@ WSGI_APPLICATION = 'knackbook.wsgi.application'
 if POSTGRE_PASSWORD != "":  # Если пароль указан то postgre есть
     DATABASES = {
         'default': {
-            'NAME': 'knackbook',
+            'NAME': POSTGRE_DB,
             'ENGINE': 'django.db.backends.postgresql',
-            'USER': 'admin',
+            'USER': POSTGRE_USER,
             'PASSWORD': POSTGRE_PASSWORD,
             'HOST': 'localhost'
         }
