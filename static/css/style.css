@@ -1,0 +1,95 @@
+html, body {
+	height: 100%;
+}
+
+body {
+    background-color: #f8f8f8; /* цвет фона на всех страницах по умолчанию */
+}
+
+.menu {
+    float:right;
+}
+
+.menu li {
+    list-style-type: none; /* убрать маркеры списка для меню сайта */
+    display: inline;
+    padding: 20px;
+}
+
+.menu li a {
+    color: #8B00FF; /* цвет для ссылок меню сайта */
+    font-size: 1.5em; /* размер шрифта для ссылок меню сайта */
+    font-style: italic; /* начертание шрифта для ссылок меню сайта */
+    text-decoration-line: none;
+}
+
+.active {
+    text-decoration: underline;
+}
+
+.menu li a:hover{
+    color:blue;
+}
+
+/*блок header*/
+.header{
+	height:50px;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-image: url(../img/header.png);
+}
+
+/*логотип*/
+.logo{
+    float:left;
+    margin:5px 5px 5px 5px;
+}
+
+/*блок footer*/
+.footer{
+    position: fixed; /* Фиксированное положение */
+    left: 0; bottom: 0; /* Левый нижний угол */
+    padding: 10px; /* Поля вокруг текста */
+    background-color: #999999; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    width: 100%; /* Ширина слоя */
+    text-align: right; /* Выравнивание текста */
+}
+
+.footer p {
+    padding: 5px 15px 0 0;
+}
+
+.footer_span {
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+/* поля ввода на форме */
+input[type="text"] {
+    width: 308px; /* Ширина */
+    height: 18px; /* Высота */
+    color: black; /* цвет текста */
+    font-size: 16px; /* размер шрифта */
+}
+
+/*Родительский класс container*/
+.container{
+	width: 90%;
+	margin: 0 auto;
+}
+
+table {
+  border:           1px solid #909090;
+  padding:          5px 5px 2px;
+  margin-left:      20px;
+  margin-right:     20px;
+  caption-side:     bottom;
+  border-collapse:  collapse;
+}
+
+td, th {
+  padding:          5px;
+  text-align:       left;
+  border:           thin dotted gray;
+}
