@@ -49,3 +49,14 @@ class ArticleDetailView(DetailView):
     """Просмотр выбранной статьи"""
     model = Article
     template_name = 'mainapp/article_detail.html'
+
+
+class ArticlesForSectionList(DetailView):
+    """Просмотр списка статей для выбранного раздела"""
+    model = Section
+    template_name = 'mainapp/articles_for_section_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['articles'] = Article.objects.filter(sections=self.object, is_active=True).order_by('-edited', 'title')
+        return context

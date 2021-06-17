@@ -15,7 +15,7 @@
     <hr>
 
     {% for object in object_list %}
-        <a href="#"> {{ object.name }} </a>
+        <a href="{% url 'articles_for_section_list' pk=object.pk %}">{{ object.name }} </a>
         <br>
     {% endfor %}
 
