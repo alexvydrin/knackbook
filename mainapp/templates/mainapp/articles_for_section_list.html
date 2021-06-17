@@ -15,7 +15,7 @@
     <hr>
 
     {% for article in articles %}
-        <a href="{% url 'article_detail' pk=article.pk %}">{{ article.title }}
+        <a href="{% url 'mainapp:article_detail' pk=article.pk %}">{{ article.title }}
             ({{ article.edited|date:"d-E-Y P" }}) </a>
         <br>
     {% endfor %}

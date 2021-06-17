@@ -1,14 +1,14 @@
 <ul class="menu">
 
     <li {% if request.resolver_match.url_name == 'sections' %} class="active" {% endif %} >
-        <a href="{% url 'sections' %}">
+        <a href="{% url 'mainapp:sections' %}">
             Разделы
         </a>
     </li>
 
 
     <li {% if request.resolver_match.url_name == 'articles' %} class="active" {% endif %} >
-        <a href="{% url 'articles' %}">
+        <a href="{% url 'mainapp:articles' %}">
             Статьи
         </a>
     </li>
