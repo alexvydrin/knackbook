@@ -1,24 +1,49 @@
 <ul class="menu">
 
-    <li {% if request.resolver_match.url_name == 'sections' %} class="active" {% endif %} >
+    <li {% if request.resolver_match.url_name == 'sections' %}
+        class="active" {% endif %} >
         <a href="{% url 'mainapp:sections' %}">
             Разделы
         </a>
     </li>
 
 
-    <li {% if request.resolver_match.url_name == 'articles' %} class="active" {% endif %} >
+    <li {% if request.resolver_match.url_name == 'articles' %}
+        class="active" {% endif %} >
         <a href="{% url 'mainapp:articles' %}">
             Статьи
         </a>
     </li>
 
-    <!--  Почему то не работает, скобки ставил - делал аналогично предыдущим
-    <li>
-        <a href="% url 'admin' %">
-            Админка
-        </a>
-    </li>
-    -->
+    {% if user.is_authenticated %}
+        <li>
+            <a href="#">
+                Личный кабинет
+            </a>
+        </li>
+    {% endif %}
+
+    {% if user.is_superuser %}
+        <li>
+            <a href="/admin">
+                Админка
+            </a>
+        </li>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <li>
+            <a href="#">
+                Выход
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a href="#">
+                Войти
+            </a>
+        </li>
+    {% endif %}
+
 
 </ul>
