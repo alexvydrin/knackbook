@@ -41,7 +41,7 @@
 
                                                 <div class="catItemHeader">
                                                     <h3 class="catItemTitle">
-                                                        <a href="#">
+                                                        <a href="{% url 'article_detail' pk=article.pk %}">
                                                             {{ article.title }}
                                                         </a>
                                                     </h3>
@@ -51,7 +51,7 @@
 
                                                     <div class="catItemImageBlock">
                                                         <span class="catItemImage">
-                                                            <a href="#" title="{{ article.title }}">
+                                                            <a href="{% url 'article_detail' pk=article.pk %}" title="{{ article.title }}">
                                                                 <img src="#" alt="картинка" style="width:300px;
                                                                 height:auto;" />
                                                             </a>
@@ -70,7 +70,7 @@
 
                                                 <div class="clr"></div>
                                                 <div class="catItemReadMore">
-                                                    <a class="k2ReadMore" href="#">
+                                                    <a class="k2ReadMore" href="{% url 'article_detail' pk=article.pk %}">
                                                         Читать ... </a>
                                                 </div>
 
