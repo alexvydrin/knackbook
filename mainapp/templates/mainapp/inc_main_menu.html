@@ -1,24 +1,79 @@
-<ul class="menu">
+{% load static %}
+<section id="g-fixedside">
+            <div class="g-grid">
 
-    <li {% if request.resolver_match.url_name == 'sections' %} class="active" {% endif %} >
-        <a href="{% url 'sections' %}">
-            Разделы
-        </a>
-    </li>
+                <div class="g-block size-100">
+                    <div class="spacer"></div>
+                </div>
+            </div>
+            <div class="g-grid">
 
+                <div class="g-block size-100 my-logo">
+                    <div id="logo-8818-particle" class="g-content g-particle"> <a href="#" title="" rel="" class="">
+                            <img src="{% static 'image/logo.png' %}" alt="KnackBook" />
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-    <li {% if request.resolver_match.url_name == 'articles' %} class="active" {% endif %} >
-        <a href="{% url 'articles' %}">
-            Статьи
-        </a>
-    </li>
+            <div class="g-grid">
 
-    <!--  Почему то не работает, скобки ставил - делал аналогично предыдущим
-    <li>
-        <a href="% url 'admin' %">
-            Админка
-        </a>
-    </li>
-    -->
+                <div class="g-block size-100 align-left">
+                    <div id="sidemenu-6284-particle" class="g-content g-particle">
+                        <nav class="g-main-nav">
+                            <ul class="g-toplevel">
 
-</ul>
+                                <li class="g-menu-item g-menu-item-type-component g-menu-item-195 active g-standard  ">
+                                    <a class="g-menu-item-container" href="#">
+                                        <span class="g-menu-item-content">
+                                            <span class="g-menu-item-title">Главная</span>
+
+                                        </span>
+                                    </a>
+                                </li>
+
+                                {% for section in links_section_menu %}
+                                <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                    <a class="g-menu-item-container" href="#">
+                                        <span class="g-menu-item-content">
+                                            <span class="g-menu-item-title">{{ section.name }}</span>
+
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                                <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                    <a class="g-menu-item-container" href="#">
+                                        <span class="g-menu-item-content">
+                                            <span class="g-menu-item-title">Личный кабинет</span>
+
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                    <a class="g-menu-item-container" href="#">
+                                        <span class="g-menu-item-content">
+                                            <span class="g-menu-item-title">Войти</span>
+
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                    <a class="g-menu-item-container" href="#">
+                                        <span class="g-menu-item-content">
+                                            <span class="g-menu-item-title">Админка</span>
+
+                                        </span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </section>
