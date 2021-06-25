@@ -18,11 +18,9 @@ from django.urls import path
 import mainapp.views as mainapp
 
 urlpatterns = [
-    path('', mainapp.SectionListView.as_view(), name='main'),
+    path('', mainapp.main, name='main'),
     path('admin/', admin.site.urls, name='admin'),
     path('sections/', mainapp.SectionListView.as_view(), name='sections'),
-    path('articles_for_section_list/<int:pk>/', mainapp.ArticlesForSectionList.as_view(),
-         name='articles_for_section_list'),
     path('articles/', mainapp.ArticleListView.as_view(), name='articles'),
     path('articles/<int:pk>/', mainapp.ArticleDetailView.as_view(), name='article_detail'),
 ]
