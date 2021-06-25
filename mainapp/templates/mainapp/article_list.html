@@ -14,9 +14,6 @@
     <h1>Статьи</h1>
     <hr>
 
-    <a href="#">Добавить новую статью</a>
-    <hr>
-
     {% for object in object_list %}
         <a href="{% url 'article_detail' pk=object.pk %}">{{ object.title }} ({{ object.edited|date:"d-E-Y P" }}) </a>
         <br>

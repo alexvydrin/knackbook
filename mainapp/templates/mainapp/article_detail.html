@@ -11,10 +11,6 @@
 
 {% block content %}
 
-    <a href="#">Изменить статью</a>
-    /
-    <a href="#">Удалить статью</a>
-
     <hr>
     <h1>{{ object.title }}</h1>
     <hr>
@@ -22,8 +18,12 @@
     <p>{{ object.content|linebreaks }}</p>
 
     <br>
-    <!-- теги: -->
-    <br>
+    теги:
+    {% for tag in tags_for_article %}
+        <a href="{% url 'articles_for_tag_list' pk=tag.pk %}">
+            {{ tag.name }}
+        </a>
+    {% endfor %}
 
     <br>
     <p>Автор: {{ object.user.last_name }}</p>

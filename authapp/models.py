@@ -6,4 +6,5 @@ class User(AbstractUser):
     """Пользователь (На основании стандартного пользователя)"""
     banned = models.DateTimeField(
         verbose_name='забанен до',
-        null=True)
+        null=True,
+        blank=True)

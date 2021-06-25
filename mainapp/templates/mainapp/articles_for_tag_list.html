@@ -1,0 +1,23 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    Статьи для тега
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <hr>
+    <h1>Статьи для тега {{ object.name }} </h1>
+    <hr>
+
+    {% for article in articles %}
+        <a href="{% url 'article_detail' pk=article.pk %}">{{ article.title }}
+            ({{ article.edited|date:"d-E-Y P" }}) </a>
+        <br>
+    {% endfor %}
+
+{% endblock %}

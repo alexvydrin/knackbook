@@ -1,79 +1,79 @@
 {% load static %}
 <section id="g-fixedside">
-            <div class="g-grid">
+    <div class="g-grid">
 
-                <div class="g-block size-100">
-                    <div class="spacer"></div>
-                </div>
+        <div class="g-block size-100">
+            <div class="spacer"></div>
+        </div>
+    </div>
+    <div class="g-grid">
+
+        <div class="g-block size-100 my-logo">
+            <div id="logo-8818-particle" class="g-content g-particle"><a href="{% url 'main' %}" title="" rel="" class="">
+                <img src="{% static 'image/logo.png' %}" alt="KnackBook"/>
+                <span></span>
+            </a>
             </div>
-            <div class="g-grid">
+        </div>
+    </div>
 
-                <div class="g-block size-100 my-logo">
-                    <div id="logo-8818-particle" class="g-content g-particle"> <a href="#" title="" rel="" class="">
-                            <img src="{% static 'image/logo.png' %}" alt="KnackBook" />
-                            <span></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+    <div class="g-grid">
 
-            <div class="g-grid">
+        <div class="g-block size-100 align-left">
+            <div id="sidemenu-6284-particle" class="g-content g-particle">
+                <nav class="g-main-nav">
+                    <ul class="g-toplevel">
 
-                <div class="g-block size-100 align-left">
-                    <div id="sidemenu-6284-particle" class="g-content g-particle">
-                        <nav class="g-main-nav">
-                            <ul class="g-toplevel">
-
-                                <li class="g-menu-item g-menu-item-type-component g-menu-item-195 active g-standard  ">
-                                    <a class="g-menu-item-container" href="#">
+                        <li class="g-menu-item g-menu-item-type-component g-menu-item-195 active g-standard  ">
+                            <a class="g-menu-item-container" href="{% url 'main' %}">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Главная</span>
-
                                         </span>
-                                    </a>
-                                </li>
+                            </a>
+                        </li>
 
-                                {% for section in links_section_menu %}
-                                <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                                    <a class="g-menu-item-container" href="#">
+                        {% for section in links_section_menu %}
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                <a class="g-menu-item-container" href="{% url 'articles_for_section_list' pk=section.pk %}">
                                         <span class="g-menu-item-content">
-                                            <span class="g-menu-item-title">{{ section.name }}</span>
-
+                                            <span class="g-menu-item-title">
+                                                {{ section.name }}
+                                            </span>
                                         </span>
-                                    </a>
-                                </li>
-                                {% endfor %}
-                                <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                                    <a class="g-menu-item-container" href="#">
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                            <a class="g-menu-item-container" href="#">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Личный кабинет</span>
 
                                         </span>
-                                    </a>
-                                </li>
+                            </a>
+                        </li>
 
-                                <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                                    <a class="g-menu-item-container" href="#">
+                        <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                            <a class="g-menu-item-container" href="#">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Войти</span>
 
                                         </span>
-                                    </a>
-                                </li>
+                            </a>
+                        </li>
 
-                                <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                                    <a class="g-menu-item-container" href="#">
+                        <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                            <a class="g-menu-item-container" href="#">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Админка</span>
 
                                         </span>
-                                    </a>
-                                </li>
+                            </a>
+                        </li>
 
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+                    </ul>
+                </nav>
             </div>
+        </div>
+    </div>
 
-        </section>
+</section>

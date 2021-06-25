@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from tags.models import Tag
 
 
 class Section(models.Model):
@@ -42,6 +43,10 @@ class Article(models.Model):
         Section,
         verbose_name='разделы')
     """разделы, в которые входит статья"""
+    tags = models.ManyToManyField(
+        Tag,
+        verbose_name='теги')
+    """теги для статьи"""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
