@@ -20,7 +20,7 @@
     <br>
     теги:
     {% for tag in tags_for_article %}
-        <a href="{% url 'articles_for_tag_list' pk=tag.pk %}">
+        <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">
             {{ tag.name }}
         </a>
     {% endfor %}

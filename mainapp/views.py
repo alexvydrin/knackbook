@@ -79,7 +79,8 @@ class ArticleDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['links_section_menu'] = get_links_section_menu()
         context['tags_menu'] = get_tags_menu()
-        context['tags_for_article'] = Tag.objects.filter(article=self.object, is_active=True)
+        context['tags_for_article'] = Tag.objects.filter(article=self.object,
+                                                         is_active=True)
         return context
 
 
@@ -90,7 +91,9 @@ class ArticlesForSectionList(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['articles'] = Article.objects.filter(sections=self.object, is_active=True).order_by('-edited', 'title')
+        context['articles'] = Article.objects.filter(sections=self.object,
+                                                     is_active=True).order_by(
+            '-edited', 'title')
         context['links_section_menu'] = get_links_section_menu()
         context['tags_menu'] = get_tags_menu()
         return context
@@ -103,7 +106,9 @@ class ArticlesForTagList(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['articles'] = Article.objects.filter(tags=self.object, is_active=True).order_by('-edited', 'title')
+        context['articles'] = Article.objects.filter(tags=self.object,
+                                                     is_active=True).order_by(
+            '-edited', 'title')
         context['links_section_menu'] = get_links_section_menu()
         context['tags_menu'] = get_tags_menu()
         return context

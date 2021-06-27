@@ -10484,8 +10484,8 @@ body {
     font-size: 1rem;
     line-height: 1.5;
     height: 100%
-        
-    
+
+
 }
 
 h1 {
@@ -16655,15 +16655,15 @@ only screen and (min-width:1040px) and (max-width:1355px) {
 /**
  * Swiper 3.0.7
  * Most modern mobile touch slider and framework with hardware accelerated transitions
- * 
+ *
  * http://www.idangero.us/swiper/
- * 
+ *
  * Copyright 2015, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
- * 
+ *
  * Licensed under MIT
- * 
+ *
  * Released on: April 25, 2015
  */
 .swiper-container {

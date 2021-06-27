@@ -2,96 +2,102 @@
 {% load static %}
 
 {% block content %}
-<div class="g-block size-75">
-    <section id="g-mainbody">
-        <div class="g-grid">
-            <div class="g-block size-100">
-                <div class="g-content">
-                    <div class="platform-content row-fluid">
-                        <div class="span12">
+    <div class="g-block size-75">
+        <section id="g-mainbody">
+            <div class="g-grid">
+                <div class="g-block size-100">
+                    <div class="g-content">
+                        <div class="platform-content row-fluid">
+                            <div class="span12">
 
-                            <div id="k2Container" class="itemListView">
+                                <div id="k2Container" class="itemListView">
 
-                                <div class="itemListCategoriesBlock">
+                                    <div class="itemListCategoriesBlock">
 
-                                    <div class="itemListCategory">
+                                        <div class="itemListCategory">
 
-                                        <h1>СВЕЖИЕ СТАТЬИ</h1>
+                                            <h1>СВЕЖИЕ СТАТЬИ</h1>
 
-                                        <div class="clr"></div>
-                                    </div>
-                                </div>
-
-                                <div class="itemList container-fluid">
-                                    <div style="text-align: justify; padding: 0 30px; color: #4D4D4D;">
-                                        <p>
-                                            Новое на сайте
-                                        </p>
-
+                                            <div class="clr"></div>
+                                        </div>
                                     </div>
 
-                                    <div class="advertur-rek google-rek-item">
-                                    </div>
-
-                                    <div id="itemListLeading" class="row">
-                                        {% for article in articles %}
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 itemContainer" style="">
-
-                                            <div class="catItemView groupLeading">
-
-                                                <div class="catItemHeader">
-                                                    <h3 class="catItemTitle">
-                                                        <a href="{% url 'article_detail' pk=article.pk %}">
-                                                            {{ article.title }}
-                                                        </a>
-                                                    </h3>
-                                                </div>
-
-                                                <div class="catItemBody">
-
-                                                    <div class="catItemImageBlock">
-                                                        <span class="catItemImage">
-                                                            <a href="{% url 'article_detail' pk=article.pk %}" title="{{ article.title }}">
-                                                                <img src="#" alt="картинка" style="width:300px;
-                                                                height:auto;" />
-                                                            </a>
-                                                        </span>
-                                                        <div class="clr"></div>
-                                                    </div>
-
-                                                    <div class="catItemIntroText">
-                                                        {{ article.title }}&#8230; </div>
-                                                    <div class="clr"></div>
-                                                    <div class="clr"></div>
-                                                </div>
-
-
-                                                <div class="clr"></div>
-
-                                                <div class="clr"></div>
-                                                <div class="catItemReadMore">
-                                                    <a class="k2ReadMore" href="{% url 'article_detail' pk=article.pk %}">
-                                                        Читать ... </a>
-                                                </div>
-
-                                                <div class="clr"></div>
-                                                <div class="clr"></div>
-
-                                            </div>
+                                    <div class="itemList container-fluid">
+                                        <div style="text-align: justify; padding: 0 30px; color: #4D4D4D;">
+                                            <p>
+                                                Новое на сайте
+                                            </p>
 
                                         </div>
-                                        {% endfor %}
-                                    </div>
 
+                                        <div class="advertur-rek google-rek-item">
+                                        </div>
+
+                                        <div id="itemListLeading" class="row">
+                                            {% for article in articles %}
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 itemContainer"
+                                                     style="">
+
+                                                    <div class="catItemView groupLeading">
+
+                                                        <div class="catItemHeader">
+                                                            <h3 class="catItemTitle">
+                                                                <a href="{% url 'mainapp:article_detail' pk=article.pk %}">
+                                                                    {{ article.title }}
+                                                                </a>
+                                                            </h3>
+                                                        </div>
+
+                                                        <div class="catItemBody">
+
+                                                            <div class="catItemImageBlock">
+                                                        <span class="catItemImage">
+                                                            <a href="{% url 'mainapp:article_detail' pk=article.pk %}"
+                                                               title="{{ article.title }}">
+                                                                <img src="#"
+                                                                     alt="картинка"
+                                                                     style="width:300px;
+                                                                height:auto;"/>
+                                                            </a>
+                                                        </span>
+                                                                <div class="clr"></div>
+                                                            </div>
+
+                                                            <div class="catItemIntroText">
+                                                                {{ article.title }}&#8230;
+                                                            </div>
+                                                            <div class="clr"></div>
+                                                            <div class="clr"></div>
+                                                        </div>
+
+
+                                                        <div class="clr"></div>
+
+                                                        <div class="clr"></div>
+                                                        <div class="catItemReadMore">
+                                                            <a class="k2ReadMore"
+                                                               href="{% url 'mainapp:article_detail' pk=article.pk %}">
+                                                                Читать ... </a>
+                                                        </div>
+
+                                                        <div class="clr"></div>
+                                                        <div class="clr"></div>
+
+                                                    </div>
+
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 {% endblock %}
 
 {% block menu %}
