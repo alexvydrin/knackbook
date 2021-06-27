@@ -15,7 +15,7 @@
     <hr>
 
     {% for object in object_list %}
-        <a href="{% url 'article_detail' pk=object.pk %}">{{ object.title }} ({{ object.edited|date:"d-E-Y P" }}) </a>
+        <a href="{% url 'mainapp:article_detail' pk=object.pk %}">{{ object.title }} ({{ object.edited|date:"d-E-Y P" }}) </a>
         <br>
     {% endfor %}
 

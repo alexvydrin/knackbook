@@ -109,7 +109,7 @@ g-2column-left g-style-preset5">
                                                 <ul class="nav menu">
                                                     {% for tag in tags_menu %}
                                                     <li class="item-383">
-                                                        <a href="{% url 'articles_for_tag_list' pk=tag.pk %}">{{ tag.name }}</a>
+                                                        <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">{{ tag.name }}</a>
                                                     </li>
                                                     {% endfor %}
                                                 </ul>
@@ -132,7 +132,7 @@ g-2column-left g-style-preset5">
                     <div class="g-block size-20">
                         <div id="branding-3118-particle" class="g-content g-particle">
                             <div class="g-branding branding">
-                                <h6> <a href="{% url 'main' %}" title="Knack Book" class="g-powered-by">
+                                <h6> <a href="{% url 'mainapp:index' %}" title="Knack Book" class="g-powered-by">
                                     <span class="hidden-tablet">Knack Book</span></a></h6>
                             </div>
                         </div>

@@ -9,7 +9,8 @@
     <div class="g-grid">
 
         <div class="g-block size-100 my-logo">
-            <div id="logo-8818-particle" class="g-content g-particle"><a href="{% url 'main' %}" title="" rel="" class="">
+            <div id="logo-8818-particle" class="g-content g-particle"><a
+                    href="{% url 'mainapp:index' %}" title="" rel="" class="">
                 <img src="{% static 'image/logo.png' %}" alt="KnackBook"/>
                 <span></span>
             </a>
@@ -24,8 +25,9 @@
                 <nav class="g-main-nav">
                     <ul class="g-toplevel">
 
-                        <li class="g-menu-item g-menu-item-type-component g-menu-item-195 active g-standard  ">
-                            <a class="g-menu-item-container" href="{% url 'main' %}">
+                        <li class="g-menu-item g-menu-item-type-component g-menu-item-195 g-standard {% if not request.resolver_match.kwargs.pk %}active{% endif %}">
+                            <a class="g-menu-item-container"
+                               href="{% url 'mainapp:index' %}">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Главная</span>
                                         </span>
@@ -33,8 +35,9 @@
                         </li>
 
                         {% for section in links_section_menu %}
-                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                                <a class="g-menu-item-container" href="{% url 'articles_for_section_list' pk=section.pk %}">
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent {% if request.resolver_match.kwargs.pk|add:0 == section.pk %}active{% endif %}">
+                                <a class="g-menu-item-container"
+                                   href="{% url 'mainapp:articles_for_section_list' pk=section.pk %}">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">
                                                 {{ section.name }}
@@ -43,32 +46,51 @@
                                 </a>
                             </li>
                         {% endfor %}
-                        <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                            <a class="g-menu-item-container" href="#">
+
+                        {% if user.is_authenticated %}
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                <a class="g-menu-item-container" href="#">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Личный кабинет</span>
 
                                         </span>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
 
-                        <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                            <a class="g-menu-item-container" href="#">
+                        {% else %}
+
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                <a class="g-menu-item-container"
+                                   href="/admin/login">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Войти</span>
 
                                         </span>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
 
-                        <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                            <a class="g-menu-item-container" href="#">
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                <a class="g-menu-item-container"
+                                   href="#">
+                                        <span class="g-menu-item-content">
+                                            <span class="g-menu-item-title">Зарегистрироваться</span>
+
+                                        </span>
+                                </a>
+                            </li>
+
+                        {% endif %}
+
+                        {% if user.is_superuser %}
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                                <a class="g-menu-item-container" href="/admin">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Админка</span>
 
                                         </span>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                        {% endif %}
 
                     </ul>
                 </nav>

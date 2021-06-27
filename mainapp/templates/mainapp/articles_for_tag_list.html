@@ -11,11 +11,11 @@
 
 {% block content %}
     <hr>
-    <h1>Статьи для тега {{ object.name }} </h1>
+    <h1>Статьи для тега: {{ object.name|title }} </h1>
     <hr>
 
     {% for article in articles %}
-        <a href="{% url 'article_detail' pk=article.pk %}">{{ article.title }}
+        <a href="{% url 'mainapp:article_detail' pk=article.pk %}">{{ article.title }}
             ({{ article.edited|date:"d-E-Y P" }}) </a>
         <br>
     {% endfor %}
