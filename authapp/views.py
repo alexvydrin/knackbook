@@ -22,7 +22,7 @@ def login(request):
             return HttpResponseRedirect(reverse('main:index'))
 
     content = {
-        'title': '',
+        'title': 'вход',
         'login_form': login_form,
         'links_section_menu': get_links_section_menu(),
         'tags_menu': get_tags_menu(),
