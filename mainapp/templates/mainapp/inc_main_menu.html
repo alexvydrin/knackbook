@@ -83,7 +83,7 @@
                                 <a class="g-menu-item-container"
                                    href="{% url 'auth:register' %}">
                                         <span class="g-menu-item-content">
-                                            <span class="g-menu-item-title">Зарегистрироваться</span>
+                                            <span class="g-menu-item-title">Регистрация</span>
 
                                         </span>
                                 </a>
@@ -93,7 +93,7 @@
 
                         {% if user.is_superuser %}
                             <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
-                                <a class="g-menu-item-container" href="/admin">
+                                <a class="g-menu-item-container" href="{% url 'admin:index' %}">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Админка</span>
 
