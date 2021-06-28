@@ -1,0 +1,14 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% include 'mainapp/inc_main_menu.html' %}
+
+    <form class="form-horizontal" action="{% url 'auth:register' %}"
+          method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ register_form.as_p }}
+        <br>
+        <input class="btn btn-round form-control" type="submit" value="зарегистрироваться">
+    </form>
+{% endblock %}

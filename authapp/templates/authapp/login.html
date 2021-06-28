@@ -1,0 +1,15 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% include 'mainapp/inc_main_menu.html' %}
+
+    <form class="form-horizontal" action="{% url 'auth:login' %}"
+          method="post">
+        {% csrf_token %}
+        {{ login_form.as_p }}
+        <br>
+        <input class="btn btn-round form-control" type="submit" value="войти">
+    </form>
+
+{% endblock %}

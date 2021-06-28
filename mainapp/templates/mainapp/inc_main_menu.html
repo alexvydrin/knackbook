@@ -25,7 +25,7 @@
                 <nav class="g-main-nav">
                     <ul class="g-toplevel">
 
-                        <li class="g-menu-item g-menu-item-type-component g-menu-item-195 g-standard {% if not request.resolver_match.kwargs.pk %}active{% endif %}">
+                        <li class="g-menu-item g-menu-item-type-component g-menu-item-195 g-standard {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                             <a class="g-menu-item-container"
                                href="{% url 'mainapp:index' %}">
                                         <span class="g-menu-item-content">
@@ -57,11 +57,21 @@
                                 </a>
                             </li>
 
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent">
+                                <a class="g-menu-item-container"
+                                   href="{% url 'auth:logout' %}">
+                                        <span class="g-menu-item-content">
+                                            <span class="g-menu-item-title">Выйти</span>
+
+                                        </span>
+                                </a>
+                            </li>
+
                         {% else %}
 
-                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent {% if request.resolver_match.url_name == 'login' %}active{% endif %}">
                                 <a class="g-menu-item-container"
-                                   href="/admin/login">
+                                   href="{% url 'auth:login' %}">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Войти</span>
 
@@ -69,9 +79,9 @@
                                 </a>
                             </li>
 
-                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
                                 <a class="g-menu-item-container"
-                                   href="#">
+                                   href="{% url 'auth:register' %}">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Зарегистрироваться</span>
 
