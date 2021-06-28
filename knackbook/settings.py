@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'captcha',
     'mainapp',
     'authapp',
     'tags',
@@ -149,3 +150,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authapp.User'
+
+# Captcha
+
+CAPTCHA_FONT_SIZE = 50
+CAPTCHA_LENGTH = 5
