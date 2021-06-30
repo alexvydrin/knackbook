@@ -1,0 +1,73 @@
+{% load static %}
+
+<div class="g-grid table-bordered">
+
+    <div class="g-block size-100 align-left">
+        <nav class="g-main-nav">
+            <ul>
+
+                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                    <a href="{% url 'cabinet:cabinet' %}">
+                            <span class="">
+                                <span class="">Мои статьи</span>
+                            </span>
+                    </a>
+                </li>
+
+                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                    <a href="{% url 'cabinet:cabinet' %}">
+                            <span class="g-menu-item-content">
+                                <span class="g-menu-item-title">Черновики</span>
+                            </span>
+                    </a>
+                </li>
+
+                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                    <a href="{% url 'cabinet:cabinet' %}">
+                        <span class="g-menu-item-content">
+                            <span class="g-menu-item-title">Новая статья</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                    <a href="{% url 'cabinet:cabinet' %}">
+                        <span class="g-menu-item-content">
+                            <span class="g-menu-item-title">Изменить профиль</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                    <a href="{% url 'cabinet:cabinet' %}">
+                        <span class="g-menu-item-content">
+                            <span class="g-menu-item-title">Уведомления</span>
+                        </span>
+                    </a>
+                </li>
+
+                {% if user.is_superuser or user.is_staff %}
+                    <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                        <a href="{% url 'cabinet:cabinet' %}">
+                            <span class="g-menu-item-content">
+                                <span class="g-menu-item-title">Модерация</span>
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if user.is_superuser %}
+                    <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                        <a href="{% url 'admin:index' %}">
+                            <span class="g-menu-item-content">
+                                <span class="g-menu-item-title">Админка</span>
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    </div>
+
+</div>

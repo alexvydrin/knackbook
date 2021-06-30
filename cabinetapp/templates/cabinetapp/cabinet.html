@@ -1,0 +1,31 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <section>
+
+        <div class="itemListCategory">
+            <h1>личный кабинет</h1>
+            <div>
+                <h3>
+                    {% if user.is_superuser %}
+                        <p>{{ user }} (администратор)</p>
+                    {% elif user.is_staff %}
+                        <p>{{ user }} (модератор)</p>
+                    {% else %}
+                        <p>{{ user }}</p>
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+
+        <div>
+            {% include 'cabinetapp/inc_menu.html' %}
+        </div>
+
+    </section>
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
