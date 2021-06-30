@@ -26,7 +26,7 @@
     {% endfor %}
 
     <br>
-    <p>Автор: {{ object.user.last_name }}</p>
+    <p>Автор: <a href="{% url 'cabinet:cabinet' %}">{{ object.user.username }}</a></p>
     <p>Создано: {{ object.created|date:"d-E-Y P" }}</p>
     <p>Изменено: {{ object.edited|date:"d-E-Y P" }}</p>
 

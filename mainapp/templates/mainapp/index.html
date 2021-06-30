@@ -46,33 +46,10 @@
                                                                 </a>
                                                             </h3>
                                                         </div>
+                                                        <div class="small align-right">
+                                                            {{ article.edited|date:"d-E-Y" }}
+                                                        </div>
 
-{#                                                        <div class="catItemBody">#}
-{##}
-{#                                                            <div class="catItemImageBlock">#}
-{#                                                        <span class="catItemImage">#}
-{#                                                            <a href="{% url 'mainapp:article_detail' pk=article.pk %}"#}
-{#                                                               title="{{ article.title }}">#}
-{#                                                                <img src="#"#}
-{#                                                                     alt="картинка"#}
-{#                                                                     style="width:300px;#}
-{#                                                                height:auto;"/>#}
-{#                                                            </a>#}
-{#                                                        </span>#}
-{#                                                                <div class="clr"></div>#}
-{#                                                            </div>#}
-{##}
-{#                                                            <div class="catItemIntroText">#}
-{#                                                                {{ article.title }}&#8230;#}
-{#                                                            </div>#}
-{#                                                            <div class="clr"></div>#}
-{#                                                            <div class="clr"></div>#}
-{#                                                        </div>#}
-{##}
-{##}
-{#                                                        <div class="clr"></div>#}
-{##}
-{#                                                        <div class="clr"></div>#}
                                                         <div class="catItemReadMore">
                                                             <a class="k2ReadMore"
                                                                href="{% url 'mainapp:article_detail' pk=article.pk %}">
