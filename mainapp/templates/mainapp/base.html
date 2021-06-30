@@ -10,10 +10,11 @@
     </title>
 
     {% block css %}
-<!--        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
-<!--              integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"-->
-<!--              crossorigin="anonymous">-->
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+            crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'style.css' %}" >
+        <link rel="shortcut icon" type="image/png" href="{% static "image/favicon.png" %}">
 
     {% endblock %}
 
@@ -106,7 +107,7 @@ g-2column-left g-style-preset5">
                                     <div class="g-content">
                                         <div class="platform-content">
                                             <div class="moduletable ">
-                                                <ul class="nav menu">
+                                                <ul class="list-unstyled">
                                                     {% for tag in tags_menu %}
                                                     <li class="item-383">
                                                         <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">{{ tag.name }}</a>

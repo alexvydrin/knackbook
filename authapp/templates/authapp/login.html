@@ -9,10 +9,9 @@
         {% csrf_token %}
         {{ login_form.as_p }}
         <br>
-        <input class="btn btn-round form-control" type="submit" value="войти">
+        <input class="btn btn-round form-control button" type="submit" value="Войти">
+        <a class="float-right" type="submit"
+           href="{% url 'auth:register' %}">Нет учентой записи?</a>
     </form>
-
-    <a class="btn-round form-control" type="submit"
-           href="{% url 'auth:register' %}">Зарегистрироваться</a>
 
 {% endblock %}

@@ -26,7 +26,13 @@
     {% endfor %}
 
     <br>
-    <p>Автор: {{ object.user.last_name }}</p>
+    {% if user.is_authenticated %}
+        <p>Автор: <a
+                href="{% url 'cabinet:cabinet' %}">{{ object.user.username }}</a>
+        </p>
+    {% else %}
+        <p>Автор: {{ object.user.username }}</p>
+    {% endif %}
     <p>Создано: {{ object.created|date:"d-E-Y P" }}</p>
     <p>Изменено: {{ object.edited|date:"d-E-Y P" }}</p>
 

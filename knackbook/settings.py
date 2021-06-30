@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'mainapp',
     'authapp',
     'tags',
+    'cabinetapp',
 ]
 
 MIDDLEWARE = [
