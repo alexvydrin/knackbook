@@ -13,13 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('mainapp.urls', namespace='main')),
     path('auth/', include('authapp.urls', namespace='auth')),
     path('cabinet/', include('cabinetapp.urls', namespace='cabinet')),
+
     path('captcha/', include('captcha.urls')),
+    url(r'^favicon\.png$',
+        RedirectView.as_view(url='/static/image/favicon.png', permanent=True)),
 ]
