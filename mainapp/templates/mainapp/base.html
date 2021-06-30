@@ -25,7 +25,7 @@
 <body class="gantry site com_k2 view-itemlist layout-category task-category dir-ltr itemid-195 outline-40
 g-2column-left g-style-preset5">
     <div id="g-page-surround">
-        <header id="g-header" style="height: 300px">
+        <header id="g-header" style="height: 280px">
             <div class="g-container">
                 <div class="g-grid">
                     <div class="g-block size-100 center title1 swiper-slide-content">
@@ -35,7 +35,7 @@ g-2column-left g-style-preset5">
                                     <div class="swiper-container g-horizontal-slides g-horizontal-slides-" style="height: 300px;">
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
-                                                <div class="swiper-slide-content">
+                                                <div class="swiper-slide-content" style="margin-bottom: 40px;margin-top: 10px;">
                                                     <div class="swiper-slide-content-text">
                                                     <div class="g-swiper-slide-content-subtitle" style="margin-bottom: 15px;margin-top: 10px;">KNACK BOOK</div>
                                                     <div class="g-swiper-slide-content-title">Ваши статьи</div>
@@ -130,7 +130,7 @@ g-2column-left g-style-preset5">
             <div class="g-container">
                 <div class="g-grid">
 
-                    <div class="g-block size-20">
+                    <div class="g-block size-30">
                         <div id="branding-3118-particle" class="g-content g-particle">
                             <div class="g-branding branding">
                                 <h6> <a href="{% url 'mainapp:index' %}" title="Knack Book" class="g-powered-by">
@@ -138,16 +138,17 @@ g-2column-left g-style-preset5">
                             </div>
                         </div>
                     </div>
-                    <div class="g-block size-20">
+                    <div class="g-block size-30">
                         <div id="copyright-7616-particle" class="g-content g-particle">
                             <div class="g-copyright ">
-                                Copyright &copy;2021
+                                {% now "Y" as today %}
+                                Copyright &copy; {{ today }}
                             </div>
                         </div>
                     </div>
 
-                    <div class="g-block size-20">
-                        <div class="g-content">
+                    <div class="g-block size-30">
+                        <div class="g-content float-right">
                             <div class="platform-content">
                                 <div class="moduletable obratnaia">
                                     <ul class="nav menu">
