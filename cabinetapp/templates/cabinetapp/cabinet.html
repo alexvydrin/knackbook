@@ -53,6 +53,28 @@
         <div class="row">
             {% include 'cabinetapp/inc_menu.html' %}
             <div class="col-6">
+
+                {% if first_name %}
+                    <p>Имя: {{ first_name }}</p>
+                {% else %}
+                    <div>Имя: <a class="small text-error g-notexttransform"
+                                 href="">добавить</a>
+                {% endif %}
+
+                {% if last_name %}
+                    <p>Фамилия: {{ last_name }}</p>
+                {% else %}
+                    <div>Фамилия: <a class="small text-error g-notexttransform"
+                                     href="">добавить</a>
+                {% endif %}
+
+                {% if email %}
+                    <p>E-mail: {{ email }}</p>
+                {% else %}
+                    <div>E-mail: <a class="small text-error g-notexttransform"
+                                    href="">добавить</a>
+                {% endif %}
+
                 {% if gender %}
                     <p>Пол: {{ gender }}</p>
                 {% else %}
@@ -66,11 +88,12 @@
                     <p>Дата рождения: {{ birth_date }}</p>
                 {% else %}
                     <div>Возраст: <a class="small text-error g-notexttransform"
-                                 href="">добавить</a>
+                                     href="">добавить</a>
                     </div>
                 {% endif %}
-            </div>
-        </div>
+
+                </div>
+                </div>
 
     </section>
 {% endblock %}
