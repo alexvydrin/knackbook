@@ -4,7 +4,7 @@
 {% block content %}
     {% include 'mainapp/inc_main_menu.html' %}
 
-    <form class="form-horizontal" action="{% url 'auth:login' %}"
+    <form class="form-horizontal size-90" action="{% url 'auth:login' %}"
           method="post">
         {% csrf_token %}
         {{ login_form.as_p }}

@@ -5,22 +5,71 @@
     <section>
 
         <div class="itemListCategory">
-            <h1>личный кабинет</h1>
+
             <div>
-                <h3>
-                    {% if user.is_superuser %}
-                        <p>{{ user }} (администратор)</p>
-                    {% elif user.is_staff %}
-                        <p>{{ user }} (модератор)</p>
-                    {% else %}
-                        <p>{{ user }}</p>
-                    {% endif %}
-                </h3>
+                <h1>личный кабинет</h1>
+            </div>
+
+            <div class="container">
+                <div class="row size-100">
+                    <div class="col-md-3">
+                        <img src="/media/{{ avatar }}"
+                             class="img-fluid img-circle" alt=" "
+                             style="height: 150px; width: 150px">
+                    </div>
+
+                    <div class="col-md-9">
+
+                        <div>
+                            <h5>
+                                {% if user.is_superuser %}
+                                    <p>{{ user }} (администратор)</p>
+                                {% elif user.is_staff %}
+                                    <p>{{ user }} (модератор)</p>
+                                {% else %}
+                                    <p>{{ user }}</p>
+                                {% endif %}
+                            </h5>
+                        </div>
+
+                        <div class="align-left small g-notexttransform">О
+                            себе:
+                        </div>
+
+                        <div class="table-bordered">
+                            {% if about_me %}
+                                <p class="small text-left g-notexttransform">{{ about_me }}</p>
+                            {% else %}
+                                <a class="small float-left text-error g-notexttransform"
+                                   href="#">добавить</a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div>
+        <br><br>
+        <div class="row">
             {% include 'cabinetapp/inc_menu.html' %}
+            <div class="col-6">
+                {% if gender %}
+                    <p>Пол: {{ gender }}</p>
+                {% else %}
+                    <div>Пол: <a class="small text-error g-notexttransform"
+                                 href="">добавить</a>
+                    </div>
+                {% endif %}
+
+
+                {% if birth_date %}
+                    <p>Дата рождения: {{ birth_date }}</p>
+                {% else %}
+                    <div>Возраст: <a class="small text-error g-notexttransform"
+                                 href="">добавить</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
 
     </section>

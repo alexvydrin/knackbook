@@ -1,36 +1,36 @@
 {% load static %}
 
-<div class="g-grid table-bordered">
+<div class="g-grid col-3">
 
     <div class="g-block size-100 align-left">
         <nav class="g-main-nav">
             <ul>
 
-                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                             <span class="">
-                                <span class="">Мои статьи</span>
+                                <span class="">Новая статья</span>
                             </span>
                     </a>
                 </li>
 
-                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                             <span class="g-menu-item-content">
-                                <span class="g-menu-item-title">Черновики</span>
+                                <span class="g-menu-item-title">Мои статьи</span>
                             </span>
                     </a>
                 </li>
 
-                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                         <span class="g-menu-item-content">
-                            <span class="g-menu-item-title">Новая статья</span>
+                            <span class="g-menu-item-title">Черновики</span>
                         </span>
                     </a>
                 </li>
 
-                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                         <span class="g-menu-item-content">
                             <span class="g-menu-item-title">Изменить профиль</span>
@@ -38,7 +38,7 @@
                     </a>
                 </li>
 
-                <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                         <span class="g-menu-item-content">
                             <span class="g-menu-item-title">Уведомления</span>
@@ -47,7 +47,7 @@
                 </li>
 
                 {% if user.is_superuser or user.is_staff %}
-                    <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                    <li>
                         <a href="{% url 'cabinet:cabinet' %}">
                             <span class="g-menu-item-content">
                                 <span class="g-menu-item-title">Модерация</span>
@@ -57,7 +57,7 @@
                 {% endif %}
 
                 {% if user.is_superuser %}
-                    <li class="{% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+                    <li>
                         <a href="{% url 'admin:index' %}">
                             <span class="g-menu-item-content">
                                 <span class="g-menu-item-title">Админка</span>
