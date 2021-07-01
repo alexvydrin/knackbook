@@ -5,7 +5,7 @@ from django.db import models
 class User(AbstractUser):
     """Пользователь (На основании стандартного пользователя)"""
     MALE = 'Мужской'
-    FEMALE = 'Мужской'
+    FEMALE = 'Женский'
 
     GENDER_CHOICES = (
         (MALE, 'Мужской'),

@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'authapp',
     'tags',
     'cabinetapp',
+    'commentapp',
+    'likeapp',
+    'notificationapp'
 ]
 
 MIDDLEWARE = [
