@@ -1,0 +1,43 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row">
+
+    <div class="col-2">
+
+    </div>
+
+    <div class="col-8 g-bold">
+        {% if user.first_name %}
+            {{ user.first_name }},
+        {% else %}
+            {{ user|title }},
+        {% endif %} вы уверены что хотите удалить учетную запись?
+        <br><br>
+        <form action="{% url 'auth:delete' user.id %}" method="post">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-8">
+                <input class="btn btn-danger" type="submit" value="удалить">
+                </div>
+                <div class="col-4">
+                <button class="btn btn-inverse">
+                    <a class="" href="{% url 'cabinet:cabinet' %}">
+                        Отмена
+                    </a>
+                </button>
+                    </div>
+            </div>
+
+        </form>
+    </div>
+
+
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}

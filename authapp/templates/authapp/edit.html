@@ -88,8 +88,10 @@
                            value="Сохранить">
 
                 </div>
-            </div>
 
+            </div>
+            <a class="float-right text-error" type="submit"
+               href="{% url 'auth:delete' pk=user.id %}">Удалить учетную запись?</a>
         </section>
     </form>
 {% endblock %}
