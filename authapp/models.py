@@ -24,3 +24,4 @@ class User(AbstractUser):
                               verbose_name='пол')
     birth_date = models.DateField(blank=True, null=True,
                                   verbose_name='дата рождения')
+    email = models.EmailField(blank=False, null=False, unique=True)

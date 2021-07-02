@@ -1,0 +1,99 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <form class="form-horizontal" action="{% url 'auth:edit' %}"
+          method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <section>
+
+            <div class="itemListCategory">
+
+                <div>
+                    <h1>личный кабинет</h1>
+                </div>
+
+                <div class="container">
+                    <div class="row size-100">
+                        <div class="col-md-3">
+                            <img src="/media/{{ avatar }}"
+                                 class="img-fluid img-circle" alt=" "
+                                 style="height: 150px; width: 150px">
+
+
+                            <div class="input-group input-group-text ">
+                                {{ edit_form.avatar }}
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-9">
+
+                            <div>
+                                <h5>
+                                    {% if user.is_superuser %}
+                                        <p>{{ user }} (администратор)</p>
+                                    {% elif user.is_staff %}
+                                        <p>{{ user }} (модератор)</p>
+                                    {% else %}
+                                        <p>{{ user }}</p>
+                                    {% endif %}
+                                </h5>
+                            </div>
+
+                            <div class="align-left small g-notexttransform">
+                                О себе:
+                            </div>
+
+                            <div class="">
+                                <p class="small text-left g-notexttransform">{{ edit_form.about_me }}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                {% include 'cabinetapp/inc_menu.html' %}
+                <div class="col-6">
+                    <div class="small">Имя: <span
+                            class="g-bold">{{ edit_form.first_name }}</span>
+                    </div>
+                    <br>
+
+                    <div class="small">Фамилия: <span
+                            class="g-bold">{{ edit_form.last_name }}</span>
+                    </div>
+
+                    <br>
+                    <div class="small">E-mail: <span
+                            class="g-bold">{{ edit_form.email }}</span>
+                    </div>
+
+                    <br>
+
+                    <div class="small">Пол: <span
+                            class="g-bold">{{ edit_form.gender }}</span>
+                    </div>
+
+                    <br>
+                    <div class="small">Дата рождения: <span
+                            class="g-bold">{{ edit_form.birth_date }}</span>
+                    </div>
+                    <br>
+
+                    <input class="btn-inverse form-control float-left"
+                           type="submit"
+                           value="Сохранить">
+
+                </div>
+            </div>
+
+        </section>
+    </form>
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}

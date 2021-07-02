@@ -9,7 +9,7 @@
         {% csrf_token %}
         {{ register_form.as_p }}
         <br>
-        <input class="btn btn-round form-control button" type="submit"
+        <input class="btn-inverse form-control" type="submit"
                value="Зарегистрироваться">
         <a class="float-right" type="submit"
            href="{% url 'auth:login' %}">Уже есть учетная запись?</a>

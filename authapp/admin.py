@@ -7,11 +7,8 @@ from authapp.models import User
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('avatar',)}),
-        (None, {'fields': ('about_me',)}),
-        (None, {'fields': ('birth_date',)}),
-        (None, {'fields': ('gender',)}),
-        (None, {'fields': ('banned',)}),
+        (None, {'fields': (
+            'banned', 'birth_date', 'avatar', 'gender', 'about_me',)}),
     )
 
 
