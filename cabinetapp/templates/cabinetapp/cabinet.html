@@ -41,7 +41,7 @@
                                 <p class="small text-left g-notexttransform">{{ about_me }}</p>
                             {% else %}
                                 <a class="small float-left text-error g-notexttransform"
-                                   href="#">добавить</a>
+                                   href="{% url 'auth:edit' %}">добавить</a>
                             {% endif %}
                         </div>
 
@@ -55,40 +55,46 @@
             <div class="col-6">
 
                 {% if first_name %}
-                    <p>Имя: {{ first_name }}</p>
+                    <div>Имя: <span
+                            class="g-bold">{{ first_name|title }}</span></div>
                 {% else %}
                     <div>Имя: <a class="small text-error g-notexttransform"
-                                 href="">добавить</a>
+                                 href="{% url 'auth:edit' %}">добавить</a>
                 {% endif %}
 
                 {% if last_name %}
-                    <p>Фамилия: {{ last_name }}</p>
+                    <div>Фамилия: <span
+                            class="g-bold">{{ last_name|title }}</span></div>
                 {% else %}
                     <div>Фамилия: <a class="small text-error g-notexttransform"
-                                     href="">добавить</a>
+                                     href="{% url 'auth:edit' %}">добавить</a>
                 {% endif %}
 
                 {% if email %}
-                    <p>E-mail: {{ email }}</p>
+                    <div>E-mail: <span class="g-bold">{{ email }}</span></div>
                 {% else %}
                     <div>E-mail: <a class="small text-error g-notexttransform"
-                                    href="">добавить</a>
+                                    href="{% url 'auth:edit' %}">добавить</a>
                 {% endif %}
 
+                <br><br>
+
                 {% if gender %}
-                    <p>Пол: {{ gender }}</p>
+                    <div>Пол: <span class="g-bold">{{ gender }}</span></div>
                 {% else %}
                     <div>Пол: <a class="small text-error g-notexttransform"
-                                 href="">добавить</a>
+                                 href="{% url 'auth:edit' %}">добавить</a>
                     </div>
                 {% endif %}
 
 
                 {% if birth_date %}
-                    <p>Дата рождения: {{ birth_date }}</p>
+                    <div>Дата рождения: <span
+                            class="g-bold">{{ birth_date }}</span></div>
                 {% else %}
-                    <div>Возраст: <a class="small text-error g-notexttransform"
-                                     href="">добавить</a>
+                    <div>Дата рождения: <a
+                            class="small text-error g-notexttransform"
+                            href="{% url 'auth:edit' %}">добавить</a>
                     </div>
                 {% endif %}
 

@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from authapp.forms import UserLoginForm, UserRegisterForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm
+from authapp.models import User
 from mainapp.views import get_links_section_menu, get_tags_menu, \
     get_articles_five
 
@@ -57,3 +58,31 @@ def register(request):
     }
 
     return render(request, 'authapp/register.html', content)
+
+
+def edit(request):
+    """Редактирование пользователя"""
+    if request.user.is_authenticated:
+        user = User.objects.filter(id=request.user.id).first()
+
+        if request.method == 'POST':
+            edit_form = UserEditForm(request.POST, request.FILES,
+                                     instance=request.user)
+            if edit_form.is_valid():
+                edit_form.save()
+                return HttpResponseRedirect(reverse('cabinet:cabinet'))
+
+        edit_form = UserEditForm(instance=request.user)
+
+        content = {
+            'title': 'редактирование профиля',
+            'edit_form': edit_form,
+            'links_section_menu': get_links_section_menu(),
+            'tags_menu': get_tags_menu(),
+            'articles': get_articles_five(),
+            'avatar': user.avatar
+        }
+
+        return render(request, 'authapp/edit.html', content)
+
+    return HttpResponseRedirect(reverse('auth:login'))

@@ -9,7 +9,7 @@
                 <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                             <span class="">
-                                <span class="">Новая статья</span>
+                                <span class="g-menu-item-title g-bold">Новая статья</span>
                             </span>
                     </a>
                 </li>
@@ -17,7 +17,7 @@
                 <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                             <span class="g-menu-item-content">
-                                <span class="g-menu-item-title">Мои статьи</span>
+                                <span class="g-menu-item-title g-bold">Мои статьи</span>
                             </span>
                     </a>
                 </li>
@@ -25,7 +25,15 @@
                 <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                         <span class="g-menu-item-content">
-                            <span class="g-menu-item-title">Черновики</span>
+                            <span class="g-menu-item-title g-bold">Черновики</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'auth:edit' %}">
+                        <span class="g-menu-item-content">
+                            <span class="g-menu-item-title g-bold {% if request.resolver_match.url_name == 'edit' %}text-dark{% endif %}">Изменить профиль</span>
                         </span>
                     </a>
                 </li>
@@ -33,15 +41,7 @@
                 <li>
                     <a href="{% url 'cabinet:cabinet' %}">
                         <span class="g-menu-item-content">
-                            <span class="g-menu-item-title">Изменить профиль</span>
-                        </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{% url 'cabinet:cabinet' %}">
-                        <span class="g-menu-item-content">
-                            <span class="g-menu-item-title">Уведомления</span>
+                            <span class="g-menu-item-title g-bold">Уведомления</span>
                         </span>
                     </a>
                 </li>
@@ -50,7 +50,7 @@
                     <li>
                         <a href="{% url 'cabinet:cabinet' %}">
                             <span class="g-menu-item-content">
-                                <span class="g-menu-item-title">Модерация</span>
+                                <span class="g-menu-item-title g-bold">Модерация</span>
                             </span>
                         </a>
                     </li>
@@ -60,7 +60,7 @@
                     <li>
                         <a href="{% url 'admin:index' %}">
                             <span class="g-menu-item-content">
-                                <span class="g-menu-item-title">Админка</span>
+                                <span class="g-menu-item-title g-bold">Админка</span>
                             </span>
                         </a>
                     </li>

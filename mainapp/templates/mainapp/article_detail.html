@@ -26,9 +26,9 @@
     {% endfor %}
 
     <br>
-    {% if user.is_authenticated %}
+    {% if user.last_name and user.first_name %}
         <p>Автор: <a
-                href="{% url 'cabinet:cabinet' %}">{{ object.user.username }}</a>
+                href="{% url 'cabinet:cabinet' %}">{{ user.first_name }} {{ user.last_name }}</a>
         </p>
     {% else %}
         <p>Автор: {{ object.user.username }}</p>
