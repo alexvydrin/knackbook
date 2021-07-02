@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm
@@ -85,4 +85,25 @@ def edit(request):
 
         return render(request, 'authapp/edit.html', content)
 
+    return HttpResponseRedirect(reverse('auth:login'))
+
+
+def delete(request, pk):
+    """Удаление учентой записи"""
+    if request.user.is_authenticated:
+        user = get_object_or_404(User, id=pk)
+        if request.method == 'POST':
+            if user.is_active:
+                user.is_active = False
+                user.save()
+            return HttpResponseRedirect(reverse('main:index'))
+
+        content = {
+            'title': 'удаление профиля',
+            'links_section_menu': get_links_section_menu(),
+            'tags_menu': get_tags_menu(),
+            'articles': get_articles_five(),
+            'avatar': user.avatar
+        }
+        return render(request, 'authapp/delete.html', content)
     return HttpResponseRedirect(reverse('auth:login'))
