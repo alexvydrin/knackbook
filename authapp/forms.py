@@ -4,7 +4,7 @@ from captcha.fields import CaptchaField
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, \
     UserChangeForm
-from django.forms import HiddenInput, FileInput
+from django.forms import HiddenInput, FileInput, DateInput
 
 from authapp.models import User
 
@@ -24,7 +24,7 @@ class UserLoginForm(AuthenticationForm):
 
 class UserRegisterForm(UserCreationForm):
     """Форма для регистрации"""
-    Captcha = CaptchaField()
+    Captcha = CaptchaField(label='Подтвердите что вы не робот!')
 
     class Meta:
         model = User
@@ -56,7 +56,10 @@ class UserEditForm(UserChangeForm):
             'avatar', 'first_name', 'last_name',
             'email', 'gender', 'birth_date', 'about_me',
         )
-        widgets = {}
+
+        widgets = {
+            'birth_date': DateInput(attrs={'type': 'date'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -69,6 +72,8 @@ class UserEditForm(UserChangeForm):
                 field.widget = HiddenInput()
             if field_name == 'avatar':
                 field.widget = FileInput()
+            if field_name == 'birth_date' and self.instance.birth_date:
+                field.widget = DateInput()
 
     def clean_birth_date(self):
         now = datetime.now().year

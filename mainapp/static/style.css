@@ -14126,6 +14126,10 @@ textarea:focus {
     background: #06070a
 }
 
+#id_Captcha_1 {
+    text-transform: uppercase;
+}
+
 #g-fixedside {
     background: #151a23;
     color: #fff;
