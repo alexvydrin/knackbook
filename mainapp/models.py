@@ -33,9 +33,17 @@ class Section(models.Model):
     def __str__(self):
         return str(self.name)
 
+    @staticmethod
+    def get_links_section_menu():
+        """Меню разделов"""
+        links_section_menu = Section.objects.all()
+        return links_section_menu
+
 
 class Article(models.Model):
     """Статья"""
+    class Meta:
+        ordering = ['-edited']
 
     title = models.CharField(
         max_length=200,
@@ -114,3 +122,9 @@ class Article(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+    @staticmethod
+    def get_articles_five():
+        """Пять самых свежих статей по дате создания"""
+        articles = Article.objects.all()[:5]
+        return articles

@@ -5,8 +5,8 @@ from django.urls import reverse
 
 from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm
 from authapp.models import User
-from mainapp.views import get_links_section_menu, get_tags_menu, \
-    get_articles_five
+from mainapp.models import Section, Article
+from tags.models import Tag
 
 
 def login(request):
@@ -23,9 +23,9 @@ def login(request):
     content = {
         'title': 'вход',
         'login_form': login_form,
-        'links_section_menu': get_links_section_menu(),
-        'tags_menu': get_tags_menu(),
-        'articles': get_articles_five(),
+        'links_section_menu': Section.get_links_section_menu(),
+        'tags_menu': Tag.get_tags_menu(),
+        'articles': Article.get_articles_five(),
     }
 
     return render(request, 'authapp/login.html', content)
@@ -52,9 +52,9 @@ def register(request):
     content = {
         'title': 'регистрация',
         'register_form': register_form,
-        'links_section_menu': get_links_section_menu(),
-        'tags_menu': get_tags_menu(),
-        'articles': get_articles_five(),
+        'links_section_menu': Section.get_links_section_menu(),
+        'tags_menu': Tag.get_tags_menu(),
+        'articles': Article.get_articles_five(),
     }
 
     return render(request, 'authapp/register.html', content)
@@ -77,9 +77,9 @@ def edit(request):
         content = {
             'title': 'редактирование профиля',
             'edit_form': edit_form,
-            'links_section_menu': get_links_section_menu(),
-            'tags_menu': get_tags_menu(),
-            'articles': get_articles_five(),
+            'links_section_menu': Section.get_links_section_menu(),
+            'tags_menu': Tag.get_tags_menu(),
+            'articles': Article.get_articles_five(),
             'avatar': user.avatar
         }
 
@@ -100,9 +100,9 @@ def delete(request, pk):
 
         content = {
             'title': 'удаление профиля',
-            'links_section_menu': get_links_section_menu(),
-            'tags_menu': get_tags_menu(),
-            'articles': get_articles_five(),
+            'links_section_menu': Section.get_links_section_menu(),
+            'tags_menu': Tag.get_tags_menu(),
+            'articles': Article.get_articles_five(),
             'avatar': user.avatar
         }
         return render(request, 'authapp/delete.html', content)

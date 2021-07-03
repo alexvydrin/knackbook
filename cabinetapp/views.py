@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from authapp.models import User
-from mainapp.views import get_links_section_menu, get_tags_menu, \
-    get_articles_five
+from mainapp.models import Section, Article
+from tags.models import Tag
 
 
 def main(request):
@@ -14,9 +14,9 @@ def main(request):
 
         context = {
             'title': 'личный кабинет',
-            'links_section_menu': get_links_section_menu(),
-            'tags_menu': get_tags_menu(),
-            'articles': get_articles_five(),
+            'links_section_menu': Section.get_links_section_menu(),
+            'tags_menu': Tag.get_tags_menu(),
+            'articles': Article.get_articles_five(),
             'user': request.user,
             'avatar': user.avatar,
             'about_me': user.about_me,

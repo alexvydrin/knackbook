@@ -47,7 +47,7 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserEditForm(UserChangeForm):
-    """форма для редактирования юзера"""
+    """Форма для редактирования юзера"""
 
     class Meta:
         now = int(datetime.now().year)

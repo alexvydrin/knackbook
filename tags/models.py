@@ -25,3 +25,9 @@ class Tag(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    @staticmethod
+    def get_tags_menu():
+        """Список тегов"""
+        tags_menu = Tag.objects.all()
+        return tags_menu
