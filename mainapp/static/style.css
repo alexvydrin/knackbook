@@ -14130,6 +14130,14 @@ textarea:focus {
     text-transform: uppercase;
 }
 
+.errorlist {
+    color: red;
+}
+
+.helptext {
+    display: none;
+}
+
 #g-fixedside {
     background: #151a23;
     color: #fff;

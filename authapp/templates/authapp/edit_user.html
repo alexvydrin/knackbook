@@ -22,7 +22,7 @@
 
 
                             <div class="input-group input-group-text ">
-                                {{ edit_form.avatar }}
+                                <a href="{% url 'auth:edit_avatar' %}">{{ edit_form.avatar }}</a>
                             </div>
 
                         </div>
@@ -80,8 +80,16 @@
                     <br>
                     <div class="small">Дата рождения: <span
                             class="g-bold">{{ edit_form.birth_date }}</span>
+                        <br><br>
+                    <div class="">Пароль: <span
+                            class="g-bold"></span>
+                    </div>
+                        <a class="btn btn-success"
+                           href="{% url 'auth:edit_password' %}">Изменить
+                            пароль</a>
                     </div>
                     <br>
+
 
                     <input class="btn-inverse form-control float-left"
                            type="submit"
@@ -91,7 +99,8 @@
 
             </div>
             <a class="float-right text-error" type="submit"
-               href="{% url 'auth:delete' pk=user.id %}">Удалить учетную запись?</a>
+               href="{% url 'auth:delete_user' pk=user.id %}">Удалить учетную
+                запись?</a>
         </section>
     </form>
 {% endblock %}

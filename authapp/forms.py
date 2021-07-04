@@ -1,10 +1,10 @@
 from datetime import datetime
 
 from captcha.fields import CaptchaField
-from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, \
     UserChangeForm
-from django.forms import HiddenInput, FileInput, DateInput
+from django.core.exceptions import ValidationError
+from django.forms import FileInput, DateInput
 
 from authapp.models import User
 
@@ -40,14 +40,14 @@ class UserRegisterForm(UserCreationForm):
         email_user = self.cleaned_data['email']
         email_data = User.objects.filter(email=email_user)
         if email_data:
-            raise forms.ValidationError(
+            raise ValidationError(
                 'Пользователь с таким email уже зарегистрирован'
             )
         return email_user
 
 
 class UserEditForm(UserChangeForm):
-    """форма для редактирования юзера"""
+    """Форма для редактирования юзера"""
 
     class Meta:
         now = int(datetime.now().year)
@@ -59,6 +59,8 @@ class UserEditForm(UserChangeForm):
 
         widgets = {
             'birth_date': DateInput(attrs={'type': 'date'}),
+            'avatar': FileInput(
+                attrs={'type': 'button', 'value': 'Редактировать'})
         }
 
     def __init__(self, *args, **kwargs):
@@ -68,10 +70,7 @@ class UserEditForm(UserChangeForm):
             field.widget.attrs['class'] = 'form-group'
             self.fields['about_me'].widget.attrs['rows'] = 4
             field.help_text = ''
-            if field_name == 'password':
-                field.widget = HiddenInput()
-            if field_name == 'avatar':
-                field.widget = FileInput()
+
             if field_name == 'birth_date' and self.instance.birth_date:
                 field.widget = DateInput()
 
@@ -81,6 +80,26 @@ class UserEditForm(UserChangeForm):
         if date_data:
             if 1920 < date_data.year < now:
                 return date_data
-            raise forms.ValidationError(
+            raise ValidationError(
                 'Неверная дата'
             )
+
+
+class UserEditAvatarForm(UserChangeForm):
+    """Форма для редактирования аватарки"""
+
+    class Meta:
+        model = User
+        fields = ('avatar',)
+
+        widgets = {
+            'avatar': FileInput(
+                attrs={'type': 'file'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['class'] = 'form-group'
+            field.help_text = ''

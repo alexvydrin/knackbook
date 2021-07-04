@@ -19,31 +19,13 @@ from .models import Section, Article
 from tags.models import Tag
 
 
-def get_links_section_menu():
-    """Меню разделов"""
-    links_section_menu = Section.objects.all()
-    return links_section_menu
-
-
-def get_tags_menu():
-    """Список тегов"""
-    tags_menu = Tag.objects.all()
-    return tags_menu
-
-
-def get_articles_five():
-    """Пять самых свежих статей по дате создания"""
-    articles = Article.objects.all().order_by('-edited')[:5]
-    return articles
-
-
 def main(request):
     """Главная страница"""
     context = {
         'title': 'главная',
-        'links_section_menu': get_links_section_menu(),
-        'tags_menu': get_tags_menu(),
-        'articles': get_articles_five(),
+        'links_section_menu': Section.get_links_section_menu(),
+        'tags_menu': Tag.get_tags_menu(),
+        'articles': Article.get_articles_five(),
     }
     return render(request, 'mainapp/index.html', context)
 
@@ -77,8 +59,8 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['links_section_menu'] = get_links_section_menu()
-        context['tags_menu'] = get_tags_menu()
+        context['links_section_menu'] = Section.get_links_section_menu()
+        context['tags_menu'] = Tag.get_tags_menu()
         context['tags_for_article'] = Tag.objects.filter(article=self.object,
                                                          is_active=True)
         return context
@@ -94,8 +76,8 @@ class ArticlesForSectionList(DetailView):
         context['articles'] = Article.objects.filter(sections=self.object,
                                                      is_active=True).order_by(
             '-edited', 'title')
-        context['links_section_menu'] = get_links_section_menu()
-        context['tags_menu'] = get_tags_menu()
+        context['links_section_menu'] = Section.get_links_section_menu()
+        context['tags_menu'] = Tag.get_tags_menu()
         return context
 
 
@@ -109,6 +91,6 @@ class ArticlesForTagList(DetailView):
         context['articles'] = Article.objects.filter(tags=self.object,
                                                      is_active=True).order_by(
             '-edited', 'title')
-        context['links_section_menu'] = get_links_section_menu()
-        context['tags_menu'] = get_tags_menu()
+        context['links_section_menu'] = Section.get_links_section_menu()
+        context['tags_menu'] = Tag.get_tags_menu()
         return context
