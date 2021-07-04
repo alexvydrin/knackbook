@@ -1,0 +1,49 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-4">
+            <img src="/media/{{ avatar }}"
+                 class="img-fluid img-circle" alt=" "
+                 style="height: 150px; width: 150px">
+        </div>
+
+        <div class="col-6 g-bold ">
+            {% if user.first_name %}
+                {{ user.first_name }},
+            {% else %}
+                {{ user|title }},
+            {% endif %} здесь вы можете изменить аватарку
+            <br><br>
+            <form action="{% url 'auth:edit_avatar' %}" method="post"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ edit_form.avatar }}
+                <br><br>
+                <div class="row">
+                    <div class="col-8">
+                        <input class="btn btn-success" type="submit"
+                               value="Сохранить">
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-inverse">
+                            <a class="" href="{% url 'cabinet:cabinet' %}">
+                                Отмена
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}

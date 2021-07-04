@@ -22,7 +22,7 @@
 
 
                             <div class="input-group input-group-text ">
-                                {{ edit_form.avatar }}
+                                <a href="{% url 'auth:edit_avatar' %}">{{ edit_form.avatar }}</a>
                             </div>
 
                         </div>
@@ -92,7 +92,8 @@
 
             </div>
             <a class="float-right text-error" type="submit"
-               href="{% url 'auth:delete' pk=user.id %}">Удалить учетную запись?</a>
+               href="{% url 'auth:delete_user' pk=user.id %}">Удалить учетную
+                запись?</a>
         </section>
     </form>
 {% endblock %}

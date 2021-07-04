@@ -54,11 +54,13 @@ class UserEditForm(UserChangeForm):
         model = User
         fields = (
             'avatar', 'first_name', 'last_name',
-            'email', 'gender', 'birth_date', 'about_me',
+            'email', 'gender', 'birth_date', 'about_me', 'password'
         )
 
         widgets = {
             'birth_date': DateInput(attrs={'type': 'date'}),
+            'avatar': FileInput(
+                attrs={'type': 'button', 'value': 'Редактировать'})
         }
 
     def __init__(self, *args, **kwargs):
@@ -68,10 +70,8 @@ class UserEditForm(UserChangeForm):
             field.widget.attrs['class'] = 'form-group'
             self.fields['about_me'].widget.attrs['rows'] = 4
             field.help_text = ''
-            if field_name == 'password':
-                field.widget = HiddenInput()
-            if field_name == 'avatar':
-                field.widget = FileInput()
+            # if field_name == 'password':
+            #     field.widget = HiddenInput()
             if field_name == 'birth_date' and self.instance.birth_date:
                 field.widget = DateInput()
 
@@ -84,3 +84,23 @@ class UserEditForm(UserChangeForm):
             raise forms.ValidationError(
                 'Неверная дата'
             )
+
+
+class UserEditAvatarForm(UserChangeForm):
+    """Форма для редактирования аватарки"""
+
+    class Meta:
+        model = User
+        fields = ('avatar',)
+
+        widgets = {
+            'avatar': FileInput(
+                attrs={'type': 'file'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['class'] = 'form-group'
+            field.help_text = ''
