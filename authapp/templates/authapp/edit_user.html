@@ -81,7 +81,11 @@
                     <div class="small">Дата рождения: <span
                             class="g-bold">{{ edit_form.birth_date }}</span>
                         <br><br>
-                        <a href="{% url 'auth:edit_password' %}">Изменить
+                    <div class="">Пароль: <span
+                            class="g-bold"></span>
+                    </div>
+                        <a class="btn btn-success"
+                           href="{% url 'auth:edit_password' %}">Изменить
                             пароль</a>
                     </div>
                     <br>
