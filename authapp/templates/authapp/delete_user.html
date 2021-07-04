@@ -16,7 +16,7 @@
             {{ user|title }},
         {% endif %} вы уверены что хотите удалить учетную запись?
         <br><br>
-        <form action="{% url 'auth:delete' user.id %}" method="post">
+        <form action="{% url 'auth:delete_user' user.id %}" method="post">
             {% csrf_token %}
 
             <div class="row">
