@@ -1,13 +1,27 @@
 from django.contrib import auth
+from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, \
     UserEditAvatarForm
 from authapp.models import User
 from mainapp.models import Section, Article
 from tags.models import Tag
+
+
+class PasswordEditView(PasswordChangeView):
+    """Редактирование пароля"""
+    template_name = 'authapp/edit_password.html'
+    success_url = reverse_lazy('auth:login')
+
+    def get_context_data(self, **kwargs):
+        content = super().get_context_data(**kwargs)
+        content['links_section_menu'] = Section.get_links_section_menu()
+        content['tags_menu'] = Tag.get_tags_menu()
+        content['tags_for_article'] = Tag.get_tags_menu()
+        return content
 
 
 def login(request):
@@ -61,7 +75,7 @@ def register(request):
     return render(request, 'authapp/register.html', content)
 
 
-def edit(request):
+def edit_user(request):
     """Редактирование пользователя"""
     if request.user.is_authenticated:
         user = User.objects.filter(id=request.user.id).first()
@@ -84,7 +98,7 @@ def edit(request):
             'avatar': user.avatar
         }
 
-        return render(request, 'authapp/edit.html', content)
+        return render(request, 'authapp/edit_user.html', content)
 
     return HttpResponseRedirect(reverse('auth:login'))
 

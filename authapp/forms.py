@@ -1,10 +1,10 @@
 from datetime import datetime
 
 from captcha.fields import CaptchaField
-from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, \
     UserChangeForm
-from django.forms import HiddenInput, FileInput, DateInput
+from django.core.exceptions import ValidationError
+from django.forms import FileInput, DateInput
 
 from authapp.models import User
 
@@ -40,7 +40,7 @@ class UserRegisterForm(UserCreationForm):
         email_user = self.cleaned_data['email']
         email_data = User.objects.filter(email=email_user)
         if email_data:
-            raise forms.ValidationError(
+            raise ValidationError(
                 'Пользователь с таким email уже зарегистрирован'
             )
         return email_user
@@ -54,7 +54,7 @@ class UserEditForm(UserChangeForm):
         model = User
         fields = (
             'avatar', 'first_name', 'last_name',
-            'email', 'gender', 'birth_date', 'about_me', 'password'
+            'email', 'gender', 'birth_date', 'about_me',
         )
 
         widgets = {
@@ -70,8 +70,7 @@ class UserEditForm(UserChangeForm):
             field.widget.attrs['class'] = 'form-group'
             self.fields['about_me'].widget.attrs['rows'] = 4
             field.help_text = ''
-            # if field_name == 'password':
-            #     field.widget = HiddenInput()
+
             if field_name == 'birth_date' and self.instance.birth_date:
                 field.widget = DateInput()
 
@@ -81,7 +80,7 @@ class UserEditForm(UserChangeForm):
         if date_data:
             if 1920 < date_data.year < now:
                 return date_data
-            raise forms.ValidationError(
+            raise ValidationError(
                 'Неверная дата'
             )
 
