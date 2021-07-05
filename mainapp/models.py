@@ -42,6 +42,7 @@ class Section(models.Model):
 
 class Article(models.Model):
     """Статья"""
+
     class Meta:
         ordering = ['-edited']
 
@@ -126,5 +127,6 @@ class Article(models.Model):
     @staticmethod
     def get_articles_five():
         """Пять самых свежих статей по дате создания"""
-        articles = Article.objects.all()[:5]
+        articles = Article.objects.all().filter(is_active=True,
+                                                is_published=True)[:5]
         return articles

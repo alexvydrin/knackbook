@@ -1,0 +1,71 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h1 class="center">Создание новой статьи</h1>
+    <div class="row">
+
+        <div class="col-1"></div>
+
+        <div class="col-10 g-bold">
+
+            <form action="{% url 'cabinet:new_article' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
+
+                    <div class="col-12">
+                        <small>Название статьи</small>
+                        {{ form.title }}
+                    </div>
+
+                    <div class="col-12">
+                        <small>Статья</small>
+                        {{ form.content }}
+                    </div>
+
+                    <div class="col-6">
+                        <small>Раздел</small>
+                        {{ form.sections }}
+                    </div>
+
+                    <div class="col-6">
+                        <small>Тэги</small>
+                        {{ form.tags }}
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-4 center">
+                        <button class="btn btn-success" type="submit"
+                                value="save" name="save">Опубликовать</button>
+                    </div>
+
+                    <div class="col-4 center">
+                        <button class="btn btn-danger" type="submit"
+                                value="draft" name="draft">В черновик</button>
+                    </div>
+
+                    <div class="col-4 center">
+                        <button class="btn btn-inverse">
+                            <a class="" href="{% url 'cabinet:cabinet' %}">
+                                Отмена
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
