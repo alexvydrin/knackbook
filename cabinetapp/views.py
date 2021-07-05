@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from authapp.models import User
@@ -8,19 +8,45 @@ from mainapp.models import Section, Article
 from tags.models import Tag
 
 
-def add_user_article(request, id_last_article):
-    """Добавления автора статьи"""
-    Article.objects.filter(id=id_last_article).update(user=request.user.id)
+def add_user_article(request, id_article):
+    """Добавления автора статьи при создании"""
+    Article.objects.filter(id=id_article).update(user=request.user.id)
 
 
-def update_is_reviewing(request, id_last_article):
+def update_is_reviewing(id_article):
     """Отправление статьи на модерацию"""
-    Article.objects.filter(id=id_last_article).update(is_reviewing=True)
+    Article.objects.filter(id=id_article).update(is_reviewing=True,
+                                                 is_published=False,
+                                                 is_rejected=False)
 
 
-def update_is_published(request, id_last_article):
-    """Опубликовать статью. Удалить после создания модерации"""
-    Article.objects.filter(id=id_last_article).update(is_published=True)
+def update_is_published(id_article):
+    """Опубликовать статью"""
+    Article.objects.filter(id=id_article).update(is_reviewing=False,
+                                                 is_published=True,
+                                                 is_rejected=False)
+
+
+def save_draft(id_article):
+    """Сохранения черновика"""
+    Article.objects.filter(id=id_article).update(is_reviewing=False,
+                                                 is_published=False,
+                                                 is_rejected=False)
+
+
+def update_article_data(data, pk):
+    """Обновление статьи в базе"""
+    Article.objects.filter(id=pk).update(
+        title=data.get('title'),
+        content=data.get('content'),
+    )
+
+    Article.objects.filter(id=pk).first().sections.clear()
+    Article.objects.filter(id=pk).first().tags.clear()
+    for section in data.getlist('sections'):
+        Article.objects.filter(id=pk).first().sections.add(section)
+    for tag in data.getlist('tags'):
+        Article.objects.filter(id=pk).first().tags.add(tag)
 
 
 def main(request):
@@ -28,7 +54,7 @@ def main(request):
     if request.user.is_authenticated:
         user = User.objects.filter(id=request.user.id).first()
 
-        context = {
+        content = {
             'title': 'личный кабинет',
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
@@ -43,7 +69,7 @@ def main(request):
             'email': user.email
         }
 
-        return render(request, 'cabinetapp/cabinet.html', context)
+        return render(request, 'cabinetapp/cabinet.html', content)
     return HttpResponseRedirect(reverse('main:index'))
 
 
@@ -51,27 +77,136 @@ def new_article(request):
     """Создание новой статьи"""
     if request.user.is_authenticated:
         form = NewArticleForm(request.POST)
-        form.fields['tags'].required = False
+
         if request.method == 'POST':
             if form.is_valid():
                 form.save()
                 id_last_article = Article.objects.all().order_by('-id')[0].id
                 add_user_article(request, id_last_article)
                 if form.data.get('save'):
-                    update_is_reviewing(request, id_last_article)
-
-                """ !!! удалить после создания модерации !!! """
-                update_is_published(request, id_last_article)
-                """ !!! удалить после создания модерации !!! """
+                    update_is_reviewing(id_last_article)
 
                 return HttpResponseRedirect(reverse('cabinet:cabinet'))
 
-        context = {
+        content = {
             'title': 'личный кабинет',
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
-            'articles': Article.get_articles_five(),
             'form': form
         }
-        return render(request, 'cabinetapp/new_article.html', context)
+        return render(request, 'cabinetapp/new_article.html', content)
+    return HttpResponseRedirect(reverse('auth:login'))
+
+
+def my_articles(request):
+    """Просмотр моих опубликованных статей"""
+    if request.user.is_authenticated:
+        user = request.user.id
+        articles = Article.objects.filter(
+            is_active=True,
+            is_published=True,
+            user=user
+        )
+
+        content = {
+            'title': 'мои статьи',
+            'links_section_menu': Section.get_links_section_menu(),
+            'tags_menu': Tag.get_tags_menu(),
+            'articles': articles,
+        }
+
+        return render(request, 'cabinetapp/my_article.html', content)
+
+    return HttpResponseRedirect(reverse('auth:login'))
+
+
+def delete_article(request, pk):
+    """Удаление статьи"""
+    if request.user.is_authenticated:
+        article = get_object_or_404(Article, pk=pk)
+
+        if request.user.id == article.user_id:
+
+            if request.method == 'POST':
+                if article.is_active:
+                    article.is_active = False
+                    article.is_published = False
+                    article.save()
+                    return HttpResponseRedirect(reverse('cabinet:my_articles'))
+
+            content = {
+                'title': 'удаление статьи',
+                'links_section_menu': Section.get_links_section_menu(),
+                'tags_menu': Tag.get_tags_menu(),
+                'article': article
+            }
+            return render(request, 'cabinetapp/delete_article.html', content)
+
+        return HttpResponseRedirect(reverse('cabinet:my_articles'))
+
+    return HttpResponseRedirect(reverse('auth:login'))
+
+
+def my_drafts(request):
+    """Просмотр черновиков"""
+    if request.user.is_authenticated:
+        user = request.user.id
+        articles = Article.objects.filter(
+            is_active=True,
+            is_published=False,
+            is_rejected=False,
+            is_reviewing=False,
+            user=user
+        )
+
+        content = {
+            'title': 'черновики',
+            'links_section_menu': Section.get_links_section_menu(),
+            'tags_menu': Tag.get_tags_menu(),
+            'articles': articles,
+        }
+
+        return render(request, 'cabinetapp/my_article.html', content)
+
+    return HttpResponseRedirect(reverse('auth:login'))
+
+
+def edit_draft(request, pk):
+    """Редактирование черновика"""
+    if request.user.is_authenticated:
+        article = Article.objects.filter(id=pk).first()
+        article_published = Article.objects.filter(id=pk,
+                                                   is_published=True).first()
+
+        if request.user.id == article.user_id:
+
+            if request.method == 'POST':
+                form = NewArticleForm(request.POST)
+
+                if form.is_valid():
+                    form.save(commit=False)
+                    data = form.data
+                    if form.data.get('draft'):
+                        save_draft(pk)
+                    elif form.data.get('save'):
+                        update_is_reviewing(pk)
+                    update_article_data(data, pk)
+
+                    return HttpResponseRedirect(reverse('cabinet:my_drafts'))
+
+            form = NewArticleForm(instance=article)
+
+            content = {
+                'title': 'редактирование',
+                'links_section_menu': Section.get_links_section_menu(),
+                'tags_menu': Tag.get_tags_menu(),
+                'form': form,
+                'article': article,
+                'article_published': article_published
+            }
+
+            return render(request, 'cabinetapp/new_article.html', content)
+
+        return HttpResponseRedirect(reverse('cabinet:my_drafts'))
+
     return HttpResponseRedirect(reverse('auth:login'))

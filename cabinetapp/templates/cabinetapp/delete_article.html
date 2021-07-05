@@ -14,19 +14,19 @@
                 {{ user.first_name }},
             {% else %}
                 {{ user|title }},
-            {% endif %} вы уверены что хотите удалить учетную запись?
+            {% endif %} вы уверены что хотите удалить статью?
             <br><br>
-            <form action="{% url 'auth:delete_user' user.id %}" method="post">
+            <form action="{% url 'cabinet:delete_article' article.id %}" method="post">
                 {% csrf_token %}
 
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-6">
                         <input class="btn btn-danger" type="submit"
                                value="Удалить">
                     </div>
                     <div class="col-4">
                         <button class="btn btn-inverse">
-                            <a class="" href="{% url 'cabinet:cabinet' %}">
+                            <a class="" href="{% url 'cabinet:my_articles' %}">
                                 Отмена
                             </a>
                         </button>

@@ -117,8 +117,6 @@ def delete_user(request, pk):
             'title': 'удаление профиля',
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
-            'articles': Article.get_articles_five(),
-            'avatar': user.avatar
         }
         return render(request, 'authapp/delete_user.html', content)
     return HttpResponseRedirect(reverse('auth:login'))
