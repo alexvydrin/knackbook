@@ -8,6 +8,9 @@ from mainapp.models import Article
 class Comment(models.Model):
     """Комментарий"""
 
+    class Meta:
+        ordering = ('created',)
+
     content = models.TextField(verbose_name='содержимое комментария')
     """содержимое комментария"""
 
@@ -30,8 +33,7 @@ class Comment(models.Model):
         Article,
         on_delete=models.CASCADE,
         verbose_name='статья',
-        null=True,
-        blank=True)
+        null=False)
     """статья"""
 
     rating = models.IntegerField(
@@ -55,3 +57,15 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.content)
+
+    @staticmethod
+    def get_for_article(article):
+        """Получить комментарии для статьи"""
+        comments = Comment.objects.filter(article=article, is_active=True)
+        return comments
+
+    @staticmethod
+    def get_for_comment(comment):
+        """Получить комментарии для комментария"""
+        comments = Comment.objects.filter(comment=comment, is_active=True)
+        return comments

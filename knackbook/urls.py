@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('mainapp.urls', namespace='main')),
     path('auth/', include('authapp.urls', namespace='auth')),
+    path('comments/', include('commentapp.urls', namespace='comments')),
     path('cabinet/', include('cabinetapp.urls', namespace='cabinet')),
 
     path('captcha/', include('captcha.urls')),

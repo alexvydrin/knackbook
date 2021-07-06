@@ -46,6 +46,7 @@
         "title": "О кошках",
         "content": "У кошки 4 ноги",
         "user": 1,
+        "is_published": true,
         "is_active": true,
         "created": "2021-06-17T17:33:00.313Z",
         "edited": "2021-06-25T21:03:14.150Z",
@@ -66,6 +67,7 @@
         "content": "У собаки есть хвост",
         "user": 1,
         "is_active": true,
+        "is_published": true,
         "created": "2021-06-17T17:33:27.057Z",
         "edited": "2021-06-25T21:03:09.725Z",
         "sections": [
