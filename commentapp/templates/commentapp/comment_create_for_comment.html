@@ -1,0 +1,25 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    Ответ на комментарий
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <hr>
+    <h1>{{ title }}</h1>
+    <hr>
+
+    <form action="." method="post">
+        {{ comment_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Сохранить"></p>
+    </form>
+
+
+{% endblock %}

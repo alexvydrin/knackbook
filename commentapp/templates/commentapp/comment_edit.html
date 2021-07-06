@@ -1,0 +1,29 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    Изменение комментария
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <hr>
+    <h1>{{ title }}</h1>
+    <hr>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if user == object.user %}
+            <button type="submit">Сохранить</button>
+        {% endif %}
+
+    </form>
+
+
+{% endblock %}

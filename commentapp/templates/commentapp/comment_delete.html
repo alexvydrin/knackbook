@@ -1,0 +1,28 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    Удаление комментария
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
+
+{% block content %}
+
+    Уверены, что хотите удалить этот комментарий ?
+    <hr>
+    {{ object.content }}
+    <hr>
+    <form action="{% url 'commentapp:comment_delete' object.pk %}" method="post">
+        {% csrf_token %}
+        {% if user == object.user %}
+            <input class="btn btn-danger" type="submit" value="удалить">
+        {% endif %}
+    </form>
+    <button class="btn btn-success">
+        <a href="{% url 'mainapp:article_detail' object.article.pk %}">отмена</a>
+    </button>
+
+{% endblock %}
