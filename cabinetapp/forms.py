@@ -14,3 +14,7 @@ class NewArticleForm(ModelForm):
         super().__init__(data=data, *args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+
+        self.fields['tags'].required = False
+        self.fields['content'].required = False
+        self.fields['sections'].required = False

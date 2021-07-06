@@ -1,0 +1,129 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="g-block size-90">
+        <section id="g-mainbody">
+            <div class="g-grid">
+                <div class="g-block size-100">
+                    <div class="g-content">
+                        <div class="platform-content row-fluid">
+                            <div class="span12">
+
+                                <div id="k2Container" class="itemListView">
+
+                                    <div class="itemListCategoriesBlock">
+
+                                        <div class="itemListCategory">
+                                            <hr>
+                                            {% if request.resolver_match.url_name == 'my_articles' %}
+                                                <h1>мои статьи</h1>
+                                            {% elif request.resolver_match.url_name == 'my_drafts' %}
+                                                <h1>черновики</h1>
+                                            {% endif %}
+                                            <hr>
+                                            <div class="clr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemList ">
+                                        <div class="advertur-rek google-rek-item">
+                                        </div>
+
+                                        <div id="itemListLeading" class="row">
+                                            {% for article in articles %}
+                                                <div class="col-12 well-small">
+
+                                                    <div class="catItemView groupLeading">
+                                                        {% if request.resolver_match.url_name == 'my_articles' %}
+                                                            <div class="catItemHeader">
+
+                                                                <h3 class="catItemTitle">
+                                                                    <a href="{% url 'mainapp:article_detail' pk=article.pk %}">
+                                                                        {{ article.title }}
+                                                                    </a>
+                                                                </h3>
+                                                            </div>
+                                                            <div class="small align-right">
+                                                                {{ article.edited|date:"d-E-Y" }}
+                                                            </div>
+                                                        {% elif request.resolver_match.url_name == 'my_drafts' %}
+                                                            <div class="catItemHeader">
+
+                                                                <h3 class="catItemTitle">
+                                                                    <a href="{% url 'cabinet:edit_draft' pk=article.pk %}">
+                                                                        {{ article.title }}
+                                                                    </a>
+                                                                </h3>
+                                                            </div>
+                                                            <div class="small align-right">
+                                                                {{ article.edited|date:"d-E-Y" }}
+                                                            </div>
+
+                                                        {% endif %}
+
+                                                        <div class="row catItemView groupLeading">
+
+                                                            {% if request.resolver_match.url_name == 'my_articles' %}
+                                                                <a class="float-left col-4 btn btn-success"
+                                                                   href="{% url 'mainapp:article_detail' pk=article.pk %}">
+                                                                    Читать </a>
+
+                                                                <a class="col-4 btn btn-info"
+                                                                   style="text-align: center"
+                                                                   href="{% url 'cabinet:edit_draft' pk=article.id %}">
+                                                                    Редактировать</a>
+
+                                                                <a class="float-right col-4 btn btn-danger"
+                                                                   href="{% url 'cabinet:delete_article' pk=article.id %}">
+                                                                    Удалить</a>
+
+                                                            {% elif request.resolver_match.url_name == 'my_drafts' %}
+
+                                                                <a class="float-left col-4 btn btn-success"
+                                                                   href="{% url 'cabinet:edit_draft' pk=article.id %}">
+                                                                    Опубликовать
+                                                                </a>
+
+                                                                <a class="col-4 btn btn-info"
+                                                                   style="text-align: center"
+                                                                   href="{% url 'cabinet:edit_draft' pk=article.id %}">
+                                                                    Редактировать</a>
+
+                                                                <a class="float-right col-4 btn btn-danger"
+                                                                   href="{% url 'cabinet:delete_article' pk=article.id %}">
+                                                                    Удалить</a>
+
+                                                            {% endif %}
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <a class="btn float-right btn-inverse"
+                               href="{% url 'cabinet:cabinet' %}">
+                                Назад
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}

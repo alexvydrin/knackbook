@@ -49,7 +49,7 @@ class Article(models.Model):
     title = models.CharField(
         max_length=200,
         verbose_name='название',
-        unique=True)
+        unique=False)
     """наименование статьи"""
 
     content = models.TextField(verbose_name='контент')
@@ -127,6 +127,6 @@ class Article(models.Model):
     @staticmethod
     def get_articles_five():
         """Пять самых свежих статей по дате создания"""
-        articles = Article.objects.all().filter(is_active=True,
-                                                is_published=True)[:5]
+        articles = Article.objects.filter(is_active=True,
+                                          is_published=True)[:5]
         return articles
