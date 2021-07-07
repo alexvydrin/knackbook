@@ -80,6 +80,20 @@ def edit_user(request):
     if request.user.is_authenticated:
         user = User.objects.filter(id=request.user.id).first()
 
+        score_article = Article.objects
+        score_article_draft = Article.objects.filter(is_active=True,
+                                                     is_published=False,
+                                                     is_rejected=False,
+                                                     is_reviewing=False,
+                                                     user=request.user.id)
+        if request.user.is_staff:
+            score_article = score_article.filter(is_reviewing=True,
+                                                 is_active=True)
+        elif not request.user.is_staff and not request.user.is_superuser:
+            score_article = score_article.filter(is_reviewing=True,
+                                                 is_active=True,
+                                                 user=request.user.id)
+
         if request.method == 'POST':
             edit_form = UserEditForm(request.POST, request.FILES,
                                      instance=request.user)
@@ -95,7 +109,9 @@ def edit_user(request):
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
             'articles': Article.get_articles_five(),
-            'avatar': user.avatar
+            'avatar': user.avatar,
+            'score_article': len(score_article),
+            'score_article_draft': len(score_article_draft)
         }
 
         return render(request, 'authapp/edit_user.html', content)
