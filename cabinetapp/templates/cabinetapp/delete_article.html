@@ -16,7 +16,8 @@
                 {{ user|title }},
             {% endif %} вы уверены что хотите удалить статью?
             <br><br>
-            <form action="{% url 'cabinet:delete_article' article.id %}" method="post">
+            <form action="{% url 'cabinet:delete_article' article.id %}"
+                  method="post">
                 {% csrf_token %}
 
                 <div class="row">
@@ -24,13 +25,29 @@
                         <input class="btn btn-danger" type="submit"
                                value="Удалить">
                     </div>
-                    <div class="col-4">
-                        <button class="btn btn-inverse">
-                            <a class="" href="{% url 'cabinet:my_articles' %}">
-                                Отмена
-                            </a>
-                        </button>
-                    </div>
+                    {% if user.is_staff %}
+
+                        <div class="col-4">
+                            <button class="btn btn-inverse">
+                                <a class=""
+                                   href="{% url 'cabinet:moderation' %}">
+                                    Отмена
+                                </a>
+                            </button>
+                        </div>
+
+                    {% elif user.is_authenticated %}
+
+                        <div class="col-4">
+                            <button class="btn btn-inverse">
+                                <a class=""
+                                   href="{% url 'cabinet:my_articles' %}">
+                                    Отмена
+                                </a>
+                            </button>
+                        </div>
+
+                    {% endif %}
                 </div>
 
             </form>

@@ -1,0 +1,54 @@
+<div class="row">
+    <div>
+        <div class="row">
+
+            {% if object.is_reviewing %}
+
+                <div class="col-4 align-left">
+                    <a href="{% url 'cabinet:moderation_check' pk=object.id result=1 %}">
+                        <button class="btn btn-success" type="button">
+                            Опубликовать
+                        </button>
+                    </a>
+                </div>
+
+                <div class="col-4 center">
+                    <a href="{% url 'cabinet:moderation_check' pk=object.id result=2 %}">
+                        <button class="btn btn-warning" type="button">
+                            Отклонить
+                        </button>
+                    </a>
+                </div>
+
+                <div class="col-4 align-right">
+                    <a href="{% url 'cabinet:delete_article' pk=object.id %}">
+                        <button class="btn btn-danger" type="button">
+                            Удалить
+                        </button>
+                    </a>
+                </div>
+
+            {% elif object.is_published %}
+
+                <div class="col-6 align-left">
+                    <a href="{% url 'cabinet:moderation_check' pk=object.id result=2 %}">
+                        <button class="btn btn-warning" type="button">
+                            Снять с публикации
+                        </button>
+                    </a>
+                </div>
+
+                <div class="col-6 align-right">
+                    <a href="{% url 'cabinet:delete_article' pk=object.id %}">
+                        <button class="btn btn-danger" type="button">
+                            Удалить
+                        </button>
+                    </a>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>

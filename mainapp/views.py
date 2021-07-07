@@ -52,7 +52,10 @@ def article_detail_view(request, pk):
     # Получаем статью и одновременно проверяем на пометку удаления и на признак публикации.
     # Такая дополнительная проверка нужна чтобы нельзя было просмотреть удаленную или неопубликованную статью,
     # вручную указав в адресной строке её url
-    article = get_object_or_404(Article, pk=pk, is_active=True, is_published=True)
+    if request.user.is_staff or request.user == Article.objects.filter(id=pk).first().user:
+        article = get_object_or_404(Article, pk=pk, is_active=True)
+    else:
+        article = get_object_or_404(Article, pk=pk, is_active=True, is_published=True)
 
     context = {
         'object': article,  # сама статья
