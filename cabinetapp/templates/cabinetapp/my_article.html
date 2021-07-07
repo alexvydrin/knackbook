@@ -20,6 +20,8 @@
                                                 <h1>мои статьи</h1>
                                             {% elif request.resolver_match.url_name == 'my_drafts' %}
                                                 <h1>черновики</h1>
+                                            {% elif request.resolver_match.url_name == 'moderation' %}
+                                                <h1>На модерации</h1>
                                             {% endif %}
                                             <hr>
                                             <div class="clr"></div>
@@ -35,7 +37,7 @@
                                                 <div class="col-12 well-small">
 
                                                     <div class="catItemView groupLeading">
-                                                        {% if request.resolver_match.url_name == 'my_articles' %}
+                                                        {% if request.resolver_match.url_name == 'my_articles' or 'moderation' %}
                                                             <div class="catItemHeader">
 
                                                                 <h3 class="catItemTitle">
@@ -89,6 +91,27 @@
                                                                    style="text-align: center"
                                                                    href="{% url 'cabinet:edit_draft' pk=article.id %}">
                                                                     Редактировать</a>
+
+                                                                <a class="float-right col-4 btn btn-danger"
+                                                                   href="{% url 'cabinet:delete_article' pk=article.id %}">
+                                                                    Удалить</a>
+
+                                                            {% elif request.resolver_match.url_name == 'moderation' and user.is_staff %}
+
+                                                                <a class="float-left col-12 btn btn-success"
+                                                                   href="{% url 'mainapp:article_detail' pk=article.id %}">
+                                                                    Проверить статью
+                                                                </a>
+
+                                                            {% elif request.resolver_match.url_name == 'moderation' and not user.is_staff %}
+
+                                                                <a class="float-left col-4 btn btn-success"
+                                                                   href="{% url 'mainapp:article_detail' pk=article.pk %}">
+                                                                    Читать </a>
+
+                                                                <a class="float-left col-4 btn btn-info"
+                                                                   href="{% url 'mainapp:article_detail' pk=article.pk %}">
+                                                                    На модерации</a>
 
                                                                 <a class="float-right col-4 btn btn-danger"
                                                                    href="{% url 'cabinet:delete_article' pk=article.id %}">

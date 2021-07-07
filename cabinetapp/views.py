@@ -8,22 +8,10 @@ from mainapp.models import Section, Article
 from tags.models import Tag
 
 
-def add_user_article(request, id_article):
-    """Добавления автора статьи при создании"""
-    Article.objects.filter(id=id_article).update(user=request.user.id)
-
-
 def update_is_reviewing(id_article):
     """Отправление статьи на модерацию"""
     Article.objects.filter(id=id_article).update(is_reviewing=True,
                                                  is_published=False,
-                                                 is_rejected=False)
-
-
-def update_is_published(id_article):
-    """Опубликовать статью"""
-    Article.objects.filter(id=id_article).update(is_reviewing=False,
-                                                 is_published=True,
                                                  is_rejected=False)
 
 
@@ -53,6 +41,19 @@ def main(request):
     """Главная страница личного кабинета"""
     if request.user.is_authenticated:
         user = User.objects.filter(id=request.user.id).first()
+        score_article = Article.objects
+        score_article_draft = Article.objects.filter(is_active=True,
+                                                     is_published=False,
+                                                     is_rejected=False,
+                                                     is_reviewing=False,
+                                                     user=request.user.id)
+        if request.user.is_staff:
+            score_article = score_article.filter(is_reviewing=True,
+                                                 is_active=True)
+        elif not request.user.is_staff and not request.user.is_superuser:
+            score_article = score_article.filter(is_reviewing=True,
+                                                 is_active=True,
+                                                 user=request.user.id)
 
         content = {
             'title': 'личный кабинет',
@@ -66,7 +67,9 @@ def main(request):
             'birth_date': user.birth_date,
             'last_name': user.last_name,
             'first_name': user.first_name,
-            'email': user.email
+            'email': user.email,
+            'score_article': len(score_article),
+            'score_article_draft': len(score_article_draft)
         }
 
         return render(request, 'cabinetapp/cabinet.html', content)
@@ -80,11 +83,11 @@ def new_article(request):
 
         if request.method == 'POST':
             if form.is_valid():
-                form.save()
-                id_last_article = Article.objects.all().order_by('-id')[0].id
-                add_user_article(request, id_last_article)
+                create_article = form.save(commit=False)
+                create_article.user_id = request.user.id
                 if form.data.get('save'):
-                    update_is_reviewing(id_last_article)
+                    create_article.is_reviewing = True
+                form.save()
 
                 return HttpResponseRedirect(reverse('cabinet:cabinet'))
 
@@ -125,7 +128,7 @@ def delete_article(request, pk):
     if request.user.is_authenticated:
         article = get_object_or_404(Article, pk=pk)
 
-        if request.user.id == article.user_id:
+        if request.user.id == article.user_id or request.user.is_staff:
 
             if request.method == 'POST':
                 if article.is_active:
@@ -209,4 +212,60 @@ def edit_draft(request, pk):
 
         return HttpResponseRedirect(reverse('cabinet:my_drafts'))
 
+    return HttpResponseRedirect(reverse('auth:login'))
+
+
+def moderation(request):
+    """Список статей на модерации"""
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            articles = Article.objects.filter(is_reviewing=True,
+                                              is_active=True)
+        else:
+            articles = Article.objects.filter(user=request.user.id,
+                                              is_reviewing=True,
+                                              is_active=True)
+
+        content = {
+            'title': 'модерация',
+            'links_section_menu': Section.get_links_section_menu(),
+            'tags_menu': Tag.get_tags_menu(),
+            'articles': articles,
+        }
+
+        return render(request, 'cabinetapp/my_article.html', content)
+    return HttpResponseRedirect(reverse('auth:login'))
+
+
+def moderation_check(request, pk, result):
+    """Результат модерации"""
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            article = Article.objects.filter(id=pk).first()
+            if request.method == 'POST':
+                if result == 1:
+                    article.is_reviewing = 0
+                    article.is_rejected = 0
+                    article.is_published = 1
+                    article.reject_comment = None
+                elif result == 2:
+                    article.is_reviewing = 0
+                    article.is_rejected = 0
+                    article.is_published = 0
+                    article.reject_comment = request.POST.get('comment')
+                article.review_user_id = request.user.id
+                article.save()
+                return HttpResponseRedirect(reverse('cabinet:moderation'))
+
+            content = {
+                'title': 'модерация статьи',
+                'links_section_menu': Section.get_links_section_menu(),
+                'tags_menu': Tag.get_tags_menu(),
+                'article': article,
+                'result': result,
+            }
+
+            return render(request, 'cabinetapp/moderation_check.html', content)
+
+        return HttpResponseRedirect(reverse('cabinet:moderation'))
     return HttpResponseRedirect(reverse('auth:login'))
