@@ -18,8 +18,7 @@ def update_is_reviewing(id_article):
 def save_draft(id_article):
     """Сохранения черновика"""
     Article.objects.filter(id=id_article).update(is_reviewing=False,
-                                                 is_published=False,
-                                                 is_rejected=False)
+                                                 is_published=False)
 
 
 def update_article_data(data, pk):
@@ -44,7 +43,6 @@ def main(request):
         score_article = Article.objects
         score_article_draft = Article.objects.filter(is_active=True,
                                                      is_published=False,
-                                                     is_rejected=False,
                                                      is_reviewing=False,
                                                      user=request.user.id)
         if request.user.is_staff:
@@ -157,7 +155,6 @@ def my_drafts(request):
         articles = Article.objects.filter(
             is_active=True,
             is_published=False,
-            is_rejected=False,
             is_reviewing=False,
             user=user
         )
@@ -250,7 +247,7 @@ def moderation_check(request, pk, result):
                     article.reject_comment = None
                 elif result == 2:
                     article.is_reviewing = 0
-                    article.is_rejected = 0
+                    article.is_rejected = 1
                     article.is_published = 0
                     article.reject_comment = request.POST.get('comment')
                 article.review_user_id = request.user.id

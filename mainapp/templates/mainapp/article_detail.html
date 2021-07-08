@@ -40,6 +40,10 @@
         <p>Статус: На модерации</p>
     {% endif %}
 
+    {% if object.reject_comment %}
+        <p>Причина отклонения: {{ object.reject_comment }}</p>
+    {% endif %}
+
     <hr>
     {% if object.is_published %}
         {% with comments.count as total_comments %}
