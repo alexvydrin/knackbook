@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import main, SectionListView, article_detail_view, ArticleListView, \
-    ArticlesForTagList, ArticlesForSectionList
+    ArticlesForTagList, ArticlesForSectionList, ArticlesForSearch
 
 app_name = "mainapp"
 
@@ -18,4 +18,6 @@ urlpatterns = [
     path('articles/', ArticleListView.as_view(), name='articles'),
 
     path('articles/<int:pk>/', article_detail_view, name='article_detail'),
+
+    path('articles/search', ArticlesForSearch.as_view(), name='articles_search'),
 ]

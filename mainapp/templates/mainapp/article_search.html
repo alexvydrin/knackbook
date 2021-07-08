@@ -1,0 +1,44 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    Статьи
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <hr>
+    {% if text_search == "" %}
+        <h1>Задан пустой поиск, введите текст для поиска...</h1>
+        <hr>
+    {% else %}
+        <h1>Статьи по запросу: {{ text_search }}</h1>
+        <hr>
+        {% if object_list %}
+            {% for object in object_list %}
+                <a href="{% url 'mainapp:article_detail' pk=object.pk %}">{{ object.title }} ({{ object.edited|date:"d-E-Y P" }}) </a>
+                <br>
+            {% endfor %}
+            <div class="pagination-right">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?q={{ request.GET.q }}&page=1">&laquo; В начало</a>
+                    <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                {% endif %}
+                <span class="current">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Следующая</a>
+                    <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+                {% endif %}
+            </span>
+            </div>
+        {% else %}
+            <h4>Ничего не найдено</h4>
+        {% endif %}
+    {% endif %}
+{% endblock %}

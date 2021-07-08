@@ -130,3 +130,13 @@ class Article(models.Model):
         articles = Article.objects.filter(is_active=True,
                                           is_published=True)[:5]
         return articles
+
+    @staticmethod
+    def get_articles_for_search(request):
+        """Получение списка статей для введенного текста поиска (поиск по тексту статьи)"""
+        text_search = request.GET.get('q')
+        articles = Article.objects.filter(content__contains=text_search,
+                                          is_active=True,
+                                          is_published=True).order_by(
+            '-edited', 'title')
+        return articles

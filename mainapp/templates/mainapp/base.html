@@ -79,7 +79,7 @@ g-2column-left g-style-preset5">
 
                                 <div class="g-block size-100 moiVK otstup3">
                                     <div id="custom-6747-particle" class="g-content g-particle">
-                                        <h2>Поиск по тегам </h2>
+                                        <h2>Поиск по тексту статьи</h2>
                                     </div>
                                 </div>
                             </div>
@@ -90,14 +90,25 @@ g-2column-left g-style-preset5">
                                         <div class="platform-content">
                                             <div class="moduletable ">
 
-                                                <form id="mod-finder-searchform305" action="/component/finder/search" method="get" class="form-search">
+                                                <form id="mod-finder-searchform305" action="{% url 'mainapp:articles_search' %}" method="get" class="form-search">
                                                     <div class="finder">
-                                                        <label for="mod-finder-searchword305" class="element-invisible finder">Искать</label><input type="text" name="q" id="mod-finder-searchword305" class="search-query input-medium" size="25" value="" placeholder="Текст для поиска..." />
-                                                        <input type="hidden" name="Itemid" value="195" /> </div>
+<!--                                                        <label for="mod-finder-searchword305" class="element-invisible finder">Искать</label>-->
+                                                        <input type="text" name="q" id="mod-finder-searchword305" class="search-query input-medium"
+                                                               size="25" value="" placeholder="Введите текст..." style="width: 62%;"/>
+                                                        <input class="btn-inverse form-control" type="submit" value="Искать">
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="g-grid">
+
+                                <div class="g-block size-100 moiVK otstup3">
+                                    <div id="custom-67471-particle" class="g-content g-particle">
+                                        <h2>Поиск по тегам </h2>
                                     </div>
                                 </div>
                             </div>
