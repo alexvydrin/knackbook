@@ -3,6 +3,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.db.models import Q
+
 from tags.models import Tag
 
 
@@ -133,10 +135,16 @@ class Article(models.Model):
 
     @staticmethod
     def get_articles_for_search(request):
-        """Получение списка статей для введенного текста поиска (поиск по тексту статьи)"""
+        """
+        Получение списка статей для введенного текста
+        поиска (поиск по тексту и названию статьи)
+        """
         text_search = request.GET.get('q')
-        articles = Article.objects.filter(content__contains=text_search,
-                                          is_active=True,
-                                          is_published=True).order_by(
+        articles = Article.objects.filter(Q(content__icontains=text_search,
+                                            is_active=True,
+                                            is_published=True) | Q(
+            title__icontains=text_search,
+            is_active=True,
+            is_published=True)).order_by(
             '-edited', 'title')
         return articles
