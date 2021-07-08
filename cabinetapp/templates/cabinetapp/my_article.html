@@ -82,25 +82,56 @@
 
                                                             {% elif request.resolver_match.url_name == 'my_drafts' %}
 
-                                                                <a class="float-left col-4 btn btn-success"
-                                                                   href="{% url 'cabinet:edit_draft' pk=article.id %}">
-                                                                    Опубликовать
-                                                                </a>
+                                                                <div class="btn-group-vertical">{% if article.is_rejected %}<small class="text-error">Отклонена</small>{% else %}<small class="text-info">Черновик</small>{% endif %}</div>
+                                                                <br>
 
-                                                                <a class="col-4 btn btn-info"
-                                                                   style="text-align: center"
-                                                                   href="{% url 'cabinet:edit_draft' pk=article.id %}">
-                                                                    Редактировать</a>
+                                                                {% if article.is_rejected %}
 
-                                                                <a class="float-right col-4 btn btn-danger"
-                                                                   href="{% url 'cabinet:delete_article' pk=article.id %}">
-                                                                    Удалить</a>
+                                                                    <div class="float-left col-4 btn btn-secondary ">
+                                                                        Опубликовать*
+                                                                    </div>
+
+                                                                    <a class="col-4 btn btn-info"
+                                                                       style="text-align: center"
+                                                                       href="{% url 'cabinet:edit_draft' pk=article.id %}">
+                                                                        Редактировать</a>
+
+                                                                    <a class="float-right col-4 btn btn-danger"
+                                                                       href="{% url 'cabinet:delete_article' pk=article.id %}">
+                                                                        Удалить</a>
+                                                                    <div class="alert-info">
+                                                                        Причина
+                                                                        отклонения:
+                                                                        <div class="text-danger g-bold">{{ article.reject_comment }}</div>
+                                                                        <hr>
+                                                                        <div class="alert-info">* Вы можете отредактировать статью и отправить на повторное согласование</div>
+                                                                    </div>
+
+                                                                {% else %}
+
+                                                                    <a class="float-left col-4 btn btn-success"
+                                                                       href="{% url 'cabinet:edit_draft' pk=article.id %}">
+                                                                        Опубликовать
+                                                                    </a>
+
+                                                                    <a class="col-4 btn btn-info"
+                                                                       style="text-align: center"
+                                                                       href="{% url 'cabinet:edit_draft' pk=article.id %}">
+                                                                        Редактировать</a>
+
+                                                                    <a class="float-right col-4 btn btn-danger"
+                                                                       href="{% url 'cabinet:delete_article' pk=article.id %}">
+                                                                        Удалить</a>
+
+                                                                {% endif %}
+
 
                                                             {% elif request.resolver_match.url_name == 'moderation' and user.is_staff %}
 
                                                                 <a class="float-left col-12 btn btn-success"
                                                                    href="{% url 'mainapp:article_detail' pk=article.id %}">
-                                                                    Проверить статью
+                                                                    Проверить
+                                                                    статью
                                                                 </a>
 
                                                             {% elif request.resolver_match.url_name == 'moderation' and not user.is_staff %}
@@ -111,7 +142,8 @@
 
                                                                 <a class="float-left col-4 btn btn-info"
                                                                    href="{% url 'mainapp:article_detail' pk=article.pk %}">
-                                                                    На модерации</a>
+                                                                    На
+                                                                    модерации</a>
 
                                                                 <a class="float-right col-4 btn btn-danger"
                                                                    href="{% url 'cabinet:delete_article' pk=article.id %}">
