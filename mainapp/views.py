@@ -112,3 +112,25 @@ class ArticlesForTagList(DetailView):
         context['links_section_menu'] = Section.get_links_section_menu()
         context['tags_menu'] = Tag.get_tags_menu()
         return context
+
+
+class ArticlesForSearch(ListView):
+    """Просмотр списка статей для введенного в строку поиска текста"""
+    model = Article
+    template_name = 'mainapp/article_search.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        if self.request.GET.get('q') == '':
+            queryset = []
+        else:
+            queryset = Article.get_articles_for_search(self.request)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['queryset'] = self.get_queryset()
+        context['links_section_menu'] = Section.get_links_section_menu()
+        context['tags_menu'] = Tag.get_tags_menu()
+        context['text_search'] = self.request.GET.get('q')
+        return context
