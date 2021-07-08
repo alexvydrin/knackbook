@@ -38,6 +38,8 @@
 
     {% if object.is_reviewing %}
         <p>Статус: На модерации</p>
+    {% elif not object.is_rejected and not object.is_reviewing and not object.is_published%}
+        <p>Статус: Черновик</p>
     {% endif %}
 
     {% if object.reject_comment %}
