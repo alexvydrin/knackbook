@@ -44,6 +44,7 @@
 
     {% if object.reject_comment %}
         <p>Причина отклонения: {{ object.reject_comment }}</p>
+        <a class="btn btn-link" href="{% url 'cabinet:my_drafts' %}">В черновики</a>
     {% endif %}
 
     <hr>

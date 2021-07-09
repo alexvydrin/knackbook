@@ -39,9 +39,10 @@
                 </li>
 
                 <li>
-                    <a href="{% url 'cabinet:cabinet' %}">
+                    <a href="{% url 'notification:notification' %}">
                         <span class="g-menu-item-content">
-                            <span class="g-menu-item-title g-bold">Уведомления</span>
+                            <span class="g-menu-item-title g-bold {% if request.resolver_match.url_name == 'notification' %}text-dark{% endif %}">Уведомления
+                                {% if notification != 0 %}({{ notification }}){% endif %}</span>
                         </span>
                     </a>
                 </li>
