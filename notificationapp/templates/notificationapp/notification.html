@@ -1,0 +1,112 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <section>
+
+        <div class="itemListCategory">
+
+            <div>
+                <h1>уведомления</h1>
+            </div>
+
+            <div class="container">
+                <div class="row size-100">
+
+                    <div class="col-9">
+
+                        <div>
+                            <h5 class="align-right">
+                                {% if user.is_superuser %}
+                                    <p>{{ user }} (администратор)</p>
+                                {% elif user.is_staff %}
+                                    <p>{{ user }} (модератор)</p>
+                                {% else %}
+                                    <p>{{ user }}</p>
+                                {% endif %}
+                            </h5>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            {% include 'cabinetapp/inc_menu.html' %}
+            <div class="col-8">
+                {% for notification in notifications %}
+                    <form action="."
+                          method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12 table-bordered">
+                                <p class="">
+                                    <span class="g-bold">Ваша статья:</span>
+
+                                    {% if notification.content != 'статья удалена' %}
+                                        <span>
+                                    <a class="text-success cancel-link"
+                                              href="{% url 'mainapp:article_detail' pk=notification.article.id %}">
+                                    "{{ notification.article.title }}"</a>
+                                    {% else %}
+                                        "<span>{{ notification.article.title }}"</span>
+                                    {% endif %}
+
+                                    - </span>
+                                    {% if notification.content == 'одобрено' %}
+                                        <span class="text-success">опубликована на сайт</span>
+                                    {% elif notification.content == 'статья удалена' %}
+                                        <span class="text-danger">была
+                                    удалена с сайта</span>
+                                    {% else %}
+                                        <span class="text-danger">была
+                                    отклонена в публикации</span>{% endif %}
+
+                                </p>
+                                <div>
+                                    {% if notification.closed %}
+                                        <button class="float-left btn-mini btn-success"
+                                                type="button" name="button"
+                                                value="{{ notification.id }}">
+                                            Прочитано
+                                        </button>
+                                    {% else %}
+                                        <button class="float-left btn-mini btn-info"
+                                                type="submit" name="view"
+                                                value="{{ notification.id }}">
+                                            Пометить как прочитано
+                                        </button>
+                                    {% endif %}
+                                    <button class="float-right btn-mini btn-danger"
+                                            type="submit" name="delete"
+                                            value={{ notification.id }}>
+                                        Удалить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-12">
+                <a class="btn float-right btn-inverse"
+                   href="{% url 'cabinet:cabinet' %}">
+                    Личный кабинет
+                </a>
+            </div>
+        </div>
+
+
+    </section>
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}

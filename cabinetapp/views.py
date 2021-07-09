@@ -5,6 +5,7 @@ from django.urls import reverse
 from authapp.models import User
 from cabinetapp.forms import NewArticleForm
 from mainapp.models import Section, Article
+from notificationapp.models import Notification
 from tags.models import Tag
 
 
@@ -45,6 +46,11 @@ def main(request):
                                                      is_published=False,
                                                      is_reviewing=False,
                                                      user=request.user.id)
+        notification = Notification.objects.filter(
+            is_active=True,
+            user_to=request.user,
+            closed=None,
+        )
         if request.user.is_staff:
             score_article = score_article.filter(is_reviewing=True,
                                                  is_active=True)
@@ -67,7 +73,8 @@ def main(request):
             'first_name': user.first_name,
             'email': user.email,
             'score_article': len(score_article),
-            'score_article_draft': len(score_article_draft)
+            'score_article_draft': len(score_article_draft),
+            'notification': len(notification)
         }
 
         return render(request, 'cabinetapp/cabinet.html', content)
@@ -93,7 +100,8 @@ def new_article(request):
             'title': 'личный кабинет',
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
-            'form': form
+            'form': form,
+            'notification': Notification.notification(request)
         }
         return render(request, 'cabinetapp/new_article.html', content)
     return HttpResponseRedirect(reverse('auth:login'))
@@ -114,6 +122,7 @@ def my_articles(request):
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
             'articles': articles,
+            'notification': Notification.notification(request)
         }
 
         return render(request, 'cabinetapp/my_article.html', content)
@@ -133,13 +142,20 @@ def delete_article(request, pk):
                     article.is_active = False
                     article.is_published = False
                     article.save()
+                    Notification.add_notification(
+                        content='статья удалена',
+                        user_from=request.user,
+                        user_to=article.user,
+                        article=article,
+                        )
                     return HttpResponseRedirect(reverse('cabinet:my_articles'))
 
             content = {
                 'title': 'удаление статьи',
                 'links_section_menu': Section.get_links_section_menu(),
                 'tags_menu': Tag.get_tags_menu(),
-                'article': article
+                'article': article,
+                'notification': Notification.notification(request)
             }
             return render(request, 'cabinetapp/delete_article.html', content)
 
@@ -164,6 +180,7 @@ def my_drafts(request):
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
             'articles': articles,
+            'notification': Notification.notification(request)
         }
 
         return render(request, 'cabinetapp/my_article.html', content)
@@ -202,7 +219,8 @@ def edit_draft(request, pk):
                 'tags_menu': Tag.get_tags_menu(),
                 'form': form,
                 'article': article,
-                'article_published': article_published
+                'article_published': article_published,
+                'notification': Notification.notification(request)
             }
 
             return render(request, 'cabinetapp/new_article.html', content)
@@ -228,6 +246,7 @@ def moderation(request):
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
             'articles': articles,
+            'notification': Notification.notification(request)
         }
 
         return render(request, 'cabinetapp/my_article.html', content)
@@ -237,8 +256,8 @@ def moderation(request):
 def moderation_check(request, pk, result):
     """Результат модерации"""
     if request.user.is_authenticated:
+        article = Article.objects.filter(id=pk).first()
         if request.user.is_staff:
-            article = Article.objects.filter(id=pk).first()
             if request.method == 'POST':
                 if result == 1:
                     article.is_reviewing = 0
@@ -250,6 +269,11 @@ def moderation_check(request, pk, result):
                     article.is_rejected = 1
                     article.is_published = 0
                     article.reject_comment = request.POST.get('comment')
+                Notification.add_notification(content=article.reject_comment,
+                                              user_from=request.user,
+                                              user_to=article.user,
+                                              article=article,
+                                              )
                 article.review_user_id = request.user.id
                 article.save()
                 return HttpResponseRedirect(reverse('cabinet:moderation'))
@@ -260,6 +284,7 @@ def moderation_check(request, pk, result):
                 'tags_menu': Tag.get_tags_menu(),
                 'article': article,
                 'result': result,
+                'notification': Notification.notification(request)
             }
 
             return render(request, 'cabinetapp/moderation_check.html', content)

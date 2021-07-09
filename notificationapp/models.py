@@ -31,7 +31,8 @@ class Notification(models.Model):
     created = models.DateTimeField(verbose_name='создано', auto_now_add=True)
     """дата и время создания уведомления"""
 
-    closed = models.DateTimeField(verbose_name='закрыто', null=True, blank=True)
+    closed = models.DateTimeField(verbose_name='закрыто', null=True,
+                                  blank=True)
     """дата и время закрытия уведомления"""
 
     article = models.ForeignKey(
@@ -58,3 +59,23 @@ class Notification(models.Model):
     True - уведомление активно
     False - уведомление удалено
     """
+
+    @staticmethod
+    def add_notification(**kwargs):
+        if not kwargs['content']:
+            kwargs['content'] = 'одобрено'
+        Notification.objects.create(
+            content=kwargs['content'],
+            user_to=kwargs['user_to'],
+            user_from=kwargs['user_from'],
+            article=kwargs['article'],
+        )
+
+    @staticmethod
+    def notification(request):
+        notification = Notification.objects.filter(
+            is_active=True,
+            user_to=request.user,
+            closed=None,
+        )
+        return len(notification)

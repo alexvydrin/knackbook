@@ -8,6 +8,8 @@ Article - Статьи
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+
+from notificationapp.models import Notification
 from .models import Section, Article
 from tags.models import Tag
 from commentapp.models import Comment
@@ -21,6 +23,7 @@ def main(request):
         'links_section_menu': Section.get_links_section_menu(),
         'tags_menu': Tag.get_tags_menu(),
         'articles': Article.get_articles_five(),
+        'notification': Notification.notification(request)
     }
     return render(request, 'mainapp/index.html', context)
 
@@ -63,7 +66,8 @@ def article_detail_view(request, pk):
         'tags_menu': Tag.get_tags_menu(),  # общее меню тегов - можно вынести в общий контекст
         'tags_for_article': Tag.objects.filter(article=pk, is_active=True),  # теги статьи - создать метод в модели
         'comments': Comment.get_for_article(article=pk),  # комментарии для статьи
-        'new_comment': False
+        'new_comment': False,
+        'notification': Notification.notification(request)
     }
 
     if request.method == 'POST':
@@ -95,6 +99,7 @@ class ArticlesForSectionList(DetailView):
             '-edited', 'title')
         context['links_section_menu'] = Section.get_links_section_menu()
         context['tags_menu'] = Tag.get_tags_menu()
+        context['notification'] = Notification.notification(self.request)
         return context
 
 
@@ -111,6 +116,7 @@ class ArticlesForTagList(DetailView):
             '-edited', 'title')
         context['links_section_menu'] = Section.get_links_section_menu()
         context['tags_menu'] = Tag.get_tags_menu()
+        context['notification'] = Notification.notification(self.request)
         return context
 
 
@@ -133,4 +139,5 @@ class ArticlesForSearch(ListView):
         context['links_section_menu'] = Section.get_links_section_menu()
         context['tags_menu'] = Tag.get_tags_menu()
         context['text_search'] = self.request.GET.get('q')
+        context['notification'] = Notification.notification(self.request)
         return context

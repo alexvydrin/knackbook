@@ -8,6 +8,7 @@ from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, \
     UserEditAvatarForm
 from authapp.models import User
 from mainapp.models import Section, Article
+from notificationapp.models import Notification
 from tags.models import Tag
 
 
@@ -21,6 +22,7 @@ class PasswordEditView(PasswordChangeView):
         content['links_section_menu'] = Section.get_links_section_menu()
         content['tags_menu'] = Tag.get_tags_menu()
         content['tags_for_article'] = Tag.get_tags_menu()
+        content['notification'] = Notification.notification(self.request)
         return content
 
 
@@ -78,6 +80,11 @@ def register(request):
 def edit_user(request):
     """Редактирование пользователя"""
     if request.user.is_authenticated:
+        notification = Notification.objects.filter(
+            is_active=True,
+            user_to=request.user,
+            closed=None,
+        )
         user = User.objects.filter(id=request.user.id).first()
 
         score_article = Article.objects
@@ -111,7 +118,8 @@ def edit_user(request):
             'articles': Article.get_articles_five(),
             'avatar': user.avatar,
             'score_article': len(score_article),
-            'score_article_draft': len(score_article_draft)
+            'score_article_draft': len(score_article_draft),
+            'notification': len(notification)
         }
 
         return render(request, 'authapp/edit_user.html', content)
@@ -133,6 +141,7 @@ def delete_user(request, pk):
             'title': 'удаление профиля',
             'links_section_menu': Section.get_links_section_menu(),
             'tags_menu': Tag.get_tags_menu(),
+            'notification': Notification.notification(request)
         }
         return render(request, 'authapp/delete_user.html', content)
     return HttpResponseRedirect(reverse('auth:login'))
@@ -158,7 +167,8 @@ def edit_avatar(request):
             'tags_menu': Tag.get_tags_menu(),
             'articles': Article.get_articles_five(),
             'edit_form': edit_form,
-            'avatar': user.avatar
+            'avatar': user.avatar,
+            'notification': Notification.notification(request)
         }
         return render(request, 'authapp/edit_avatar.html', content)
 
