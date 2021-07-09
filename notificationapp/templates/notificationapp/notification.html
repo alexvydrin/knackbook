@@ -35,6 +35,7 @@
         <div class="row">
             {% include 'cabinetapp/inc_menu.html' %}
             <div class="col-8">
+            {% if notifications %}
                 {% for notification in notifications %}
                     <form action="."
                           method="post">
@@ -88,6 +89,9 @@
                         </div>
                     </form>
                 {% endfor %}
+                {% else  %}
+                <p>У вас нет уведомлений</p>
+            {% endif %}
 
             </div>
 
