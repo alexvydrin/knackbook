@@ -26,10 +26,8 @@
     {% endfor %}
 
     <br>
-    {% if user.last_name and user.first_name %}
-        <p>Автор: <a
-                href="{% url 'cabinet:cabinet' %}">{{ user.first_name }} {{ user.last_name }}</a>
-        </p>
+    {% if object.user.last_name and object.user.first_name %}
+        <p>Автор: {{ object.user.first_name }} {{ object.user.last_name }}</p>
     {% else %}
         <p>Автор: {{ object.user.username }}</p>
     {% endif %}

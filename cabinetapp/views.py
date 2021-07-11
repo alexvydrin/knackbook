@@ -40,6 +40,7 @@ def update_article_data(data, pk):
 def main(request):
     """Главная страница личного кабинета"""
     if request.user.is_authenticated:
+        # Notification.objects.filter(id=76).delete()
         user = User.objects.filter(id=request.user.id).first()
         score_article = Article.objects
         score_article_draft = Article.objects.filter(is_active=True,
@@ -147,6 +148,7 @@ def delete_article(request, pk):
                         user_from=request.user,
                         user_to=article.user,
                         article=article,
+                        comment=None
                         )
                     return HttpResponseRedirect(reverse('cabinet:my_articles'))
 
@@ -273,6 +275,7 @@ def moderation_check(request, pk, result):
                                               user_from=request.user,
                                               user_to=article.user,
                                               article=article,
+                                              comment=None
                                               )
                 article.review_user_id = request.user.id
                 article.save()

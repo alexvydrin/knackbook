@@ -60,6 +60,8 @@
                                     {% elif notification.content == 'статья удалена' %}
                                         <span class="text-danger">была
                                     удалена с сайта</span>
+                                    {% elif notification.content == 'комментарий' %}
+                                        <span>Добавлен комментарий</span>
                                     {% else %}
                                         <span class="text-danger">была
                                     отклонена в публикации</span>{% endif %}

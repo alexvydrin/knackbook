@@ -81,6 +81,12 @@ def article_detail_view(request, pk):
             new_comment.user = request.user  # Ссылка на текущего пользователя
             new_comment.save()
             context['new_comment'] = new_comment
+            Notification.add_notification(content='комментарий',
+                                          user_from=request.user,
+                                          user_to=article.user,
+                                          article=article,
+                                          comment=new_comment
+                                          )
         context['comment_form'] = comment_form
     else:
         context['comment_form'] = CommentForm()
