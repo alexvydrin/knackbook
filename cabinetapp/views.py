@@ -40,7 +40,6 @@ def update_article_data(data, pk):
 def main(request):
     """Главная страница личного кабинета"""
     if request.user.is_authenticated:
-        # Notification.objects.filter(id=76).delete()
         user = User.objects.filter(id=request.user.id).first()
         score_article = Article.objects
         score_article_draft = Article.objects.filter(is_active=True,
