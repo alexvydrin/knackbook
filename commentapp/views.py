@@ -5,6 +5,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import UpdateView, DeleteView
 from mainapp.models import Section
+from notificationapp.models import Notification
 from tags.models import Tag
 from commentapp.models import Comment
 from commentapp.forms import CommentForm
@@ -28,6 +29,8 @@ class CommentUpdateView(UpdateView):
         context['title'] = 'Изменение комментария'
         context['links_section_menu'] = Section.get_links_section_menu()  # общее меню разделов - вынести в общ.контекст
         context['tags_menu'] = Tag.get_tags_menu()  # общее меню тегов - можно вынести в общий контекст
+        if self.request.user.is_authenticated:
+            context['notification'] = Notification.notification(self.request)
         return context
 
     @method_decorator(login_required)
@@ -58,12 +61,19 @@ def comment_create_for_comment(request, pk):
             new_comment.article = comment_to.article  # Ссылка на текущую статью
             new_comment.user = request.user  # Ссылка на текущего пользователя
             new_comment.save()
+            Notification.add_notification(content='комментарий',
+                                          user_from=request.user,
+                                          user_to=comment_to.article.user,
+                                          article=comment_to.article,
+                                          comment=comment_to.comment_to
+                                          )
             return redirect('mainapp:article_detail', pk=comment_to.article.pk)
         context['comment_form'] = comment_form
     else:
         # Форма для добавления комментария - комментарий еще не добавлен
         context['title'] = 'Ответ на комментарий'
         context['comment_form'] = CommentForm()
+        context['notification'] = Notification.notification(request)
 
     return render(request, 'commentapp/comment_create_for_comment.html', context)
 
@@ -93,6 +103,8 @@ class CommentDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['links_section_menu'] = Section.get_links_section_menu()  # общее меню разделов - вынести в общ.контекст
         context['tags_menu'] = Tag.get_tags_menu()  # общее меню тегов - можно вынести в общий контекст
+        if self.request.user.is_authenticated:
+            context['notification'] = Notification.notification(self.request)
         return context
 
     @method_decorator(login_required)

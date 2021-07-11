@@ -69,6 +69,7 @@ class Notification(models.Model):
             user_to=kwargs['user_to'],
             user_from=kwargs['user_from'],
             article=kwargs['article'],
+            comment=kwargs['comment']
         )
 
     @staticmethod

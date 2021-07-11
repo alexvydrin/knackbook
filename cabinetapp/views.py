@@ -147,6 +147,7 @@ def delete_article(request, pk):
                         user_from=request.user,
                         user_to=article.user,
                         article=article,
+                        comment=None
                         )
                     return HttpResponseRedirect(reverse('cabinet:my_articles'))
 
@@ -273,6 +274,7 @@ def moderation_check(request, pk, result):
                                               user_from=request.user,
                                               user_to=article.user,
                                               article=article,
+                                              comment=None
                                               )
                 article.review_user_id = request.user.id
                 article.save()

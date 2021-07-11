@@ -49,7 +49,7 @@ def notifications(request):
             'score_article_draft': len(score_article_draft),
             'notifications': notifications.filter(user_to=request.user.id,
                                                   is_active=True).order_by(
-                'closed', '-created'),
+                '-created', 'closed'),
             'notification': len(notifications.filter(
                 is_active=True,
                 user_to=request.user,
