@@ -7,6 +7,7 @@ from notificationapp.models import Notification
 
 
 def likes(request, pk):
+    """Постановка и снятие лайков"""
     if request.is_ajax():
         like = LikeArticle.objects.filter(article=pk,
                                           user=request.user.id).first()
