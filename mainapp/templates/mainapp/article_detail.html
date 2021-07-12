@@ -63,11 +63,50 @@
     </div>
 
     <br>
-    {% if object.user.last_name and object.user.first_name %}
-        <p>Автор: {{ object.user.first_name }} {{ object.user.last_name }}</p>
+    <span>Автор:</span>
+
+    {% if like_active_user == 0 %}
+        {% if object.user.last_name and object.user.first_name %}
+            {{ object.user.first_name }} {{ object.user.last_name }}
+            <div class="like-user col-8 float-right">
+                <button class="like-users" type="submit"
+                        data-pk="{{ object.user_id }}"
+                        value="{{ likes_user }}">
+                    {% include 'likeapp/like_user.html' %}
+                </button>
+            </div>
+        {% else %}
+            {{ object.user.username }}
+            <div class="like-user col-8 float-right">
+                <button class="like-users" type="submit"
+                        data-pk="{{ object.user_id }}"
+                        value="{{ likes_user }}">
+                    {% include 'likeapp/like_user.html' %}
+                </button>
+            </div>
+        {% endif %}
     {% else %}
-        <p>Автор: {{ object.user.username }}</p>
+        {% if object.user.last_name and object.user.first_name %}
+            {{ object.user.first_name }} {{ object.user.last_name }}
+            <div class="like-user text-danger col-8 float-right">
+                <button class="like-users" type="submit"
+                        data-pk="{{ object.user_id }}"
+                        value="{{ likes_user }}">
+                    {% include 'likeapp/like_user.html' %}
+                </button>
+            </div>
+        {% else %}
+            {{ object.user.username }}
+            <div class="like-user text-danger col-8 float-right">
+                <button class="like-users text-danger" type="submit"
+                        data-pk="{{ object.user_id }}"
+                        value="{{ likes_user }}">
+                    {% include 'likeapp/like_user.html' %}
+                </button>
+            </div>
+        {% endif %}
     {% endif %}
+
     <p>Создано: {{ object.created|date:"d-E-Y P" }}</p>
     <p>Изменено: {{ object.edited|date:"d-E-Y P" }}</p>
 
