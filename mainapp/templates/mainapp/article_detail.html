@@ -18,12 +18,49 @@
     <p>{{ object.content|linebreaks }}</p>
 
     <br>
-    теги:
-    {% for tag in tags_for_article %}
-        <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">
-            {{ tag.name }}
-        </a>
-    {% endfor %}
+    {% if user.is_authenticated %}
+        {% if like_active == 0 %}
+
+            <div class="col-3 float-right like-article">
+                <button class="like-articles" type="submit"
+                        data-pk="{{ object.pk }}"
+                        value="{{ likes }}">
+                    {% include 'likeapp/like_article.html' %}
+                </button>
+            </div>
+
+        {% else %}
+
+            <div class="col-3 float-right like-article text-danger">
+                <button class="like-articles" type="submit"
+                        data-pk="{{ object.pk }}"
+                        value="{{ likes }}">
+                    {% include 'likeapp/like_article.html' %}
+                </button>
+            </div>
+
+        {% endif %}
+    {% else %}
+
+        <div class="col-3 float-right">
+            <a href="{% url 'auth:login' %}">
+                {% include 'likeapp/like_article.html' %}
+            </a>
+        </div>
+
+    {% endif %}
+
+    <div class="row">
+        теги:
+        <div class="col-6 align-left">
+            {% for tag in tags_for_article %}
+
+                <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">
+                    {{ tag.name }}<br>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
 
     <br>
     {% if object.user.last_name and object.user.first_name %}
@@ -36,13 +73,14 @@
 
     {% if object.is_reviewing %}
         <p>Статус: На модерации</p>
-    {% elif not object.is_rejected and not object.is_reviewing and not object.is_published%}
+    {% elif not object.is_rejected and not object.is_reviewing and not object.is_published %}
         <p>Статус: Черновик</p>
     {% endif %}
 
     {% if object.reject_comment %}
         <p>Причина отклонения: {{ object.reject_comment }}</p>
-        <a class="btn btn-link" href="{% url 'cabinet:my_drafts' %}">В черновики</a>
+        <a class="btn btn-link" href="{% url 'cabinet:my_drafts' %}">В
+            черновики</a>
     {% endif %}
 
     <hr>
