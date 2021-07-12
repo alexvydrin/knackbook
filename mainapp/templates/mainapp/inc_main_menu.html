@@ -55,9 +55,7 @@ active{% endif %}">
                                    href="{% url 'cabinet:cabinet' %}">
                                         <span class="g-menu-item-content">
                                             <span class="g-menu-item-title">Личный кабинет
-                                                {% if notification != 0 %}(
-                                                    {{ notification }}
-                                                    ){% endif %}</span>
+                                                {% if notification != 0 %}({{ notification }}){% endif %}</span>
 
                                         </span>
                                 </a>
