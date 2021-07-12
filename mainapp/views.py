@@ -4,11 +4,11 @@
 Section - Разделы
 Article - Статьи
 """
-
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
+from likeapp.models import LikeArticle
 from notificationapp.models import Notification
 from .models import Section, Article
 from tags.models import Tag
@@ -56,18 +56,26 @@ def article_detail_view(request, pk):
     # Получаем статью и одновременно проверяем на пометку удаления и на признак публикации.
     # Такая дополнительная проверка нужна чтобы нельзя было просмотреть удаленную или неопубликованную статью,
     # вручную указав в адресной строке её url
-    if request.user.is_staff or request.user == Article.objects.filter(id=pk).first().user:
+    if request.user.is_staff or request.user == Article.objects.filter(
+            id=pk).first().user:
         article = get_object_or_404(Article, pk=pk, is_active=True)
     else:
-        article = get_object_or_404(Article, pk=pk, is_active=True, is_published=True)
-
+        article = get_object_or_404(Article, pk=pk, is_active=True,
+                                    is_published=True)
+    likes = LikeArticle.objects.filter(is_active=True, article=pk)
     context = {
         'object': article,  # сама статья
-        'links_section_menu': Section.get_links_section_menu(),  # общее меню разделов - можно вынести в общий контекст
-        'tags_menu': Tag.get_tags_menu(),  # общее меню тегов - можно вынести в общий контекст
-        'tags_for_article': Tag.objects.filter(article=pk, is_active=True),  # теги статьи - создать метод в модели
-        'comments': Comment.get_for_article(article=pk),  # комментарии для статьи
+        'links_section_menu': Section.get_links_section_menu(),
+        # общее меню разделов - можно вынести в общий контекст
+        'tags_menu': Tag.get_tags_menu(),
+        # общее меню тегов - можно вынести в общий контекст
+        'tags_for_article': Tag.objects.filter(article=pk, is_active=True),
+        # теги статьи - создать метод в модели
+        'comments': Comment.get_for_article(article=pk),
+        # комментарии для статьи
         'new_comment': False,
+        'likes': len(likes),
+        'like_active': len(likes.filter(user=request.user.id))
     }
     if request.user.is_authenticated:
         context['notification'] = Notification.notification(request)
@@ -152,3 +160,16 @@ class ArticlesForSearch(ListView):
         if self.request.user.is_authenticated:
             context['notification'] = Notification.notification(self.request)
         return context
+
+
+def page_help(request):
+    """Страница помощь"""
+    context = {
+        'title': 'главная',
+        'links_section_menu': Section.get_links_section_menu(),
+        'tags_menu': Tag.get_tags_menu(),
+        'articles': Article.get_articles_five(),
+    }
+    if request.user.is_authenticated:
+        context['notification'] = Notification.notification(request)
+    return render(request, 'mainapp/page_help.html', context)

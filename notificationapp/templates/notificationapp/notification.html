@@ -62,6 +62,8 @@
                                     удалена с сайта</span>
                                     {% elif notification.content == 'комментарий' %}
                                         <span>Добавлен комментарий</span>
+                                    {% elif notification.content == 'лайк статья' %}
+                                        <span class="text-danger">Поставили лайк ❤</span>
                                     {% else %}
                                         <span class="text-danger">была
                                     отклонена в публикации</span>{% endif %}
