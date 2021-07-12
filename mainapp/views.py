@@ -152,3 +152,16 @@ class ArticlesForSearch(ListView):
         if self.request.user.is_authenticated:
             context['notification'] = Notification.notification(self.request)
         return context
+
+
+def page_help(request):
+    """Страница помощь"""
+    context = {
+        'title': 'главная',
+        'links_section_menu': Section.get_links_section_menu(),
+        'tags_menu': Tag.get_tags_menu(),
+        'articles': Article.get_articles_five(),
+    }
+    if request.user.is_authenticated:
+        context['notification'] = Notification.notification(request)
+    return render(request, 'mainapp/page_help.html', context)
