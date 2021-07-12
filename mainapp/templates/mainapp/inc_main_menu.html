@@ -95,15 +95,28 @@ active{% endif %}">
 
                         {% endif %}
 
+
                         <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
                             <a class="g-menu-item-container"
                                href="{% url 'main:page_help' %}">
+                        {#                        {% if user.is_superuser %}#}
+                        {#                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent ">#}
+                        {#                                <a class="g-menu-item-container"#}
+                        {#                                   href="{% url 'admin:index' %}">#}
+                        {#                                        <span class="g-menu-item-content">#}
+                        {#                                            <span class="g-menu-item-title">Админка</span>#}
+                        {##}
+                        {#                                        </span>#}
+                        {#                                </a>#}
+                        {#                            </li>#}
+                        {#                        {% endif %}#}
+                        <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
+                            <a class="g-menu-item-container" href="{% url 'main:page_help' %}">
                                 <span class="g-menu-item-content">
                                     <span class="g-menu-item-title">Помощь</span>
                                 </span>
                             </a>
                         </li>
-
                     </ul>
                 </nav>
             </div>
