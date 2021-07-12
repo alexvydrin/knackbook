@@ -1,6 +1,11 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/notification_scripts.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     <section>
 
@@ -35,23 +40,21 @@
         <div class="row">
             {% include 'cabinetapp/inc_menu.html' %}
             <div class="col-8">
-            {% if notifications %}
-                {% for notification in notifications %}
-                    <form action="."
-                          method="post">
-                        {% csrf_token %}
-                        <div class="row">
+                {% if notifications %}
+                    {% for notification in notifications %}
+                        <div class="row pb-3" id="n{{ notification.id }}">
                             <div class="col-12 table-bordered">
                                 <p class="">
                                     <span class="g-bold">Ваша статья:</span>
 
                                     {% if notification.content != 'статья удалена' %}
                                         <span>
-                                    <a class="text-success cancel-link"
-                                              href="{% url 'mainapp:article_detail' pk=notification.article.id %}">
+                                        <a class="text-success cancel-link"
+                                           href="{% url 'mainapp:article_detail' pk=notification.article.id %}">
                                     "{{ notification.article.title }}"</a>
                                     {% else %}
-                                        "<span>{{ notification.article.title }}"</span>
+                                        "
+                                        <span>{{ notification.article.title }}"</span>
                                     {% endif %}
 
                                     - </span>
@@ -71,31 +74,36 @@
                                 </p>
                                 <div>
                                     {% if notification.closed %}
-                                        <button class="float-left btn-mini btn-success"
-                                                type="button" name="button"
-                                                value="{{ notification.id }}">
-                                            Прочитано
-                                        </button>
+                                        <div class="">
+                                            <input class="float-left btn-mini btn-success"
+                                                    type="reset"
+                                                    name="button"
+                                                    value="Прочитано">
+                                        </div>
                                     {% else %}
-                                        <button class="float-left btn-mini btn-info"
-                                                type="submit" name="view"
-                                                value="{{ notification.id }}">
-                                            Пометить как прочитано
-                                        </button>
+                                        <div class="edit-button">
+                                            <input class="edit-buttons float-left btn-mini btn-info"
+                                                   type="submit"
+                                                   name="view"
+                                                   id="{{ notification.id }}"
+                                                   data-pk="{{ notification.id }}"
+                                                   value="Пометить как прочитано">
+                                        </div>
                                     {% endif %}
-                                    <button class="float-right btn-mini btn-danger"
-                                            type="submit" name="delete"
-                                            value={{ notification.id }}>
-                                        Удалить
-                                    </button>
+                                    <div class="delete-button">
+                                        <input class="delete-buttons float-right btn-mini btn-danger"
+                                                type="submit" name="delete"
+                                                id="{{ notification.id }}"
+                                                data-pk="{{ notification.id }}"
+                                                value="Удалить">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                {% endfor %}
-                {% else  %}
-                <p>У вас нет уведомлений</p>
-            {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p>У вас нет уведомлений</p>
+                {% endif %}
 
             </div>
 

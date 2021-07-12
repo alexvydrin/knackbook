@@ -1,6 +1,11 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/like_scripts.js' %}"></script>
+{% endblock %}
+
 {% block title %}
     Статья
 {% endblock %}
