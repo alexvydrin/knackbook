@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -62,6 +63,7 @@ def notifications(request):
     return HttpResponseRedirect(reverse('auth:login'))
 
 
+@login_required
 def notification_edit(request, pk):
     """Изменение статуса уведомления"""
     if request.is_ajax():
@@ -74,6 +76,7 @@ def notification_edit(request, pk):
         return JsonResponse({'result': ''})
 
 
+@login_required
 def notification_delete(request, pk):
     """Удаление уведомления"""
     notifications = Notification.objects

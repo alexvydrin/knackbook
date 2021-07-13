@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
@@ -7,6 +8,7 @@ from mainapp.models import Article
 from notificationapp.models import Notification
 
 
+@login_required
 def likes_article(request, pk):
     """Постановка и снятие лайков статьям"""
     if request.is_ajax():
@@ -48,6 +50,7 @@ def likes_article(request, pk):
         return JsonResponse({'result': result})
 
 
+@login_required
 def likes_user(request, pk):
     """Постановка и снятие лайков пользователям"""
     if request.is_ajax():
