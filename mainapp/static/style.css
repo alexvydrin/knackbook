@@ -17128,4 +17128,7 @@ only screen and (min-width:1040px) and (max-width:1355px) {
     }
 }
 
-
+/* Комментарии второго уровня к статье */
+.div_article_comment_2 {
+    padding-left: 10%;
+}

@@ -59,7 +59,6 @@
         теги:
         <div class="col-6 align-left">
             {% for tag in tags_for_article %}
-
                 <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">
                     {{ tag.name }}<br>
                 </a>
@@ -129,16 +128,19 @@
 
     <hr>
     {% if object.is_published %}
-        {% with comments.count as total_comments %}
-            <h4>
-                Количество комментариев: {{ total_comments }}
-            </h4>
-        {% endwith %}
+
+        <h4>
+            Количество комментариев: {{ total_comments }}
+        </h4>
+
+        {# Выведем все комментарии к статье #}
         {% for comment in comments %}
+
             <hr>
+
             <div>
                 <p>
-                    Комментарий № {{ forloop.counter }} от {{ comment.user }}
+                    Комментарий от {{ comment.user }}
                     ({{ comment.created }}
                     {% if comment.edited > comment.created %}
                         - изменен {{ comment.edited }}
@@ -155,6 +157,12 @@
 
                 {{ comment.content|linebreaks }}
                 <br>
+
+                {% if not comment.comment_level_1 and comment.answers_count > 0 and comment.pk != comment_for_answers %}
+                    <a href="{% url 'mainapp:article_detail_comment_answers' pk=object.pk comment_to=comment.pk %}">Развернуть</a>
+                    ({{ comment.answers_count }})
+                {% endif %}
+
                 {% if user.is_authenticated %}
                     <a href="{% url 'commentapp:comment_new' pk=comment.pk %}">Ответить</a>
                     {% if user == comment.user %}
@@ -163,6 +171,48 @@
                     {% endif %}
                 {% endif %}
             </div>
+
+            {% if comment.pk == comment_for_answers %}
+                {# Если выбран режим просмотра ответов к комментарию то выводим ответы #}
+                {# здесь практически продублирован код для вывода обычного комментария #}
+
+                {% for answer in answers_for_comment %}
+
+                    <hr>
+                    {# Если комментарий второго уровня (ответ) то у него специальный класс со смещением #}
+                    <div class="div_article_comment_2">
+                        <p>
+                            Комментарий от {{ answer.user }}
+                            ({{ answer.created }}
+                            {% if answer.edited > answer.created %}
+                                - изменен {{ answer.edited }}
+                            {% endif %}
+                            )
+                        </p>
+
+                        {% if answer.comment_to %}
+                            <p>
+                                в ответ на комментарий от {{ answer.comment_to.user }}
+                                ({{ answer.comment_to.created }})
+                            </p>
+                        {% endif %}
+
+                        {{ answer.content|linebreaks }}
+                        <br>
+
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'commentapp:comment_new' pk=answer.pk %}">Ответить</a>
+                            {% if user == answer.user %}
+                                <a href="{% url 'commentapp:comment_edit' pk=answer.pk %}">Изменить</a>
+                                <a href="{% url 'commentapp:comment_delete' pk=answer.pk %}">Удалить</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
         {% empty %}
             <p>Пока комментариев нет</p>
         {% endfor %}
