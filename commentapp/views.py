@@ -22,7 +22,11 @@ class CommentUpdateView(UpdateView):
     fields = ['content']
 
     def get_success_url(self):
-        return reverse_lazy('mainapp:article_detail', kwargs={'pk': self.object.article.pk})
+        if self.object.comment_level_1 is not None:
+            return reverse_lazy('mainapp:article_detail_comment_answers',
+                                kwargs={'pk': self.object.article.pk, 'comment_to': self.object.comment_level_1.pk})
+        else:
+            return reverse_lazy('mainapp:article_detail', kwargs={'pk': self.object.article.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,6 +62,13 @@ def comment_create_for_comment(request, pk):
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.comment_to = comment_to  # Ссылка на комментарий-родитель
+            # Ссылка на комментарий первого уровня
+            if comment_to.comment_to is None:
+                # Значит ответ на комментарий первого уровня
+                new_comment.comment_level_1 = comment_to
+            else:
+                # Значит ответ на комментарий не первого уровня
+                new_comment.comment_level_1 = comment_to.comment_level_1
             new_comment.article = comment_to.article  # Ссылка на текущую статью
             new_comment.user = request.user  # Ссылка на текущего пользователя
             new_comment.save()
@@ -67,7 +78,9 @@ def comment_create_for_comment(request, pk):
                                           article=comment_to.article,
                                           comment=comment_to.comment_to
                                           )
-            return redirect('mainapp:article_detail', pk=comment_to.article.pk)
+            # return redirect('mainapp:article_detail', pk=comment_to.article.pk)
+            return redirect('mainapp:article_detail_comment_answers', pk=comment_to.article.pk,
+                            comment_to=new_comment.comment_level_1.pk)
         context['comment_form'] = comment_form
     else:
         # Форма для добавления комментария - комментарий еще не добавлен
@@ -84,7 +97,11 @@ class CommentDeleteView(DeleteView):
     template_name = 'commentapp/comment_delete.html'
 
     def get_success_url(self):
-        return reverse_lazy('mainapp:article_detail', kwargs={'pk': self.object.article.pk})
+        if self.object.comment_level_1 is not None:
+            return reverse_lazy('mainapp:article_detail_comment_answers',
+                                kwargs={'pk': self.object.article.pk, 'comment_to': self.object.comment_level_1.pk})
+        else:
+            return reverse_lazy('mainapp:article_detail', kwargs={'pk': self.object.article.pk})
 
     def __init__(self, *args, **kwargs):
         # self.object потом переопределим в def delete

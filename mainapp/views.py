@@ -50,7 +50,7 @@ class ArticleListView(ListView):  # pylint: disable=too-many-ancestors
         return queryset.filter(is_active=True, is_published=True)
 
 
-def article_detail_view(request, pk):
+def article_detail_view(request, pk, comment_to=None):
     """Просмотр выбранной статьи и работа с комментариями"""
 
     # Получаем статью и одновременно проверяем на пометку удаления и на признак публикации.
@@ -72,7 +72,8 @@ def article_detail_view(request, pk):
         # общее меню тегов - можно вынести в общий контекст
         'tags_for_article': Tag.objects.filter(article=pk, is_active=True),
         # теги статьи - создать метод в модели
-        'comments': Comment.get_for_article(article=pk),
+        # 'comments': Comment.get_for_article(article=pk),
+        'comments': Comment.get_for_article_level_1(article=pk),  # только первый уровень
         # комментарии для статьи
         'new_comment': False,
         'likes': len(likes),
@@ -82,7 +83,13 @@ def article_detail_view(request, pk):
         'like_active_user': len(
             likes_user.filter(is_active=True, user_to=article.user_id,
                               user_from=request.user.id)),
+        'comment_for_answers': comment_to,  # комментарий для которого развернут ответ
     }
+
+    # Ответы на комментарий
+    if comment_to is not None:
+        context['answers_for_comment'] = Comment.get_for_comment(comment_to=comment_to)
+
     if request.user.is_authenticated:
         context['notification'] = Notification.notification(request)
 
@@ -101,9 +108,13 @@ def article_detail_view(request, pk):
                                           article=article,
                                           comment=new_comment
                                           )
-        context['comment_form'] = comment_form
+        # context['comment_form'] = comment_form
+        context['comment_form'] = CommentForm()
     else:
         context['comment_form'] = CommentForm()
+
+    # Количество комментариев к статье
+    context['total_comments'] = Comment.objects.filter(article=pk, is_active=True).count()
 
     return render(request, 'mainapp/article_detail.html', context)
 

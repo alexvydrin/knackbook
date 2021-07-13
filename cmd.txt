@@ -14,3 +14,6 @@ python manage.py test
 # Запускаем проект
 python manage.py runserver
 ######################################
+# Первоначальное заполнение поля comment.comment_level_1 на основании других полей таблицы comment
+python manage.py init_comment_level_1
+######################################

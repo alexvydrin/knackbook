@@ -19,6 +19,8 @@ urlpatterns = [
 
     path('articles/<int:pk>/', article_detail_view, name='article_detail'),
 
+    path('articles/<int:pk>/<int:comment_to>/', article_detail_view, name='article_detail_comment_answers'),
+
     path('articles/search', ArticlesForSearch.as_view(), name='articles_search'),
 
     path('help/', page_help, name='page_help'),
