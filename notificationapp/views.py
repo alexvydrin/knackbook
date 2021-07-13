@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -27,19 +27,19 @@ def notifications(request):
                                                  is_active=True,
                                                  user=request.user.id)
 
-        if request.method == 'POST':
-            if request.POST.get('delete'):
-                notification = notifications.filter(
-                    id=request.POST.get('delete')).first()
-                notification.is_active = False
-                notification.save()
-            elif request.POST.get('view'):
-                notification = notifications.filter(
-                    id=request.POST.get('view')).first()
-                notification.closed = datetime.now()
-                notification.save()
-
-            return HttpResponseRedirect(reverse('notification:notification'))
+        # if request.method == 'POST':
+        #     if request.POST.get('delete'):
+        #         notification = notifications.filter(
+        #             id=request.POST.get('delete')).first()
+        #         notification.is_active = False
+        #         notification.save()
+        #     elif request.POST.get('view'):
+        #         notification = notifications.filter(
+        #             id=request.POST.get('view')).first()
+        #         notification.closed = datetime.now()
+        #         notification.save()
+        #
+        #     return HttpResponseRedirect(reverse('notification:notification'))
 
         content = {
             'title': 'уведомления',
@@ -60,3 +60,27 @@ def notifications(request):
         return render(request, 'notificationapp/notification.html', content)
 
     return HttpResponseRedirect(reverse('auth:login'))
+
+
+def notification_edit(request, pk):
+    """Изменение статуса уведомления"""
+    if request.is_ajax():
+        notification = Notification.objects.filter(id=pk,
+                                                   closed=None).first()
+        if notification:
+            notification.closed = datetime.now()
+            notification.save()
+
+        return JsonResponse({'result': ''})
+
+
+def notification_delete(request, pk):
+    """Удаление уведомления"""
+    notifications = Notification.objects
+
+    notification = notifications.filter(id=pk).first()
+    if notification:
+        notification.is_active = False
+        notification.save()
+
+    return JsonResponse({'result': ''})

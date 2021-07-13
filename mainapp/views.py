@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
-from likeapp.models import LikeArticle
+from likeapp.models import LikeArticle, LikeUser
 from notificationapp.models import Notification
 from .models import Section, Article
 from tags.models import Tag
@@ -63,6 +63,7 @@ def article_detail_view(request, pk):
         article = get_object_or_404(Article, pk=pk, is_active=True,
                                     is_published=True)
     likes = LikeArticle.objects.filter(is_active=True, article=pk)
+    likes_user = LikeUser.objects
     context = {
         'object': article,  # сама статья
         'links_section_menu': Section.get_links_section_menu(),
@@ -75,7 +76,12 @@ def article_detail_view(request, pk):
         # комментарии для статьи
         'new_comment': False,
         'likes': len(likes),
-        'like_active': len(likes.filter(user=request.user.id))
+        'like_active': len(likes.filter(user=request.user.id)),
+        'likes_user': len(
+            likes_user.filter(is_active=True, user_to=article.user_id)),
+        'like_active_user': len(
+            likes_user.filter(is_active=True, user_to=article.user_id,
+                              user_from=request.user.id)),
     }
     if request.user.is_authenticated:
         context['notification'] = Notification.notification(request)
