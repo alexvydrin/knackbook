@@ -35,7 +35,7 @@
                         </li>
 
                         {% for section in links_section_menu %}
-                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent {% if request.resolver_match.kwargs.pk|add:0 == section.pk %}active{% endif %}">
+                            <li class="g-menu-item g-menu-item-type-component g-menu-item-344 g-parent g-standard g-menu-item-link-parent {% if request.resolver_match.url_name == 'articles_for_section_list' and request.resolver_match.kwargs.pk|add:0 == section.pk %}active{% endif %}">
                                 <a class="g-menu-item-container"
                                    href="{% url 'mainapp:articles_for_section_list' pk=section.pk %}">
                                         <span class="g-menu-item-content">
