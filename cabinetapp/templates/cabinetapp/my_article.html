@@ -82,14 +82,25 @@
 
                                                             {% elif request.resolver_match.url_name == 'my_drafts' %}
 
-                                                                <div class="btn-group-vertical">{% if article.is_rejected %}<small class="text-error">Отклонена</small>{% else %}<small class="text-info">Черновик</small>{% endif %}</div>
+                                                                <div class="btn-group-vertical">
+                                                                    {% if article.is_rejected %}
+                                                                        <small class="text-error">Отклонена</small>{% else %}
+                                                                        <small class="text-info">Черновик</small>{% endif %}
+                                                                </div>
                                                                 <br>
 
                                                                 {% if article.is_rejected %}
 
-                                                                    <div class="float-left col-4 btn btn-secondary ">
-                                                                        Опубликовать*
-                                                                    </div>
+                                                                    {% if user.banned %}
+                                                                        <a class="float-left col-4 btn btn-danger">
+                                                                            Опубликовать
+                                                                        </a>
+                                                                    {% else %}
+
+                                                                        <div class="float-left col-4 btn btn-secondary ">
+                                                                            Опубликовать*
+                                                                        </div>
+                                                                    {% endif %}
 
                                                                     <a class="col-4 btn btn-info"
                                                                        style="text-align: center"
@@ -104,15 +115,33 @@
                                                                         отклонения:
                                                                         <div class="text-danger g-bold">{{ article.reject_comment }}</div>
                                                                         <hr>
-                                                                        <div class="alert-info">* Вы можете отредактировать статью и отправить на повторное согласование</div>
+                                                                        <div class="alert-info">
+                                                                            *
+                                                                            Вы
+                                                                            можете
+                                                                            отредактировать
+                                                                            статью
+                                                                            и
+                                                                            отправить
+                                                                            на
+                                                                            повторное
+                                                                            согласование
+                                                                        </div>
                                                                     </div>
 
                                                                 {% else %}
 
-                                                                    <a class="float-left col-4 btn btn-success"
-                                                                       href="{% url 'cabinet:edit_draft' pk=article.id %}">
-                                                                        Опубликовать
-                                                                    </a>
+                                                                    {% if user.banned %}
+                                                                        <a class="float-left col-4 btn btn-danger">
+                                                                            Опубликовать
+                                                                        </a>
+                                                                    {% else %}
+
+                                                                        <a class="float-left col-4 btn btn-success"
+                                                                           href="{% url 'cabinet:edit_draft' pk=article.id %}">
+                                                                            Опубликовать
+                                                                        </a>
+                                                                    {% endif %}
 
                                                                     <a class="col-4 btn btn-info"
                                                                        style="text-align: center"

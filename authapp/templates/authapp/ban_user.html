@@ -1,0 +1,69 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <form action="." method="post">
+        {% csrf_token %}
+        <div class="row">
+
+            <div class="col-2"></div>
+
+            <div class="col-8 g-bold">
+                {% if not_ban %}
+                    Вы не можете блокировать пользователя
+                    "{{ user_ban.username }}" !!!
+                    <br><br>
+                    <div class="row">
+                        <div class="col-8">
+
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-inverse">
+                                <a class="" href="#" onclick="history.back();">
+                                    Назад
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                {% else %}
+                    Вы уверены что хотите заблокировать пользователя
+                    "{{ user_ban.username }}"?
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-5">
+                            <button class="btn btn-warning" type="submit"
+                                    value="day" name="day">1 День
+                            </button>
+                        </div>
+                        <div class="col-5 align-right">
+                            <button class="btn btn-danger" type="submit"
+                                    value="week" name="week">2 Недели
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <br>
+                    <hr>
+                    <div class="col-12">
+                        <button class="btn btn-inverse float-right">
+                            <a class="" href="#" onclick="history.back();">
+                                Отмена
+                            </a>
+                        </button>
+                    </div>
+
+
+                    </div>
+                {% endif %}
+        </div>
+    </form>
+
+
+{% endblock %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}

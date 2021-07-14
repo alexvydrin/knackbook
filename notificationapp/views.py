@@ -28,20 +28,6 @@ def notifications(request):
                                                  is_active=True,
                                                  user=request.user.id)
 
-        # if request.method == 'POST':
-        #     if request.POST.get('delete'):
-        #         notification = notifications.filter(
-        #             id=request.POST.get('delete')).first()
-        #         notification.is_active = False
-        #         notification.save()
-        #     elif request.POST.get('view'):
-        #         notification = notifications.filter(
-        #             id=request.POST.get('view')).first()
-        #         notification.closed = datetime.now()
-        #         notification.save()
-        #
-        #     return HttpResponseRedirect(reverse('notification:notification'))
-
         content = {
             'title': 'уведомления',
             'links_section_menu': Section.get_links_section_menu(),

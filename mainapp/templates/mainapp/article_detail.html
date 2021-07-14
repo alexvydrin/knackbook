@@ -72,6 +72,14 @@
     {% if like_active_user == 0 %}
         {% if object.user.last_name and object.user.first_name %}
             {{ object.user.first_name }} {{ object.user.last_name }}
+            {% if object.user.banned == none %}
+                {% if user.is_staff %}<a class="btn-link"
+                                         href="{% url 'auth:ban_user' object.user_id object.id %}">BAN</a>
+                {% endif %}
+            {% else %}
+                {% if user.is_staff %}<span class="text-danger">BAN</span>
+                {% endif %}
+            {% endif %}
             <div class="like-user col-8 float-right">
                 <button class="like-users" type="submit"
                         data-pk="{{ object.user_id }}"
@@ -81,6 +89,14 @@
             </div>
         {% else %}
             {{ object.user.username }}
+            {% if object.user.banned == none %}
+                {% if user.is_staff %}<a class="btn-link"
+                                         href="{% url 'auth:ban_user' object.user_id object.id %}">BAN</a>
+                {% endif %}
+            {% else %}
+                {% if user.is_staff %}<span class="text-danger">BAN</span>
+                {% endif %}
+            {% endif %}
             <div class="like-user col-8 float-right">
                 <button class="like-users" type="submit"
                         data-pk="{{ object.user_id }}"
@@ -92,6 +108,14 @@
     {% else %}
         {% if object.user.last_name and object.user.first_name %}
             {{ object.user.first_name }} {{ object.user.last_name }}
+            {% if object.user.banned == none %}
+                {% if user.is_staff %}<a class="btn-link"
+                                         href="{% url 'auth:ban_user' object.user_id object.id %}">BAN</a>
+                {% endif %}
+            {% else %}
+                {% if user.is_staff %}<span class="text-danger">BAN</span>
+                {% endif %}
+            {% endif %}
             <div class="like-user text-danger col-8 float-right">
                 <button class="like-users" type="submit"
                         data-pk="{{ object.user_id }}"
@@ -101,6 +125,14 @@
             </div>
         {% else %}
             {{ object.user.username }}
+            {% if object.user.banned == none %}
+                {% if user.is_staff %}<a class="btn-link"
+                                         href="{% url 'auth:ban_user' object.user_id object.id %}">BAN</a>
+                {% endif %}
+            {% else %}
+                {% if user.is_staff %}<span class="text-danger">BAN</span>
+                {% endif %}
+            {% endif %}
             <div class="like-user text-danger col-8 float-right">
                 <button class="like-users text-danger" type="submit"
                         data-pk="{{ object.user_id }}"
@@ -141,6 +173,14 @@
             <div>
                 <p>
                     Комментарий от {{ comment.user }}
+                    {% if user.is_staff %}
+                        {% if comment.user.banned == none %}
+                            <a class="btn-link"
+                               href="{% url 'auth:ban_user' comment.user_id object.id %}">BAN</a>
+                        {% else %}
+                            <span class="text-danger">BAN</span>
+                        {% endif %}
+                    {% endif %}
                     ({{ comment.created }}
                     {% if comment.edited > comment.created %}
                         - изменен {{ comment.edited }}
@@ -164,10 +204,12 @@
                 {% endif %}
 
                 {% if user.is_authenticated %}
-                    <a href="{% url 'commentapp:comment_new' pk=comment.pk %}">Ответить</a>
-                    {% if user == comment.user %}
-                        <a href="{% url 'commentapp:comment_edit' pk=comment.pk %}">Изменить</a>
-                        <a href="{% url 'commentapp:comment_delete' pk=comment.pk %}">Удалить</a>
+                    {% if not user.banned %}
+                        <a href="{% url 'commentapp:comment_new' pk=comment.pk %}">Ответить</a>
+                        {% if user == comment.user %}
+                            <a href="{% url 'commentapp:comment_edit' pk=comment.pk %}">Изменить</a>
+                            <a href="{% url 'commentapp:comment_delete' pk=comment.pk %}">Удалить</a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             </div>
@@ -183,6 +225,13 @@
                     <div class="div_article_comment_2">
                         <p>
                             Комментарий от {{ answer.user }}
+                            {% if answer.user.banned == none %}
+                                {% if user.is_staff %}<a class="btn-link"
+                                                         href="{% url 'auth:ban_user' answer.user_id object.id %}">BAN</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="text-danger">BAN</span>
+                            {% endif %}
                             ({{ answer.created }}
                             {% if answer.edited > answer.created %}
                                 - изменен {{ answer.edited }}
@@ -192,7 +241,8 @@
 
                         {% if answer.comment_to %}
                             <p>
-                                в ответ на комментарий от {{ answer.comment_to.user }}
+                                в ответ на комментарий
+                                от {{ answer.comment_to.user }}
                                 ({{ answer.comment_to.created }})
                             </p>
                         {% endif %}
@@ -201,10 +251,12 @@
                         <br>
 
                         {% if user.is_authenticated %}
-                            <a href="{% url 'commentapp:comment_new' pk=answer.pk %}">Ответить</a>
-                            {% if user == answer.user %}
-                                <a href="{% url 'commentapp:comment_edit' pk=answer.pk %}">Изменить</a>
-                                <a href="{% url 'commentapp:comment_delete' pk=answer.pk %}">Удалить</a>
+                            {% if not user.banned %}
+                                <a href="{% url 'commentapp:comment_new' pk=answer.pk %}">Ответить</a>
+                                {% if user == answer.user %}
+                                    <a href="{% url 'commentapp:comment_edit' pk=answer.pk %}">Изменить</a>
+                                    <a href="{% url 'commentapp:comment_delete' pk=answer.pk %}">Удалить</a>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                     </div>
@@ -222,12 +274,15 @@
         {% endif %}
 
         {% if user.is_authenticated %}
-            <h4>Напишите ваш комментарий:</h4>
-            <form action="." method="post">
-                {{ comment_form.as_p }}
-                {% csrf_token %}
-                <p><input type="submit" value="Добавить"></p>
-            </form>
+            {% if not user.banned %}
+                <h4>Напишите ваш комментарий:</h4>
+
+                <form action="." method="post">
+                    {{ comment_form.as_p }}
+                    {% csrf_token %}
+                    <p><input type="submit" value="Добавить"></p>
+                </form>
+            {% endif %}
         {% else %}
             <h4>Комментарии могут добавлять только авторизированные
                 пользователи </h4>

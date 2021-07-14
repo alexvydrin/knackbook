@@ -27,7 +27,12 @@
                                 {% elif user.is_staff %}
                                     <p>{{ user }} (модератор)</p>
                                 {% else %}
-                                    <p>{{ user }}</p>
+                                    {% if user.banned %}
+                                        <p class="text-danger">{{ user }}</p>
+                                        <small class="text-danger">Заблокирован до {{ user.banned }}</small>
+                                    {% else %}
+                                        <p>{{ user }}</p>
+                                    {% endif %}
                                 {% endif %}
                             </h5>
                         </div>

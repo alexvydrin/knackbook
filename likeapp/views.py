@@ -36,13 +36,14 @@ def likes_article(request, pk):
 
         if likes.filter(is_active=True, user=request.user.id, article=pk):
             article = Article.objects.filter(id=pk).first()
-            Notification.add_notification(
-                content='лайк статья',
-                user_to=article.user,
-                user_from=request.user,
-                article=article,
-                comment=None
-            )
+            if article.user != request.user:
+                Notification.add_notification(
+                    content='лайк статья',
+                    user_to=article.user,
+                    user_from=request.user,
+                    article=article,
+                    comment=None
+                )
 
         result = render_to_string(
             'likeapp/like_article.html', context)

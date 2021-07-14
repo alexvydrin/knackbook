@@ -45,40 +45,58 @@
                         <div class="row pb-3" id="n{{ notification.id }}">
                             <div class="col-12 table-bordered">
                                 <p class="">
-                                    <span class="g-bold">Ваша статья:</span>
 
-                                    {% if notification.content != 'статья удалена' %}
-                                        <span>
-                                        <a class="text-success cancel-link"
-                                           href="{% url 'mainapp:article_detail' pk=notification.article.id %}">
-                                    "{{ notification.article.title }}"</a>
+                                    {% if notification.content == '@moderator' %}
+                                        <p>В статье <a
+                                                href="{% url 'mainapp:article_detail' notification.article.id %}">"{{ notification.article }}"</a>
+                                            - жалоба!</p>
+                                        <p>Комментарий "{{ notification.comment }}"</p>
+
+                                    {% elif notification.content == 'day' %}
+                                        <p class="text-danger center">
+                                            ❗ {{ user|title }}, ваша учетная
+                                            запись заблокирована на 1 день
+                                            ❗</p>
+                                    {% elif notification.content == 'week' %}
+                                        <p class="text-danger center">
+                                            ❗ {{ user|title }}, ваша учетная
+                                            запись заблокирована на 2 недели
+                                            ❗</p>
                                     {% else %}
-                                        "
-                                        <span>{{ notification.article.title }}"</span>
-                                    {% endif %}
+                                        <span class="g-bold">Ваша статья:</span>
+
+                                        {% if notification.content != 'статья удалена' %}
+                                            <span>
+                                            <a class="text-success cancel-link"
+                                               href="{% url 'mainapp:article_detail' pk=notification.article.id %}">
+                                    "{{ notification.article.title }}"</a>
+                                        {% else %}
+                                            "
+                                            <span>{{ notification.article.title }}"</span>
+                                        {% endif %}
 
                                     - </span>
-                                    {% if notification.content == 'одобрено' %}
-                                        <span class="text-success">опубликована на сайт</span>
-                                    {% elif notification.content == 'статья удалена' %}
-                                        <span class="text-danger">была
+                                        {% if notification.content == 'одобрено' %}
+                                            <span class="text-success">опубликована на сайт</span>
+                                        {% elif notification.content == 'статья удалена' %}
+                                            <span class="text-danger">была
                                     удалена с сайта</span>
-                                    {% elif notification.content == 'комментарий' %}
-                                        <span>Добавлен комментарий</span>
-                                    {% elif notification.content == 'лайк статья' %}
-                                        <span class="text-danger">Поставили лайк ❤</span>
-                                    {% else %}
-                                        <span class="text-danger">была
+                                        {% elif notification.content == 'комментарий' %}
+                                            <span>Добавлен комментарий</span>
+                                        {% elif notification.content == 'лайк статья' %}
+                                            <span class="text-danger">Поставили лайк ❤</span>
+                                        {% else %}
+                                            <span class="text-danger">была
                                     отклонена в публикации</span>{% endif %}
 
-                                </p>
+                                    {% endif %}
                                 <div>
                                     {% if notification.closed %}
                                         <div class="">
                                             <input class="float-left btn-mini btn-success"
-                                                    type="reset"
-                                                    name="button"
-                                                    value="Прочитано">
+                                                   type="reset"
+                                                   name="button"
+                                                   value="Прочитано">
                                         </div>
                                     {% else %}
                                         <div class="edit-button">
@@ -92,10 +110,10 @@
                                     {% endif %}
                                     <div class="delete-button">
                                         <input class="delete-buttons float-right btn-mini btn-danger"
-                                                type="submit" name="delete"
-                                                id="{{ notification.id }}"
-                                                data-pk="{{ notification.id }}"
-                                                value="Удалить">
+                                               type="submit" name="delete"
+                                               id="{{ notification.id }}"
+                                               data-pk="{{ notification.id }}"
+                                               value="Удалить">
                                     </div>
                                 </div>
                             </div>
