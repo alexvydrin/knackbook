@@ -4,10 +4,15 @@
 Section - Разделы
 Article - Статьи
 """
+import re
+from datetime import datetime
+
 from django.shortcuts import render, get_object_or_404
+from django.utils.timezone import utc
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
+from authapp.models import User
 from likeapp.models import LikeArticle, LikeUser
 from notificationapp.models import Notification
 from .models import Section, Article
@@ -25,6 +30,11 @@ def main(request):
         'articles': Article.get_articles_five(),
     }
     if request.user.is_authenticated:
+        user = User.objects.filter(id=request.user.id)
+        if user.first().banned:
+            now = datetime.utcnow().replace(tzinfo=utc)
+            if now > user.first().banned:
+                user.update(banned=None)
         context['notification'] = Notification.notification(request)
     return render(request, 'mainapp/index.html', context)
 
@@ -102,12 +112,24 @@ def article_detail_view(request, pk, comment_to=None):
             new_comment.user = request.user  # Ссылка на текущего пользователя
             new_comment.save()
             context['new_comment'] = new_comment
-            Notification.add_notification(content='комментарий',
-                                          user_from=request.user,
-                                          user_to=article.user,
-                                          article=article,
-                                          comment=new_comment
-                                          )
+            if article.user != request.user:
+                Notification.add_notification(content='комментарий',
+                                              user_from=request.user,
+                                              user_to=article.user,
+                                              article=article,
+                                              comment=new_comment
+                                              )
+                for_moderator = re.search(r'@moderator', new_comment.content)
+                if for_moderator:
+                    moderators = User.objects.filter(is_staff=True)
+                    for moderator in moderators:
+                        Notification.add_notification(content='@moderator',
+                                                      user_from=request.user,
+                                                      user_to=moderator,
+                                                      article=article,
+                                                      comment=new_comment
+                                                      )
+
         # context['comment_form'] = comment_form
         context['comment_form'] = CommentForm()
     else:

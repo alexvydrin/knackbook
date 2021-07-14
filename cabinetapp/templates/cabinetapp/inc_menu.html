@@ -5,14 +5,21 @@
     <div class="g-block size-100 align-left">
         <nav class="g-main-nav">
             <ul>
-
-                <li>
-                    <a href="{% url 'cabinet:new_article' %}">
+                {% if user.banned %}
+                    <li>
+                        <span class="">
+                            <span class="g-menu-item-title g-bold text-danger">Новая статья</span>
+                        </span>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'cabinet:new_article' %}">
                             <span class="">
                                 <span class="g-menu-item-title g-bold">Новая статья</span>
                             </span>
-                    </a>
-                </li>
+                        </a>
+                    </li>
+                {% endif %}
 
                 <li>
                     <a href="{% url 'cabinet:my_articles' %}">
@@ -25,7 +32,11 @@
                 <li>
                     <a href="{% url 'cabinet:my_drafts' %}">
                         <span class="g-menu-item-content">
-                            <span class="g-menu-item-title g-bold">Черновики{% if score_article_draft != 0 %}({{ score_article_draft }}){% endif %}</span>
+                            <span class="g-menu-item-title g-bold">Черновики
+                                {% if score_article_draft != 0 %}
+                                    ({{ score_article_draft }})
+                                {% endif %}
+                            </span>
                         </span>
                     </a>
                 </li>
@@ -41,8 +52,11 @@
                 <li>
                     <a href="{% url 'notification:notification' %}">
                         <span class="g-menu-item-content">
-                            <span class="g-menu-item-title g-bold {% if request.resolver_match.url_name == 'notification' %}text-dark{% endif %}">Уведомления
-                                {% if notification != 0 %}({{ notification }}){% endif %}</span>
+                            <span class="g-menu-item-title g-bold {% if request.resolver_match.url_name == 'notification' %}text-dark{% endif %}">
+                                Уведомления
+                                {% if notification != 0 %}
+                                    ({{ notification }}){% endif %}
+                            </span>
                         </span>
                     </a>
                 </li>
@@ -51,8 +65,10 @@
                     <li>
                         <a href="{% url 'cabinet:moderation' %}">
                             <span class="g-menu-item-content">
-                                <span class="g-menu-item-title g-bold">Модерация
-                                    {% if score_article != 0 %}({{ score_article }}){% endif %}</span>
+                                <span class="g-menu-item-title g-bold">
+                                    Модерация
+                                    {% if score_article != 0 %}
+                                        ({{ score_article }}){% endif %}</span>
                             </span>
                         </a>
                     </li>
@@ -62,8 +78,10 @@
                     <li>
                         <a href="{% url 'cabinet:moderation' %}">
                             <span class="g-menu-item-content">
-                                <span class="g-menu-item-title g-bold">На модерации
-                                    {% if score_article != 0 %}({{ score_article }}){% endif %}</span>
+                                <span class="g-menu-item-title g-bold">
+                                    На модерации
+                                    {% if score_article != 0 %}
+                                        ({{ score_article }}){% endif %}</span>
                             </span>
                         </a>
                     </li>

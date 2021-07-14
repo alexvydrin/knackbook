@@ -71,11 +71,19 @@
 
                 {% elif request.resolver_match.url_name == 'edit_draft' and article_published == None %}
 
-                    <div class="col-4 center">
-                        <button class="btn btn-success" type="submit"
-                                value="save" name="save">Опубликовать
-                        </button>
-                    </div>
+                    {% if user.banned %}
+                        <div class="col-4 center">
+                            <span class="btn btn-danger">
+                                Опубликовать
+                            </span>
+                        </div>
+                    {% else %}
+                        <div class="col-4 center">
+                            <button class="btn btn-success" type="submit"
+                                    value="save" name="save">Опубликовать
+                            </button>
+                        </div>
+                    {% endif %}
 
                     <div class="col-4 center">
                         <button class="btn btn-danger" type="submit"

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -27,20 +28,6 @@ def notifications(request):
                                                  is_active=True,
                                                  user=request.user.id)
 
-        # if request.method == 'POST':
-        #     if request.POST.get('delete'):
-        #         notification = notifications.filter(
-        #             id=request.POST.get('delete')).first()
-        #         notification.is_active = False
-        #         notification.save()
-        #     elif request.POST.get('view'):
-        #         notification = notifications.filter(
-        #             id=request.POST.get('view')).first()
-        #         notification.closed = datetime.now()
-        #         notification.save()
-        #
-        #     return HttpResponseRedirect(reverse('notification:notification'))
-
         content = {
             'title': 'уведомления',
             'links_section_menu': Section.get_links_section_menu(),
@@ -62,6 +49,7 @@ def notifications(request):
     return HttpResponseRedirect(reverse('auth:login'))
 
 
+@login_required
 def notification_edit(request, pk):
     """Изменение статуса уведомления"""
     if request.is_ajax():
@@ -74,6 +62,7 @@ def notification_edit(request, pk):
         return JsonResponse({'result': ''})
 
 
+@login_required
 def notification_delete(request, pk):
     """Удаление уведомления"""
     notifications = Notification.objects

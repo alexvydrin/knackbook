@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.contrib import auth
 from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpResponseRedirect
@@ -28,24 +30,26 @@ class PasswordEditView(PasswordChangeView):
 
 def login(request):
     """Вход пользователя на сайт"""
-    login_form = UserLoginForm(data=request.POST)
-    if request.method == 'POST' and login_form.is_valid():
-        username = request.POST.get('username')
-        password = request.POST['password']
-        user = auth.authenticate(username=username, password=password)
-        if user and user.is_active:
-            auth.login(request, user)
-            return HttpResponseRedirect(reverse('main:index'))
+    if not request.user.is_authenticated:
+        login_form = UserLoginForm(data=request.POST)
+        if request.method == 'POST' and login_form.is_valid():
+            username = request.POST.get('username')
+            password = request.POST['password']
+            user = auth.authenticate(username=username, password=password)
+            if user and user.is_active:
+                auth.login(request, user)
+                return HttpResponseRedirect(reverse('main:index'))
 
-    content = {
-        'title': 'вход',
-        'login_form': login_form,
-        'links_section_menu': Section.get_links_section_menu(),
-        'tags_menu': Tag.get_tags_menu(),
-        'articles': Article.get_articles_five(),
-    }
+        content = {
+            'title': 'вход',
+            'login_form': login_form,
+            'links_section_menu': Section.get_links_section_menu(),
+            'tags_menu': Tag.get_tags_menu(),
+            'articles': Article.get_articles_five(),
+        }
 
-    return render(request, 'authapp/login.html', content)
+        return render(request, 'authapp/login.html', content)
+    return HttpResponseRedirect(reverse('main:index'))
 
 
 def logout(request):
@@ -173,3 +177,44 @@ def edit_avatar(request):
         return render(request, 'authapp/edit_avatar.html', content)
 
     return HttpResponseRedirect(reverse('auth:login'))
+
+
+def banned_user(request, pk, article=None):
+    """Бан пользователя"""
+    if request.user.is_staff:
+        user_ban = User.objects.filter(id=pk)
+        content = {
+            'title': 'блокировка пользователя',
+            'links_section_menu': Section.get_links_section_menu(),
+            'tags_menu': Tag.get_tags_menu(),
+            'notification': Notification.notification(request),
+            'user_ban': user_ban.first()
+        }
+        if not user_ban.first().is_staff:
+            if request.method == 'POST':
+                now = datetime.now()
+                if request.POST.get('day'):
+                    user_ban.update(banned=now + timedelta(days=1))
+                    Notification.add_notification(
+                        content='day',
+                        user_to=user_ban.first(),
+                        user_from=request.user,
+                        article=Article.objects.filter(id=article).first(),
+                        comment=None
+                    )
+                elif request.POST.get('week'):
+                    user_ban.update(banned=now + timedelta(weeks=2))
+                    Notification.add_notification(
+                        content='week',
+                        user_to=user_ban.first(),
+                        user_from=request.user,
+                        article=Article.objects.filter(id=article).first(),
+                        comment=None
+                    )
+                return HttpResponseRedirect(reverse('cabinet:moderation'))
+
+            return render(request, 'authapp/ban_user.html', content)
+
+        content['not_ban'] = True
+        return render(request, 'authapp/ban_user.html', content)
+    return HttpResponseRedirect(reverse('main:index'))

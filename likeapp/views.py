@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
@@ -7,6 +8,7 @@ from mainapp.models import Article
 from notificationapp.models import Notification
 
 
+@login_required
 def likes_article(request, pk):
     """Постановка и снятие лайков статьям"""
     if request.is_ajax():
@@ -34,13 +36,14 @@ def likes_article(request, pk):
 
         if likes.filter(is_active=True, user=request.user.id, article=pk):
             article = Article.objects.filter(id=pk).first()
-            Notification.add_notification(
-                content='лайк статья',
-                user_to=article.user,
-                user_from=request.user,
-                article=article,
-                comment=None
-            )
+            if article.user != request.user:
+                Notification.add_notification(
+                    content='лайк статья',
+                    user_to=article.user,
+                    user_from=request.user,
+                    article=article,
+                    comment=None
+                )
 
         result = render_to_string(
             'likeapp/like_article.html', context)
@@ -48,6 +51,7 @@ def likes_article(request, pk):
         return JsonResponse({'result': result})
 
 
+@login_required
 def likes_user(request, pk):
     """Постановка и снятие лайков пользователям"""
     if request.is_ajax():

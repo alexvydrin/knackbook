@@ -10,148 +10,180 @@
     </title>
 
     {% block css %}
-       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+              rel="stylesheet"
               integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
-            crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'style.css' %}" >
-        <link rel="shortcut icon" type="image/png" href="{% static "image/favicon.png" %}">
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <link rel="shortcut icon" type="image/png"
+              href="{% static "image/favicon.png" %}">
 
     {% endblock %}
 
     {% block js %}
-         <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     {% endblock %}
 
 </head>
 <body class="gantry site com_k2 view-itemlist layout-category task-category dir-ltr itemid-195 outline-40
 g-2column-left g-style-preset5">
-    <div id="g-page-surround">
-        <header id="g-header" style="height: 280px">
-            <div class="g-container">
-                <div class="g-grid">
-                    <div class="g-block size-100 center title1 swiper-slide-content">
-                        <div id="swiper-5120-particle" class="g-content g-particle">
-                            <div class="">
-                                <div class="g-swiper">
-                                    <div class="swiper-container g-horizontal-slides g-horizontal-slides-" style="height: 300px;">
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide">
-                                                <div class="swiper-slide-content" style="margin-bottom: 40px;margin-top: 10px;">
-                                                    <div class="swiper-slide-content-text">
-                                                    <div class="g-swiper-slide-content-subtitle" style="margin-bottom: 15px;margin-top: 10px;">KNACK BOOK</div>
-                                                    <div class="g-swiper-slide-content-title">Ваши статьи</div>
-                                                    <div class="g-swiper-slide-content-desc">Делитесь, создавайте, общайтесь</div>
+<div id="g-page-surround">
+    <header id="g-header" style="height: 280px">
+    {% if user.banned %}
+                <div class="col-12 center text-info bg-danger">{{ user|title }}, ваша
+                    учетная запись заблокирована до {{ user.banned }}</div>
+            {% endif %}
+        <div class="g-container">
+            <div class="g-grid">
+                <div class="g-block size-100 center title1 swiper-slide-content">
+                    <div id="swiper-5120-particle"
+                         class="g-content g-particle">
+                        <div class="">
+                            <div class="g-swiper">
+                                <div class="swiper-container g-horizontal-slides g-horizontal-slides-"
+                                     style="height: 300px;">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="swiper-slide-content"
+                                                 style="margin-bottom: 40px;margin-top: 10px;">
+                                                <div class="swiper-slide-content-text">
+                                                    <div class="g-swiper-slide-content-subtitle"
+                                                         style="margin-bottom: 15px;margin-top: 10px;">
+                                                        KNACK BOOK
+                                                    </div>
+                                                    <div class="g-swiper-slide-content-title">
+                                                        Ваши статьи
+                                                    </div>
+                                                    <div class="g-swiper-slide-content-desc">
+                                                        Делитесь, создавайте,
+                                                        общайтесь
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="swiper-pagination g-horizontal-slides-pagination g-horizontal-slides-pagination-"></div>
                                     </div>
+                                    <div class="swiper-pagination g-horizontal-slides-pagination g-horizontal-slides-pagination-"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </header>
-        <section id="g-container-9278" class="g-wrapper">
-            <div class="g-container">
-                <div class="g-grid">
-                    <div class="g-block size-75">
-                        <section id="g-mainbody">
-                            <div class="g-grid">
-                                <div class="g-block size-100">
-                                    <div class="g-content">
-                                        <div class="platform-content row-fluid">
-                                            <div class="span12">
-                                                {% block content %}
+        </div>
+    </header>
+    <section id="g-container-9278" class="g-wrapper">
+        <div class="g-container">
+            <div class="g-grid">
+                <div class="g-block size-75">
+                    <section id="g-mainbody">
+                        <div class="g-grid">
+                            <div class="g-block size-100">
+                                <div class="g-content">
+                                    <div class="platform-content row-fluid">
+                                        <div class="span12">
+                                            {% block content %}
 
-                                                {% endblock %}
-                                            </div>
+                                            {% endblock %}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                    </div>
-                    <div class="g-block size-25">
-                        <section id="g-sidebar">
-                            <div class="g-grid">
+                        </div>
+                    </section>
+                </div>
+                <div class="g-block size-25">
+                    <section id="g-sidebar">
+                        <div class="g-grid">
 
-                                <div class="g-block size-100 moiVK otstup3">
-                                    <div id="custom-6747-particle" class="g-content g-particle">
-                                        <h2>Поиск по тексту статьи</h2>
-                                    </div>
+                            <div class="g-block size-100 moiVK otstup3">
+                                <div id="custom-6747-particle"
+                                     class="g-content g-particle">
+                                    <h2>Поиск по тексту статьи</h2>
                                 </div>
                             </div>
-                            <div class="g-grid">
+                        </div>
+                        <div class="g-grid">
 
-                                <div class="g-block size-100 moiVK otstup1">
-                                    <div class="g-content">
-                                        <div class="platform-content">
-                                            <div class="moduletable ">
+                            <div class="g-block size-100 moiVK otstup1">
+                                <div class="g-content">
+                                    <div class="platform-content">
+                                        <div class="moduletable ">
 
-                                                <form id="mod-finder-searchform305" action="{% url 'mainapp:articles_search' %}" method="get" class="form-search">
-                                                    <div class="finder">
-<!--                                                        <label for="mod-finder-searchword305" class="element-invisible finder">Искать</label>-->
-                                                        <input type="text" name="q" id="mod-finder-searchword305" class="search-query input-medium"
-                                                               size="25" value="" placeholder="Введите текст..." style="width: 62%;"/>
-                                                        <input class="btn-inverse form-control" type="submit" value="Искать">
-                                                    </div>
-                                                </form>
-                                            </div>
+                                            <form id="mod-finder-searchform305"
+                                                  action="{% url 'mainapp:articles_search' %}"
+                                                  method="get"
+                                                  class="form-search">
+                                                <div class="finder">
+                                                    <!--                                                        <label for="mod-finder-searchword305" class="element-invisible finder">Искать</label>-->
+                                                    <input type="text" name="q"
+                                                           id="mod-finder-searchword305"
+                                                           class="search-query input-medium"
+                                                           size="25" value=""
+                                                           placeholder="Введите текст..."
+                                                           style="width: 62%;"/>
+                                                    <input class="btn-inverse form-control"
+                                                           type="submit"
+                                                           value="Искать">
+                                                </div>
+                                            </form>
                                         </div>
-
                                     </div>
+
                                 </div>
                             </div>
-                            <div class="g-grid">
+                        </div>
+                        <div class="g-grid">
 
-                                <div class="g-block size-100 moiVK otstup3">
-                                    <div id="custom-67471-particle" class="g-content g-particle">
-                                        <h2>Поиск по тегам </h2>
-                                    </div>
+                            <div class="g-block size-100 moiVK otstup3">
+                                <div id="custom-67471-particle"
+                                     class="g-content g-particle">
+                                    <h2>Поиск по тегам </h2>
                                 </div>
                             </div>
-                            <div class="g-grid">
+                        </div>
+                        <div class="g-grid">
 
-                                <div class="g-block size-100 rounded bordered square shadow2 otstup myRightMenu">
-                                    <div class="g-content">
-                                        <div class="platform-content">
-                                            <div class="moduletable ">
-                                                <ul class="list-unstyled">
-                                                    {% for tag in tags_menu %}
+                            <div class="g-block size-100 rounded bordered square shadow2 otstup myRightMenu">
+                                <div class="g-content">
+                                    <div class="platform-content">
+                                        <div class="moduletable ">
+                                            <ul class="list-unstyled">
+                                                {% for tag in tags_menu %}
                                                     <li class="item-383">
                                                         <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">{{ tag.name }}</a>
                                                     </li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </div>
+                                                {% endfor %}
+                                            </ul>
                                         </div>
-
                                     </div>
+
                                 </div>
                             </div>
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
     {% block footer %}
         <section id="g-copyright">
             <div class="g-container">
                 <div class="g-grid">
 
                     <div class="g-block size-30">
-                        <div id="branding-3118-particle" class="g-content g-particle">
+                        <div id="branding-3118-particle"
+                             class="g-content g-particle">
                             <div class="g-branding branding">
-                                <h6> <a href="{% url 'mainapp:index' %}" title="Knack Book" class="g-powered-by">
-                                    <span class="hidden-tablet">Knack Book</span></a></h6>
+                                <h6><a href="{% url 'mainapp:page_help' %}"
+                                       title="Knack Book" class="g-powered-by">
+                                    <span class="hidden-tablet">Помощь</span></a>
+                                </h6>
                             </div>
                         </div>
                     </div>
                     <div class="g-block size-30">
-                        <div id="copyright-7616-particle" class="g-content g-particle">
+                        <div id="copyright-7616-particle"
+                             class="g-content g-particle">
                             <div class="g-copyright ">
                                 {% now "Y" as today %}
                                 Copyright &copy; {{ today }}
@@ -164,7 +196,8 @@ g-2column-left g-style-preset5">
                             <div class="platform-content">
                                 <div class="moduletable obratnaia">
                                     <ul class="nav menu">
-                                        <li class="item-502"><a href="#">Написать нам</a></li>
+                                        <li class="item-502"><a href="#">Написать
+                                            нам</a></li>
                                     </ul>
                                 </div>
                             </div>

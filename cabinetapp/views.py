@@ -1,6 +1,10 @@
+from datetime import datetime
+
+from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils.timezone import utc
 
 from authapp.models import User
 from cabinetapp.forms import NewArticleForm
@@ -40,7 +44,11 @@ def update_article_data(data, pk):
 def main(request):
     """Главная страница личного кабинета"""
     if request.user.is_authenticated:
-        user = User.objects.filter(id=request.user.id).first()
+        user = User.objects.filter(id=request.user.id)
+        if user.first().banned:
+            now = datetime.utcnow().replace(tzinfo=utc)
+            if now > user.first().banned:
+                user.update(banned=None)
         score_article = Article.objects
         score_article_draft = Article.objects.filter(is_active=True,
                                                      is_published=False,
@@ -65,13 +73,13 @@ def main(request):
             'tags_menu': Tag.get_tags_menu(),
             'articles': Article.get_articles_five(),
             'user': request.user,
-            'avatar': user.avatar,
-            'about_me': user.about_me,
-            'gender': user.gender,
-            'birth_date': user.birth_date,
-            'last_name': user.last_name,
-            'first_name': user.first_name,
-            'email': user.email,
+            'avatar': user.first().avatar,
+            'about_me': user.first().about_me,
+            'gender': user.first().gender,
+            'birth_date': user.first().birth_date,
+            'last_name': user.first().last_name,
+            'first_name': user.first().first_name,
+            'email': user.first().email,
             'score_article': len(score_article),
             'score_article_draft': len(score_article_draft),
             'notification': len(notification)
@@ -81,6 +89,7 @@ def main(request):
     return HttpResponseRedirect(reverse('main:index'))
 
 
+@user_passes_test(lambda u: not u.banned)
 def new_article(request):
     """Создание новой статьи"""
     if request.user.is_authenticated:
@@ -142,13 +151,14 @@ def delete_article(request, pk):
                     article.is_active = False
                     article.is_published = False
                     article.save()
-                    Notification.add_notification(
-                        content='статья удалена',
-                        user_from=request.user,
-                        user_to=article.user,
-                        article=article,
-                        comment=None
-                        )
+                    if request.user != article.user:
+                        Notification.add_notification(
+                            content='статья удалена',
+                            user_from=request.user,
+                            user_to=article.user,
+                            article=article,
+                            comment=None
+                            )
                     return HttpResponseRedirect(reverse('cabinet:my_articles'))
 
             content = {
@@ -270,12 +280,13 @@ def moderation_check(request, pk, result):
                     article.is_rejected = 1
                     article.is_published = 0
                     article.reject_comment = request.POST.get('comment')
-                Notification.add_notification(content=article.reject_comment,
-                                              user_from=request.user,
-                                              user_to=article.user,
-                                              article=article,
-                                              comment=None
-                                              )
+                if request.user != article.user:
+                    Notification.add_notification(content=article.reject_comment,
+                                                  user_from=request.user,
+                                                  user_to=article.user,
+                                                  article=article,
+                                                  comment=None
+                                                  )
                 article.review_user_id = request.user.id
                 article.save()
                 return HttpResponseRedirect(reverse('cabinet:moderation'))
