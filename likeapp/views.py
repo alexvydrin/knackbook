@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
@@ -9,6 +9,7 @@ from notificationapp.models import Notification
 
 
 @login_required
+@user_passes_test(lambda u: not u.banned)
 def likes_article(request, pk):
     """Постановка и снятие лайков статьям"""
     if request.is_ajax():
@@ -52,11 +53,14 @@ def likes_article(request, pk):
 
 
 @login_required
+@user_passes_test(lambda u: not u.banned)
 def likes_user(request, pk):
     """Постановка и снятие лайков пользователям"""
     if request.is_ajax():
         like = LikeUser.objects.filter(user_to=pk,
                                        user_from=request.user.id).first()
+
+        user_to = User.objects.filter(id=pk).first()
 
         if like:
             if like.is_active:
@@ -65,7 +69,7 @@ def likes_user(request, pk):
                 like.is_active = True
         else:
             like = LikeUser.objects.create(
-                user_to=User.objects.filter(id=pk).first(),
+                user_to=user_to,
                 user_from=request.user,
             )
         like.save()
@@ -77,6 +81,18 @@ def likes_user(request, pk):
             'like_active_user': len(likes.filter(is_active=True, user_to=pk,
                                                  user_from=request.user.id))
         }
+
+        if likes.filter(is_active=True, user_to=user_to,
+                        user_from=request.user.id):
+            if user_to.username != request.user:
+                article = Article.objects.filter(user=pk).first()
+                Notification.add_notification(
+                    content='лайк юзер',
+                    user_to=user_to,
+                    user_from=request.user,
+                    article=article,
+                    comment=None
+                )
 
         result = render_to_string(
             'likeapp/like_user.html', context)

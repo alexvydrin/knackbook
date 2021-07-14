@@ -46,11 +46,17 @@
                             <div class="col-12 table-bordered">
                                 <p class="">
 
-                                    {% if notification.content == '@moderator' %}
+                                    {% if notification.content == 'лайк юзер' %}
+                                        <p class="center">Вам поставил лайк
+                                            <span class="text-danger">❤</span>
+                                            - {{ notification.user_from }}</p>
+
+                                    {% elif notification.content == '@moderator' %}
                                         <p>В статье <a
                                                 href="{% url 'mainapp:article_detail' notification.article.id %}">"{{ notification.article }}"</a>
                                             - жалоба!</p>
-                                        <p>Комментарий "{{ notification.comment }}"</p>
+                                        <p>Комментарий
+                                            "{{ notification.comment }}"</p>
 
                                     {% elif notification.content == 'day' %}
                                         <p class="text-danger center">
@@ -84,7 +90,8 @@
                                         {% elif notification.content == 'комментарий' %}
                                             <span>Добавлен комментарий</span>
                                         {% elif notification.content == 'лайк статья' %}
-                                            <span class="text-danger">Поставили лайк ❤</span>
+                                            <span class="text-danger">Поставил лайк ❤</span>
+                                            <span>- {{ notification.user_from }}</span>
                                         {% else %}
                                             <span class="text-danger">была
                                     отклонена в публикации</span>{% endif %}
