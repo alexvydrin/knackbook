@@ -17,7 +17,7 @@
     <hr>
     <form action="{% url 'commentapp:comment_delete' object.pk %}" method="post">
         {% csrf_token %}
-        {% if user == object.user %}
+        {% if user == object.user or user.is_staff %}
             <input class="btn btn-danger" type="submit" value="удалить">
         {% endif %}
     </form>

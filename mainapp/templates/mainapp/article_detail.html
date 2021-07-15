@@ -206,8 +206,10 @@
                 {% if user.is_authenticated %}
                     {% if not user.banned %}
                         <a href="{% url 'commentapp:comment_new' pk=comment.pk %}">Ответить</a>
-                        {% if user == comment.user or user.is_staff %}
+                        {% if user == comment.user %}
                             <a href="{% url 'commentapp:comment_edit' pk=comment.pk %}">Изменить</a>
+                            {% endif %}
+                            {% if user == comment.user or user.is_staff %}
                             <a href="{% url 'commentapp:comment_delete' pk=comment.pk %}">Удалить</a>
                         {% endif %}
                     {% endif %}
@@ -253,8 +255,10 @@
                         {% if user.is_authenticated %}
                             {% if not user.banned %}
                                 <a href="{% url 'commentapp:comment_new' pk=answer.pk %}">Ответить</a>
-                                {% if user == answer.user or user.is_staff %}
+                                {% if user == answer.user %}
                                     <a href="{% url 'commentapp:comment_edit' pk=answer.pk %}">Изменить</a>
+                                    {% endif %}
+                                {% if user == comment.user or user.is_staff %}
                                     <a href="{% url 'commentapp:comment_delete' pk=answer.pk %}">Удалить</a>
                                 {% endif %}
                             {% endif %}
