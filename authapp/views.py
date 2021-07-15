@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from django.contrib import auth
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -28,7 +29,7 @@ class PasswordEditView(PasswordChangeView):
         return content
 
 
-def login(request):
+def login_user(request):
     """Вход пользователя на сайт"""
     if not request.user.is_authenticated:
         login_form = UserLoginForm(data=request.POST)
@@ -38,7 +39,7 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user and user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('main:index'))
+            return HttpResponseRedirect(request.session['next_url'])
 
         content = {
             'title': 'вход',
@@ -47,6 +48,9 @@ def login(request):
             'tags_menu': Tag.get_tags_menu(),
             'articles': Article.get_articles_five(),
         }
+
+        next_url = request.META.get('HTTP_REFERER')
+        request.session['next_url'] = next_url
 
         return render(request, 'authapp/login.html', content)
     return HttpResponseRedirect(reverse('main:index'))
@@ -63,12 +67,19 @@ def register(request):
     if request.method == 'POST':
         register_form = UserRegisterForm(request.POST)
         if register_form.is_valid():
+            username = register_form.cleaned_data.get('username')
+            password = register_form.cleaned_data.get('password2')
             register_form.save()
-            return HttpResponseRedirect(reverse('auth:login'))
+            login_user = authenticate(username=username, password=password)
+            login(request, login_user)
+            return HttpResponseRedirect(request.session['next_url'])
     elif not request.user.is_authenticated:
         register_form = UserRegisterForm()
     else:
         return HttpResponseRedirect(reverse('main:index'))
+
+    next_url = request.META.get('HTTP_REFERER')
+    request.session['next_url'] = next_url
 
     content = {
         'title': 'регистрация',
