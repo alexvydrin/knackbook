@@ -17132,3 +17132,35 @@ only screen and (min-width:1040px) and (max-width:1355px) {
 .div_article_comment_2 {
     padding-left: 10%;
 }
+
+/* высплывающее окно */
+#zatemnenie:target {
+display: block;
+}
+#zatemnenie {
+background: rgba(102, 102, 102, 0.68);
+width: 100%;
+height: 100%;
+position: fixed;
+top: 0;
+left: 0;
+display: none;
+z-index: 9999999999;
+}
+
+window {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 400px;
+border: 1px solid #cecece;
+padding: 50px;
+transform: translate(-50%,-50%);
+background-color: #fafafa;
+
+a.close_window {
+position: absolute;
+right: 10px;
+top: 4px;
+border: none;
+}
