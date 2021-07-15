@@ -139,7 +139,7 @@ class CommentDeleteView(DeleteView):
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.is_active = False
-        if self.object.user == self.request.user:  # Еще одна дополнительная проверка пользователя
+        if self.object.user == self.request.user or self.request.user.is_staff:  # Еще одна дополнительная проверка пользователя
             self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
