@@ -17163,4 +17163,10 @@ position: absolute;
 right: 10px;
 top: 4px;
 border: none;
+margin: 0;
+}
+
+a.close_window_right {
+text-align: right;
+display: block;
 }
