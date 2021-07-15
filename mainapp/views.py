@@ -119,16 +119,16 @@ def article_detail_view(request, pk, comment_to=None):
                                               article=article,
                                               comment=new_comment
                                               )
-                for_moderator = re.search(r'@moderator', new_comment.content)
-                if for_moderator:
-                    moderators = User.objects.filter(is_staff=True)
-                    for moderator in moderators:
-                        Notification.add_notification(content='@moderator',
-                                                      user_from=request.user,
-                                                      user_to=moderator,
-                                                      article=article,
-                                                      comment=new_comment
-                                                      )
+            for_moderator = re.search(r'@moderator', new_comment.content)
+            if for_moderator:
+                moderators = User.objects.filter(is_staff=True)
+                for moderator in moderators:
+                    Notification.add_notification(content='@moderator',
+                                                  user_from=request.user,
+                                                  user_to=moderator,
+                                                  article=article,
+                                                  comment=new_comment
+                                                  )
 
         # context['comment_form'] = comment_form
         context['comment_form'] = CommentForm()

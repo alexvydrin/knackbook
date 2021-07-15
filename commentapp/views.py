@@ -90,16 +90,16 @@ def comment_create_for_comment(request, pk):
                                               article=comment_to.article,
                                               comment=comment_to.comment_to
                                               )
-                for_moderator = re.search(r'@moderator', new_comment.content)
-                if for_moderator:
-                    moderators = User.objects.filter(is_staff=True)
-                    for moderator in moderators:
-                        Notification.add_notification(content='@moderator',
-                                                      user_from=request.user,
-                                                      user_to=moderator,
-                                                      article=new_comment.article,
-                                                      comment=new_comment
-                                                      )
+            for_moderator = re.search(r'@moderator', new_comment.content)
+            if for_moderator:
+                moderators = User.objects.filter(is_staff=True)
+                for moderator in moderators:
+                    Notification.add_notification(content='@moderator',
+                                                  user_from=request.user,
+                                                  user_to=moderator,
+                                                  article=new_comment.article,
+                                                  comment=new_comment
+                                                  )
 
             # return redirect('mainapp:article_detail', pk=comment_to.article.pk)
             return redirect('mainapp:article_detail_comment_answers',
