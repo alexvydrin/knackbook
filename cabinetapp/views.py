@@ -159,7 +159,10 @@ def delete_article(request, pk):
                             article=article,
                             comment=None
                             )
-                    return HttpResponseRedirect(reverse('cabinet:my_articles'))
+                    return HttpResponseRedirect(request.session['next_url'])
+
+            next_url = request.META.get('HTTP_REFERER')
+            request.session['next_url'] = next_url
 
             content = {
                 'title': 'удаление статьи',

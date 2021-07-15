@@ -224,10 +224,12 @@ def banned_user(request, pk, article=None):
                         article=Article.objects.filter(id=article).first(),
                         comment=None
                     )
-                return HttpResponseRedirect(reverse('cabinet:moderation'))
+                return HttpResponseRedirect(request.session['next_url'])
 
             return render(request, 'authapp/ban_user.html', content)
 
         content['not_ban'] = True
+        next_url = request.META.get('HTTP_REFERER')
+        request.session['next_url'] = next_url
         return render(request, 'authapp/ban_user.html', content)
     return HttpResponseRedirect(reverse('main:index'))
