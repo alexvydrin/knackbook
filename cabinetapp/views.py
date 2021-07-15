@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -89,7 +89,7 @@ def main(request):
     return HttpResponseRedirect(reverse('main:index'))
 
 
-@user_passes_test(lambda u: not u.banned)
+@user_passes_test(lambda u: not u.banned if u.is_authenticated else '')
 def new_article(request):
     """Создание новой статьи"""
     if request.user.is_authenticated:
