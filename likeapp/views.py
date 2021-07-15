@@ -84,7 +84,7 @@ def likes_user(request, pk):
 
         if likes.filter(is_active=True, user_to=user_to,
                         user_from=request.user.id):
-            if user_to.username != request.user:
+            if user_to != request.user:
                 article = Article.objects.filter(user=pk).first()
                 Notification.add_notification(
                     content='лайк юзер',
