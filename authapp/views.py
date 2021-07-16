@@ -61,6 +61,10 @@ def logout(request):
     auth.logout(request)
     next_url = request.META.get('HTTP_REFERER')
     request.session['next_url'] = next_url
+    if 'new-article' in next_url.split('/'):
+        return HttpResponseRedirect(reverse('main:index'))
+    elif 'edit-password' in next_url.split('/'):
+        return HttpResponseRedirect(reverse('main:index'))
     return HttpResponseRedirect(request.session['next_url'])
 
 
