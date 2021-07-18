@@ -59,9 +59,7 @@ def login_user(request):
 def logout(request):
     """Разлогирование пользователя"""
     auth.logout(request)
-    next_url = request.META.get('HTTP_REFERER')
-    request.session['next_url'] = next_url
-    return HttpResponseRedirect(request.session['next_url'])
+    return HttpResponseRedirect(reverse('auth:login'))
 
 
 def register(request):
