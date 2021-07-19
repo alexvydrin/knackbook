@@ -29,11 +29,17 @@
                                 {% else %}
                                     {% if user.banned %}
                                         <p class="text-danger">{{ user }}</p>
-                                        <small class="text-danger">Заблокирован до {{ user.banned }}</small>
+                                        <small class="text-danger">Заблокирован
+                                            до {{ user.banned }}</small>
                                     {% else %}
                                         <p>{{ user }}</p>
                                     {% endif %}
                                 {% endif %}
+
+                                <small class="g-notexttransform float-left">Рейтинг: {{ rating }}</small>
+
+                                <br>
+
                             </h5>
                         </div>
 

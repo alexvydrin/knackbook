@@ -8,6 +8,7 @@ from django.utils.timezone import utc
 
 from authapp.models import User
 from cabinetapp.forms import NewArticleForm
+from likeapp.models import LikeUser
 from mainapp.models import Section, Article
 from notificationapp.models import Notification
 from tags.models import Tag
@@ -45,6 +46,7 @@ def main(request):
     """Главная страница личного кабинета"""
     if request.user.is_authenticated:
         user = User.objects.filter(id=request.user.id)
+        likes = LikeUser.objects.filter(user_to=request.user.id)
         if user.first().banned:
             now = datetime.utcnow().replace(tzinfo=utc)
             if now > user.first().banned:
@@ -82,7 +84,8 @@ def main(request):
             'email': user.first().email,
             'score_article': len(score_article),
             'score_article_draft': len(score_article_draft),
-            'notification': len(notification)
+            'notification': len(notification),
+            'rating': len(likes),
         }
 
         return render(request, 'cabinetapp/cabinet.html', content)
