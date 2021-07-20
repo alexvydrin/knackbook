@@ -112,7 +112,7 @@ class TestMainappSmoke(TestCase):
             # Проверка статуса
             self.assertEqual(response.status_code, 200)
             # Наличие на странице корректного заголовка
-            self.assertContains(response, "Статьи для тега:")
+            self.assertContains(response, "Статьи по тегу:")
             self.assertContains(response, tag.name)
 
         # Каждая статья:

@@ -1,5 +1,8 @@
-from django.urls import path
+"""
+urls for notificationapp
+"""
 
+from django.urls import path
 from notificationapp.views import notifications, notification_edit, \
     notification_delete
 

@@ -21,18 +21,26 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 
 urlpatterns = [
+
     path('admin/', admin.site.urls, name='admin'),
+
     path('', include('mainapp.urls', namespace='main')),
+
     path('auth/', include('authapp.urls', namespace='auth')),
+
     path('comments/', include('commentapp.urls', namespace='comments')),
+
     path('cabinet/', include('cabinetapp.urls', namespace='cabinet')),
+
     path('likes/', include('likeapp.urls', namespace='likes')),
-    path('notification/',
-         include('notificationapp.urls', namespace='notification')),
+
+    path('notification/', include('notificationapp.urls',
+                                  namespace='notification')),
 
     path('captcha/', include('captcha.urls')),
-    url(r'^favicon\.png$',
-        RedirectView.as_view(url='/static/image/favicon.png', permanent=True)),
+    url(r'^favicon\.png$', RedirectView.as_view(
+        url='/static/image/favicon.png',
+        permanent=True)),
 ]
 
 if settings.DEBUG:

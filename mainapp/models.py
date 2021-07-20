@@ -3,7 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Count, Q
 
 from tags.models import Tag
 
@@ -129,8 +129,36 @@ class Article(models.Model):
     @staticmethod
     def get_articles_five():
         """Пять самых свежих статей по дате создания"""
-        articles = Article.objects.filter(is_active=True,
-                                          is_published=True)[:5]
+        # Получаем еще количество лайков для статьи
+        likes_count = Count('likearticle', filter=Q(likearticle__is_active=True))
+        articles = Article.objects.filter(
+            is_active=True, is_published=True).annotate(
+            likes_count=likes_count).order_by('-edited', 'title')[:5]
+        # print("sql:", articles.query)
+        return articles
+
+    @staticmethod
+    def get_articles_for_section(section):
+        """Статьи в разделе"""
+        # Получаем еще количество лайков для статьи
+        likes_count = Count('likearticle', filter=Q(likearticle__is_active=True))
+        articles = Article.objects.filter(
+            sections=section,
+            is_active=True, is_published=True).annotate(
+            likes_count=likes_count).order_by('-edited', 'title')
+        # print("sql:", articles.query)
+        return articles
+
+    @staticmethod
+    def get_articles_for_tag(tag):
+        """Статьи для тега"""
+        # Получаем еще количество лайков для статьи
+        likes_count = Count('likearticle', filter=Q(likearticle__is_active=True))
+        articles = Article.objects.filter(
+            tags=tag,
+            is_active=True, is_published=True).annotate(
+            likes_count=likes_count).order_by('-edited', 'title')
+        # print("sql:", articles.query)
         return articles
 
     @staticmethod
@@ -140,11 +168,14 @@ class Article(models.Model):
         поиска (поиск по тексту и названию статьи)
         """
         text_search = request.GET.get('q')
-        articles = Article.objects.filter(Q(content__icontains=text_search,
-                                            is_active=True,
-                                            is_published=True) | Q(
-            title__icontains=text_search,
-            is_active=True,
-            is_published=True)).order_by(
-            '-edited', 'title')
+        # Получаем еще количество лайков для статьи
+        likes_count = Count('likearticle', filter=Q(likearticle__is_active=True))
+        articles = Article.objects.filter(
+            Q(content__icontains=text_search,
+              is_active=True,
+              is_published=True) |
+            Q(title__icontains=text_search,
+              is_active=True,
+              is_published=True)).annotate(
+            likes_count=likes_count).order_by('-edited', 'title')
         return articles

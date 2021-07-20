@@ -1,5 +1,8 @@
-from django.urls import path
+"""
+urls for likeapp
+"""
 
+from django.urls import path
 from likeapp.views import likes_article, likes_user
 
 app_name = "likeapp"
