@@ -1,22 +1,96 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 
-{% block title %}
-    Статьи
+{% block content %}
+    <div class="g-block size-90">
+        <section id="g-mainbody">
+            <div class="g-grid">
+                <div class="g-block size-100">
+                    <div class="g-content">
+                        <div class="platform-content row-fluid">
+                            <div class="span12">
+
+                                <div id="k2Container" class="itemListView">
+
+                                    <div class="itemListCategoriesBlock">
+
+                                        <div class="itemListCategory">
+                                            <hr>
+                                            <h1> {{ list_name }} </h1>
+                                            <hr>
+                                            <div class="clr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemList container-fluid">
+                                        <div class="advertur-rek google-rek-item">
+                                        </div>
+
+                                        <div id="itemListLeading" class="row">
+                                            {% for article in articles %}
+                                                <div class="col-12 well-small">
+
+                                                    <div class="catItemView groupLeading">
+
+                                                        <div class="catItemHeader">
+                                                            <h3 class="catItemTitle">
+                                                                <a href="{% url 'mainapp:article_detail' pk=article.pk %}">
+                                                                    {{ article.title }}
+                                                                </a>
+                                                            </h3>
+                                                        </div>
+                                                        <div class="small align-left">
+                                                            Рейтинг: {{ article.likes_count }}
+                                                        </div>
+                                                        <div class="small align-right">
+                                                            {{ article.edited|date:"d-E-Y" }}
+                                                        </div>
+
+                                                        <div class="catItemReadMore">
+                                                            <a class="k2ReadMore"
+                                                               href="{% url 'mainapp:article_detail' pk=article.pk %}">
+                                                                Читать ... </a>
+                                                        </div>
+
+                                                        <div class="clr"></div>
+                                                        <div class="clr"></div>
+
+                                                    </div>
+
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                        {% comment %}
+                                        пагинация пока не работает
+                                        <div class="pagination-right">
+                                            <span class="step-links">
+                                                {% if page_obj.has_previous %}
+                                                    <a href="?q={{ request.GET.q }}&page=1">&laquo; В начало</a>
+                                                    <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                                                {% endif %}
+                                                <span class="current">
+                                                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                                                </span>
+                                                {% if page_obj.has_next %}
+                                                    <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Следующая</a>
+                                                    <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        {% endcomment %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}
 
 {% block menu %}
     {% include 'mainapp/inc_main_menu.html' %}
-{% endblock %}
-
-{% block content %}
-    <hr>
-    <h1>Статьи</h1>
-    <hr>
-
-    {% for object in object_list %}
-        <a href="{% url 'mainapp:article_detail' pk=object.pk %}">{{ object.title }} ({{ object.edited|date:"d-E-Y P" }}) </a>
-        <br>
-    {% endfor %}
-
 {% endblock %}

@@ -15,16 +15,17 @@ from django.views.generic.detail import DetailView
 from authapp.models import User
 from likeapp.models import LikeArticle, LikeUser
 from notificationapp.models import Notification
-from .models import Section, Article
 from tags.models import Tag
 from commentapp.models import Comment
 from commentapp.forms import CommentForm
+from .models import Section, Article
 
 
 def main(request):
     """Главная страница"""
     context = {
-        'title': 'главная',
+        'title': 'Knack Book',  # Название закладки в браузере
+        'list_name': 'Свежие статьи',  # Наименование списка статей
         'links_section_menu': Section.get_links_section_menu(),
         'tags_menu': Tag.get_tags_menu(),
         'articles': Article.get_articles_five(),
@@ -36,35 +37,16 @@ def main(request):
             if now > user.first().banned:
                 user.update(banned=None)
         context['notification'] = Notification.notification(request)
-    return render(request, 'mainapp/index.html', context)
-
-
-class SectionListView(ListView):  # pylint: disable=too-many-ancestors
-    """Просмотр списка разделов"""
-    model = Section
-    template_name = 'mainapp/section_list.html'
-
-    def get_queryset(self):
-        filtered_list = self.model.objects.filter(is_active=True).order_by(
-            'name')
-        return filtered_list
-
-
-class ArticleListView(ListView):  # pylint: disable=too-many-ancestors
-    """Просмотр списка статей"""
-    model = Article
-    template_name = 'mainapp/article_list.html'
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.filter(is_active=True, is_published=True)
+    return render(request, 'mainapp/article_list.html', context)
 
 
 def article_detail_view(request, pk, comment_to=None):
     """Просмотр выбранной статьи и работа с комментариями"""
 
-    # Получаем статью и одновременно проверяем на пометку удаления и на признак публикации.
-    # Такая дополнительная проверка нужна чтобы нельзя было просмотреть удаленную или неопубликованную статью,
+    # Получаем статью
+    # одновременно проверяем на пометку удаления и на признак публикации.
+    # Такая дополнительная проверка нужна чтобы нельзя было просмотреть
+    # удаленную или неопубликованную статью,
     # вручную указав в адресной строке её url
     if request.user.is_staff or request.user == Article.objects.filter(
             id=pk).first().user:
@@ -73,32 +55,44 @@ def article_detail_view(request, pk, comment_to=None):
         article = get_object_or_404(Article, pk=pk, is_active=True,
                                     is_published=True)
     likes = LikeArticle.objects.filter(is_active=True, article=pk)
-    likes_user = LikeUser.objects
+    likes_user = LikeUser.objects.filter(is_active=True)
     context = {
         'object': article,  # сама статья
+
+        # общее меню разделов
         'links_section_menu': Section.get_links_section_menu(),
-        # общее меню разделов - можно вынести в общий контекст
+
+        # общее меню тегов
         'tags_menu': Tag.get_tags_menu(),
-        # общее меню тегов - можно вынести в общий контекст
+
+        # теги статьи
         'tags_for_article': Tag.objects.filter(article=pk, is_active=True),
-        # теги статьи - создать метод в модели
-        # 'comments': Comment.get_for_article(article=pk),
-        'comments': Comment.get_for_article_level_1(article=pk),  # только первый уровень
-        # комментарии для статьи
+
+        # комментарии для статьи - только первый уровень
+        'comments': Comment.get_for_article_level_1(article=pk),
+
+        # комментарий для которого развернут ответ
+        'comment_for_answers': comment_to,
+
         'new_comment': False,
+
+        # количество лайков для статьи
         'likes': len(likes),
+
         'like_active': len(likes.filter(user=request.user.id)),
+
         'likes_user': len(
             likes_user.filter(is_active=True, user_to=article.user_id)),
+
         'like_active_user': len(
             likes_user.filter(is_active=True, user_to=article.user_id,
                               user_from=request.user.id)),
-        'comment_for_answers': comment_to,  # комментарий для которого развернут ответ
     }
 
     # Ответы на комментарий
     if comment_to is not None:
-        context['answers_for_comment'] = Comment.get_for_comment(comment_to=comment_to)
+        context['answers_for_comment'] = Comment.get_for_comment(
+            comment_to=comment_to)
 
     if request.user.is_authenticated:
         context['notification'] = Notification.notification(request)
@@ -136,7 +130,8 @@ def article_detail_view(request, pk, comment_to=None):
         context['comment_form'] = CommentForm()
 
     # Количество комментариев к статье
-    context['total_comments'] = Comment.objects.filter(article=pk, is_active=True).count()
+    context['total_comments'] = Comment.objects.filter(
+        article=pk, is_active=True).count()
 
     return render(request, 'mainapp/article_detail.html', context)
 
@@ -144,14 +139,13 @@ def article_detail_view(request, pk, comment_to=None):
 class ArticlesForSectionList(DetailView):
     """Просмотр списка статей для выбранного раздела"""
     model = Section
-    template_name = 'mainapp/articles_for_section_list.html'
+    template_name = 'mainapp/article_list.html'
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['articles'] = Article.objects.filter(sections=self.object,
-                                                     is_active=True,
-                                                     is_published=True).order_by(
-            '-edited', 'title')
+        context['articles'] = Article.get_articles_for_section(self.object)
+        context['title'] = 'Статьи в разделе'  # Название закладки в браузере
+        context['list_name'] = f'Статьи в разделе: {self.object.name} '
         context['links_section_menu'] = Section.get_links_section_menu()
         context['tags_menu'] = Tag.get_tags_menu()
         if self.request.user.is_authenticated:
@@ -162,14 +156,13 @@ class ArticlesForSectionList(DetailView):
 class ArticlesForTagList(DetailView):
     """Просмотр списка статей для выбранного тега"""
     model = Tag
-    template_name = 'mainapp/articles_for_tag_list.html'
+    template_name = 'mainapp/article_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['articles'] = Article.objects.filter(tags=self.object,
-                                                     is_active=True,
-                                                     is_published=True).order_by(
-            '-edited', 'title')
+        context['articles'] = Article.get_articles_for_tag(self.object)
+        context['title'] = 'Статьи по тегу'  # Название закладки в браузере
+        context['list_name'] = f'Статьи по тегу: {self.object.name} '
         context['links_section_menu'] = Section.get_links_section_menu()
         context['tags_menu'] = Tag.get_tags_menu()
         if self.request.user.is_authenticated:

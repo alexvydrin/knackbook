@@ -47,25 +47,27 @@
         {% endif %}
     {% else %}
 
-<!--        <div class="col-3 float-right">-->
-<!--            <a href="{% url 'auth:login' %}">-->
-<!--                {% include 'likeapp/like_article.html' %}-->
-<!--            </a>-->
-<!--        </div>-->
-            <div class="col-3 float-right">
-                <a href="#zatemnenie">
-                    {% include 'likeapp/like_article.html' %}
-                </a>
-            </div>
-            <div id="zatemnenie">
-               <window>
-                   <a href="#close_window" class="close_window close_window_right" style="text-align: right;
+        {% comment %}
+        <div class="col-3 float-right">
+            <a href="{% url 'auth:login' %}">
+                {% include 'likeapp/like_article.html' %}
+            </a>
+        </div>
+        {% endcomment %}
+        <div class="col-3 float-right">
+            <a href="#zatemnenie">
+                {% include 'likeapp/like_article.html' %}
+            </a>
+        </div>
+        <div id="zatemnenie">
+            <window>
+                <a href="#close_window" class="close_window close_window_right" style="text-align: right;
                     display: block; margin: 0;">&#10008;</a> <br>
-                   <p style="margin: 0;">Действие доступно только зарегистрированному пользователю </p> <br>
-                   <a href="{% url 'auth:login' %}" class="close_window">Войти</a>
-                   <a href="{% url 'auth:register' %}" class="close_window pull-right">Зарегистрироваться</a>
-               </window>
-            </div>
+                <p style="margin: 0;">Действие доступно только зарегистрированному пользователю </p> <br>
+                <a href="{% url 'auth:login' %}" class="close_window">Войти</a>
+                <a href="{% url 'auth:register' %}" class="close_window pull-right">Зарегистрироваться</a>
+            </window>
+        </div>
 
     {% endif %}
 
@@ -119,13 +121,15 @@
                 {% endif %}
             {% endif %}
 
-<!--                <div class="like-user col-8 float-right">-->
-<!--                    <button class="like-users" type="submit"-->
-<!--                            data-pk="{{ object.user_id }}"-->
-<!--                            value="{{ likes_user }}">-->
-<!--                        {% include 'likeapp/like_user.html' %}-->
-<!--                    </button>-->
-<!--                </div>-->
+            {% comment %}
+            <div class="like-user col-8 float-right">
+                <button class="like-users" type="submit"
+                        data-pk="{{ object.user_id }}"
+                        value="{{ likes_user }}">
+                    {% include 'likeapp/like_user.html' %}
+                </button>
+            </div>
+            {% endcomment %}
             {% if user.is_authenticated %}
                 <div class="like-user col-8 float-right">
                     <button class="like-users" type="submit"
@@ -171,28 +175,30 @@
                 {% if user.is_staff %}<span class="text-danger">BAN</span>
                 {% endif %}
             {% endif %}
-<!--                <div class="like-user text-danger col-8 float-right">-->
-<!--                    <button class="like-users text-danger" type="submit"-->
-<!--                            data-pk="{{ object.user_id }}"-->
-<!--                            value="{{ likes_user }}">-->
-<!--                        {% include 'likeapp/like_user.html' %}-->
-<!--                    </button>-->
-<!--                </div>-->
-                {% if user.is_authenticated %}
-                    <div class="like-user col-8 float-right">
-                        <button class="like-users" type="submit"
-                                data-pk="{{ object.user_id }}"
-                                value="{{ likes_user }}">
-                            {% include 'likeapp/like_user.html' %}
-                        </button>
-                    </div>
-                {% else %}
-                    <div class="like-user col-8 float-right">
-                        <a href="#zatemnenie">
-                            {% include 'likeapp/like_user.html' %}
-                        </a>
-                    </div>
-                {% endif %}
+            {% comment %}
+            <div class="like-user text-danger col-8 float-right">
+                <button class="like-users text-danger" type="submit"
+                        data-pk="{{ object.user_id }}"
+                        value="{{ likes_user }}">
+                    {% include 'likeapp/like_user.html' %}
+                </button>-->
+            </div>-->
+            {% endcomment %}
+            {% if user.is_authenticated %}
+                <div class="like-user col-8 float-right">
+                    <button class="like-users" type="submit"
+                            data-pk="{{ object.user_id }}"
+                            value="{{ likes_user }}">
+                        {% include 'likeapp/like_user.html' %}
+                    </button>
+                </div>
+            {% else %}
+                <div class="like-user col-8 float-right">
+                    <a href="#zatemnenie">
+                        {% include 'likeapp/like_user.html' %}
+                    </a>
+                </div>
+            {% endif %}
         {% endif %}
     {% endif %}
     <p>Создано: {{ object.created|date:"d-E-Y P" }}</p>
