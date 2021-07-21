@@ -198,6 +198,7 @@ class ArticlesForSearch(ListView):
         context['search_rating'] = self.request.GET.get('search_rating')
         if self.request.user.is_authenticated:
             context['notification'] = Notification.notification(self.request)
+        context['value'] = self.request.GET.get('q')
         return context
 
 
