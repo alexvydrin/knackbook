@@ -19,8 +19,38 @@
         <hr>
         {% if object_list %}
             {% for object in object_list %}
-                <a href="{% url 'mainapp:article_detail' pk=object.pk %}">{{ object.title }} ({{ object.edited|date:"d-E-Y P" }}) </a>
-                <br>
+                    <div class="col-12 well-small">
+
+                        <div class="catItemView groupLeading">
+
+                            <div class="catItemHeader">
+                                <h3 class="catItemTitle">
+                                    <a href="{% url 'mainapp:article_detail' pk=object.pk %}">
+                                        {{ object.title }}
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="small align-left">
+                                Рейтинг: {{ object.likes_count }}
+                            </div>
+                            <div class="small align-right">
+                                {{ object.edited|date:"d-E-Y" }}
+                            </div>
+
+                            <div class="catItemReadMore">
+                                <a class="k2ReadMore"
+                                   href="{% url 'mainapp:article_detail' pk=object.pk %}">
+                                    Читать ... </a>
+                            </div>
+
+                            <div class="clr"></div>
+                            <div class="clr"></div>
+
+                        </div>
+
+                    </div>
+<!--                <a href="{% url 'mainapp:article_detail' pk=object.pk %}">{{ object.title }} ({{ object.edited|date:"d-E-Y P" }}) </a>-->
+<!--                <br>-->
             {% endfor %}
             <div class="pagination-right">
             <span class="step-links">

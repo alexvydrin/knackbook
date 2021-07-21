@@ -1,0 +1,103 @@
+{% load static %}
+<div class="g-block size-25">
+                    <section id="g-sidebar">
+                        <div class="g-grid">
+
+                            <div class="g-block size-100 moiVK otstup3">
+                                <div id="custom-6747-particle"
+                                     class="g-content g-particle">
+                                    <h2>Поиск по тексту статьи</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="g-grid" style="width: 100%;">
+
+                            <div class="g-block size-100 moiVK otstup1">
+                                <div class="g-content">
+                                    <div class="platform-content">
+                                        <div class="moduletable ">
+
+                                            <form id="mod-finder-searchform305"
+                                                  name="mod_finder_searchform305"
+                                                  action="{% url 'mainapp:articles_search' %}"
+                                                  method="get"
+                                                  class="form-search"
+                                                  style="width: 100%;">
+                                                <div class="finder">
+                                                    <!--                                                        <label for="mod-finder-searchword305" class="element-invisible finder">Искать</label>-->
+                                                    <div class="{% if flag_search == 'true' %} adv_search_block {% else %} adv_search_none {% endif %}"
+                                                         id="div_adv_search">
+                                                        <label for="mod-finder-searchdate305" class="element-invisible finder">Дата не менее:&nbsp;</label>
+                                                        <input type="date" name="search_date"
+                                                               id="mod-finder-searchdate305"
+                                                               class="search-query input-medium"
+                                                               size="25" value="{% if search_date %}{{search_date}}{% else %}2021-01-01{% endif %}"
+                                                               style="width: 53%;"/><br><br>
+                                                        <label for="mod-finder-searchrating305" class="element-invisible finder">Рейтинг не ниже:&nbsp;</label>
+                                                        <input type="number" name="search_rating"
+                                                               id="mod-finder-searchrating305"
+                                                               class="search-query input-medium"
+                                                               size="25" value="{% if search_rating %}{{search_rating}}{% else %}0{% endif %}"
+                                                               min="0"
+                                                               style="width: 20%;"/><br><br>
+                                                        <input type="text"
+                                                               name="flag_search"
+                                                               id="flag_search"
+                                                               class="search-query input-medium"
+                                                               value="{% if flag_search %}{{flag_search}}{% else %}false{% endif %}"
+                                                               style="display: none"/>
+                                                    </div>
+                                                    <input type="text" name="q"
+                                                           id="mod-finder-searchword305"
+                                                           class="search-query input-medium"
+                                                           size="25" value=""
+                                                           placeholder="Введите текст..."
+                                                           style="width: 50%;"/>
+                                                    <input class="btn-inverse form-control"
+                                                           id="adv_search"
+                                                           type="button"
+                                                           value="{% if flag_search == 'true' %}&mdash;{% else %}&#9776;{% endif %}"
+                                                           title="{% if flag_search %} Скрыть расширенный поиск {% else %} Расширенный поиск {% endif %}"
+                                                           onclick="window.advSearch();">
+                                                    <input class="btn-inverse form-control"
+                                                           type="submit"
+                                                           value="Искать">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="g-grid">
+
+                            <div class="g-block size-100 moiVK otstup3">
+                                <div id="custom-67471-particle"
+                                     class="g-content g-particle">
+                                    <h2>Поиск по тегам </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="g-grid">
+
+                            <div class="g-block size-100 rounded bordered square shadow2 otstup myRightMenu">
+                                <div class="g-content">
+                                    <div class="platform-content">
+                                        <div class="moduletable ">
+                                            <ul class="list-unstyled">
+                                                {% for tag in tags_menu %}
+                                                    <li class="item-383">
+                                                        <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">{{ tag.name }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>

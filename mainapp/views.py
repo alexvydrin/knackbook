@@ -171,7 +171,11 @@ class ArticlesForTagList(DetailView):
 
 
 class ArticlesForSearch(ListView):
-    """Просмотр списка статей для введенного в строку поиска текста"""
+    """
+    Просмотр списка статей для введенного в строку поиска текста,
+    с учетом расширенного поиска, при котором добавляются отборы
+    по дате изменения статьи и рейтингу статьи (при его активации)
+    """
     model = Article
     template_name = 'mainapp/article_search.html'
     paginate_by = 10
@@ -189,6 +193,9 @@ class ArticlesForSearch(ListView):
         context['links_section_menu'] = Section.get_links_section_menu()
         context['tags_menu'] = Tag.get_tags_menu()
         context['text_search'] = self.request.GET.get('q')
+        context['flag_search'] = self.request.GET.get('flag_search')
+        context['search_date'] = self.request.GET.get('search_date')
+        context['search_rating'] = self.request.GET.get('search_rating')
         if self.request.user.is_authenticated:
             context['notification'] = Notification.notification(self.request)
         return context
@@ -197,7 +204,7 @@ class ArticlesForSearch(ListView):
 def page_help(request):
     """Страница помощь"""
     context = {
-        'title': 'главная',
+        'title': 'Помощь',
         'links_section_menu': Section.get_links_section_menu(),
         'tags_menu': Tag.get_tags_menu(),
         'articles': Article.get_articles_five(),

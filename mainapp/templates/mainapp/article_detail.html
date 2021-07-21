@@ -61,11 +61,11 @@
         </div>
         <div id="zatemnenie">
             <window>
-                <a href="#close_window" class="close_window close_window_right" style="text-align: right;
+                <a href="#close_window" class="close_window_right" style="text-align: right;
                     display: block; margin: 0;">&#10008;</a> <br>
                 <p style="margin: 0;">Действие доступно только зарегистрированному пользователю </p> <br>
-                <a href="{% url 'auth:login' %}" class="close_window">Войти</a>
-                <a href="{% url 'auth:register' %}" class="close_window pull-right">Зарегистрироваться</a>
+                <a href="{% url 'auth:login' %}" class="">Войти</a>
+                <a href="{% url 'auth:register' %}" class="pull-right">Зарегистрироваться</a>
             </window>
         </div>
 

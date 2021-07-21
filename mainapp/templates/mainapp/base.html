@@ -22,6 +22,7 @@
 
     {% block js %}
         <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'js/advanced_search.js' %}"></script>
     {% endblock %}
 
 </head>
@@ -91,77 +92,7 @@ g-2column-left g-style-preset5">
                         </div>
                     </section>
                 </div>
-                <div class="g-block size-25">
-                    <section id="g-sidebar">
-                        <div class="g-grid">
-
-                            <div class="g-block size-100 moiVK otstup3">
-                                <div id="custom-6747-particle"
-                                     class="g-content g-particle">
-                                    <h2>Поиск по тексту статьи</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="g-grid">
-
-                            <div class="g-block size-100 moiVK otstup1">
-                                <div class="g-content">
-                                    <div class="platform-content">
-                                        <div class="moduletable ">
-
-                                            <form id="mod-finder-searchform305"
-                                                  action="{% url 'mainapp:articles_search' %}"
-                                                  method="get"
-                                                  class="form-search">
-                                                <div class="finder">
-                                                    <!--                                                        <label for="mod-finder-searchword305" class="element-invisible finder">Искать</label>-->
-                                                    <input type="text" name="q"
-                                                           id="mod-finder-searchword305"
-                                                           class="search-query input-medium"
-                                                           size="25" value=""
-                                                           placeholder="Введите текст..."
-                                                           style="width: 62%;"/>
-                                                    <input class="btn-inverse form-control"
-                                                           type="submit"
-                                                           value="Искать">
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="g-grid">
-
-                            <div class="g-block size-100 moiVK otstup3">
-                                <div id="custom-67471-particle"
-                                     class="g-content g-particle">
-                                    <h2>Поиск по тегам </h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="g-grid">
-
-                            <div class="g-block size-100 rounded bordered square shadow2 otstup myRightMenu">
-                                <div class="g-content">
-                                    <div class="platform-content">
-                                        <div class="moduletable ">
-                                            <ul class="list-unstyled">
-                                                {% for tag in tags_menu %}
-                                                    <li class="item-383">
-                                                        <a href="{% url 'mainapp:articles_for_tag_list' pk=tag.pk %}">{{ tag.name }}</a>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
+                {% include 'mainapp/inc_search.html' %}
             </div>
         </div>
     </section>
