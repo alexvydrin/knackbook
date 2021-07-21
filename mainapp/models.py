@@ -165,17 +165,37 @@ class Article(models.Model):
     def get_articles_for_search(request):
         """
         Получение списка статей для введенного текста
-        поиска (поиск по тексту и названию статьи)
+        поиска (поиск по тексту и названию статьи) +
+        расширенный поиск с учетом даты изменения статьи
+        и рейтинга
         """
         text_search = request.GET.get('q')
+        advanced_search_flag = request.GET.get('flag_search')
+        search_date = request.GET.get('search_date')
+        search_rating = request.GET.get('search_rating')
         # Получаем еще количество лайков для статьи
         likes_count = Count('likearticle', filter=Q(likearticle__is_active=True))
-        articles = Article.objects.filter(
-            Q(content__icontains=text_search,
-              is_active=True,
-              is_published=True) |
-            Q(title__icontains=text_search,
-              is_active=True,
-              is_published=True)).annotate(
-            likes_count=likes_count).order_by('-edited', 'title')
+        # Если расширенный поиск активен - учитываем дополнительные параметры, иначе поиск только по тексту
+        if advanced_search_flag == "true":
+            articles = Article.objects.filter(
+                Q(content__icontains=text_search,
+                  edited__gte=search_date,
+                  is_active=True,
+                  is_published=True) |
+                Q(title__icontains=text_search,
+                  edited__gte=search_date,
+                  is_active=True,
+                  is_published=True)).annotate(
+                likes_count=likes_count).filter(
+                likes_count__gte=search_rating
+            ).order_by('-edited', 'title')
+        else:
+            articles = Article.objects.filter(
+                Q(content__icontains=text_search,
+                  is_active=True,
+                  is_published=True) |
+                Q(title__icontains=text_search,
+                  is_active=True,
+                  is_published=True)).annotate(
+                likes_count=likes_count).order_by('-edited', 'title')
         return articles

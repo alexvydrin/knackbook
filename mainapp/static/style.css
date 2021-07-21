@@ -17137,6 +17137,7 @@ only screen and (min-width:1040px) and (max-width:1355px) {
 #zatemnenie:target {
 display: block;
 }
+
 #zatemnenie {
 background: rgba(102, 102, 102, 0.68);
 width: 100%;
@@ -17157,6 +17158,7 @@ border: 1px solid #cecece;
 padding: 50px;
 transform: translate(-50%,-50%);
 background-color: #fafafa;
+}
 
 a.close_window {
 position: absolute;
@@ -17168,5 +17170,14 @@ margin: 0;
 
 a.close_window_right {
 text-align: right;
+display: block;
+}
+
+/* расширенный поиск */
+.adv_search_none {
+display: none;
+}
+
+.adv_search_block {
 display: block;
 }
