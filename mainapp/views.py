@@ -7,12 +7,17 @@ Article - Статьи
 import re
 from datetime import datetime
 
+from captcha.fields import CaptchaField
+from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.timezone import utc
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
 from authapp.models import User
+from knackbook.settings import EMAIL_HOST_USER
 from likeapp.models import LikeArticle, LikeUser
 from notificationapp.models import Notification
 from tags.models import Tag
@@ -213,3 +218,30 @@ def page_help(request):
     if request.user.is_authenticated:
         context['notification'] = Notification.notification(request)
     return render(request, 'mainapp/page_help.html', context)
+
+
+@csrf_exempt
+def feedback(request):
+    """Форма обратной связи"""
+    if request.method == 'POST':
+        send_mail(request.POST.get('header'),
+                  f'{request.POST.get("message")}\nСообщение от пользователя'
+                  f' - {request.POST.get("name")} - ({request.user},'
+                  f' id - {request.user.id})',
+                  EMAIL_HOST_USER,
+                  [request.POST.get('email'), ]
+                  )
+        return HttpResponseRedirect(request.session['next_url'])
+
+    next_url = request.META.get('HTTP_REFERER')
+    request.session['next_url'] = next_url
+
+    context = {
+        'title': 'Обратная связь',
+        'links_section_menu': Section.get_links_section_menu(),
+        'tags_menu': Tag.get_tags_menu(),
+    }
+
+    if request.user.is_authenticated:
+        context['notification'] = Notification.notification(request)
+    return render(request, 'mainapp/feedback.html', context)

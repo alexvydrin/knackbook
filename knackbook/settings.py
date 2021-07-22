@@ -29,6 +29,7 @@ with open('knackbook/env.json', 'r') as f:
     POSTGRE_DB = ENV['POSTGRE_DB']
     POSTGRE_USER = ENV['POSTGRE_USER']
     POSTGRE_PASSWORD = ENV['POSTGRE_PASSWORD']
+    EMAIL_PASSWORD = ENV['EMAIL_PASSWORD']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if DEBUG_MODE == "True":  # Отладка
@@ -159,3 +160,11 @@ AUTH_USER_MODEL = 'authapp.User'
 
 CAPTCHA_FONT_SIZE = 50
 CAPTCHA_LENGTH = 5
+
+# mail
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'knackbookhelp@gmail.com'
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD

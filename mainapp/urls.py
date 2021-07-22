@@ -4,7 +4,7 @@ urls for mainapp
 
 from django.urls import path
 from .views import main, article_detail_view, ArticlesForTagList,\
-    ArticlesForSectionList, ArticlesForSearch, page_help
+    ArticlesForSectionList, ArticlesForSearch, page_help, feedback
 
 app_name = "mainapp"
 
@@ -28,4 +28,6 @@ urlpatterns = [
          name='articles_search'),
 
     path('help/', page_help, name='page_help'),
+
+    path('feedback/', feedback, name='feedback'),
 ]
