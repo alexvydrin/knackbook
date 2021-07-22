@@ -1,0 +1,42 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block menu %}
+    {% include 'mainapp/inc_main_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="center">Обратная связь</h1>
+
+    <div class="size-90 title-center">
+        <form action="." method="post" name="form">
+            <input name="name" type="text" required
+                    {% if user.is_authenticated and user.first_name and user.last_name %}
+                   value="{{ user.first_name }} {{ user.last_name }}" readonly
+                    {% elif user.is_authenticated and user.first_name %}
+                   value="{{ user.first_name }}" readonly
+                    {% else %}
+                   placeholder="Ваше имя"
+                    {% endif %}/>
+            <br>
+            <input name="email" type="email" required
+                    {% if user.is_authenticated %}
+                   value="{{ user.email }}" readonly
+                    {% else %}
+                   placeholder="Ваша почта"
+                    {% endif %}/>
+            <br>
+            <input size="30" name="header" required
+                   type="text"
+                   placeholder="Тема"/>
+            <br>
+            <textarea cols="32" required
+                      name="message"
+                      rows="5" placeholder="Текст сообщения"></textarea>
+
+            <br><br>
+            <input class="btn btn-success float-right" type="submit"
+                   value="Отправить"/>
+        </form>
+    </div>
+{% endblock %}
