@@ -225,9 +225,17 @@ def feedback(request):
     """Форма обратной связи"""
     if request.method == 'POST':
         send_mail(request.POST.get('header'),
-                  f'{request.POST.get("message")}\nСообщение от пользователя'
+                  f'{request.POST.get("message")}\n\nСообщение от пользователя'
                   f' - {request.POST.get("name")} - ({request.user},'
-                  f' id - {request.user.id})',
+                  f' id - {request.user.id}).'
+                  f'\nE-mail - {request.POST.get("email")}',
+                  EMAIL_HOST_USER,
+                  [EMAIL_HOST_USER, ]
+                  )
+        send_mail(request.POST.get('header'),
+                  f'Спасибо за обращение!\nМы получили ваше сообщение'
+                  f'\n"{request.POST.get("message")}"\n\n'
+                  f'В ближайшее время обязательно вам ответим!',
                   EMAIL_HOST_USER,
                   [request.POST.get('email'), ]
                   )
