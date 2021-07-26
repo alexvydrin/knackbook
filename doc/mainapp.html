@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mainapp &#8212; документация Knackbook 0.0.1</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="authapp" href="authapp.html" />
+    <link rel="prev" title="KnackBook" href="run.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="mainapp">
+<h1>mainapp<a class="headerlink" href="#mainapp" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Приложение, которое отвечает за:</p>
+<ul class="simple">
+<li><p>главную страницу</p></li>
+<li><p>список статей</p></li>
+<li><p>детали статьи</p></li>
+<li><p>обратную связь</p></li>
+<li><p>поиск
+и др</p></li>
+</ul>
+<section id="mainapp-models">
+<h2>mainapp.models<a class="headerlink" href="#mainapp-models" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mainapp.models.Section">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mainapp.models.</span></span><span class="sig-name descname"><span class="pre">Section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.models.Section" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Раздел (Тематика, Категория)</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="mainapp.models.Section.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#mainapp.models.Section.DoesNotExist" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="mainapp.models.Section.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#mainapp.models.Section.MultipleObjectsReturned" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Section.created">
+<span class="sig-name descname"><span class="pre">created</span></span><a class="headerlink" href="#mainapp.models.Section.created" title="Ссылка на это определение">¶</a></dt>
+<dd><p>дата и время создания раздела</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Section.edited">
+<span class="sig-name descname"><span class="pre">edited</span></span><a class="headerlink" href="#mainapp.models.Section.edited" title="Ссылка на это определение">¶</a></dt>
+<dd><p>дата и время последнего изменения раздела</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.models.Section.get_links_section_menu">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_links_section_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.models.Section.get_links_section_menu" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Меню разделов</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Section.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><a class="headerlink" href="#mainapp.models.Section.is_active" title="Ссылка на это определение">¶</a></dt>
+<dd><p>True - раздел активен
+False - раздел удален</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Section.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mainapp.models.Section.name" title="Ссылка на это определение">¶</a></dt>
+<dd><p>наименование раздела</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mainapp.models.Article">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mainapp.models.</span></span><span class="sig-name descname"><span class="pre">Article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.models.Article" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Статья</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="mainapp.models.Article.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#mainapp.models.Article.DoesNotExist" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="mainapp.models.Article.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#mainapp.models.Article.MultipleObjectsReturned" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.content">
+<span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#mainapp.models.Article.content" title="Ссылка на это определение">¶</a></dt>
+<dd><p>контент, содержимое статьи</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.created">
+<span class="sig-name descname"><span class="pre">created</span></span><a class="headerlink" href="#mainapp.models.Article.created" title="Ссылка на это определение">¶</a></dt>
+<dd><p>дата и время создания статьи</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.edited">
+<span class="sig-name descname"><span class="pre">edited</span></span><a class="headerlink" href="#mainapp.models.Article.edited" title="Ссылка на это определение">¶</a></dt>
+<dd><p>дата и время последнего изменения статьи</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.models.Article.get_articles_five">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_articles_five</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.models.Article.get_articles_five" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Пять самых свежих статей по дате создания</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.models.Article.get_articles_for_search">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_articles_for_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.models.Article.get_articles_for_search" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Получение списка статей для введенного текста
+поиска (поиск по тексту и названию статьи) +
+расширенный поиск с учетом даты изменения статьи
+и рейтинга</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.models.Article.get_articles_for_section">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_articles_for_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.models.Article.get_articles_for_section" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Статьи в разделе</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.models.Article.get_articles_for_tag">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_articles_for_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.models.Article.get_articles_for_tag" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Статьи для тега</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><a class="headerlink" href="#mainapp.models.Article.is_active" title="Ссылка на это определение">¶</a></dt>
+<dd><p>True - статья активна
+False - статья удалена</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.is_published">
+<span class="sig-name descname"><span class="pre">is_published</span></span><a class="headerlink" href="#mainapp.models.Article.is_published" title="Ссылка на это определение">¶</a></dt>
+<dd><p>статья опубликована</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.is_rejected">
+<span class="sig-name descname"><span class="pre">is_rejected</span></span><a class="headerlink" href="#mainapp.models.Article.is_rejected" title="Ссылка на это определение">¶</a></dt>
+<dd><p>статья отвергнута</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.is_reviewing">
+<span class="sig-name descname"><span class="pre">is_reviewing</span></span><a class="headerlink" href="#mainapp.models.Article.is_reviewing" title="Ссылка на это определение">¶</a></dt>
+<dd><p>статья на модерации</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.rating">
+<span class="sig-name descname"><span class="pre">rating</span></span><a class="headerlink" href="#mainapp.models.Article.rating" title="Ссылка на это определение">¶</a></dt>
+<dd><p>рейтинг</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.reject_comment">
+<span class="sig-name descname"><span class="pre">reject_comment</span></span><a class="headerlink" href="#mainapp.models.Article.reject_comment" title="Ссылка на это определение">¶</a></dt>
+<dd><p>комментарий - причина отказа в публикации</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.review_user">
+<span class="sig-name descname"><span class="pre">review_user</span></span><a class="headerlink" href="#mainapp.models.Article.review_user" title="Ссылка на это определение">¶</a></dt>
+<dd><p>модератор статьи</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.sections">
+<span class="sig-name descname"><span class="pre">sections</span></span><a class="headerlink" href="#mainapp.models.Article.sections" title="Ссылка на это определение">¶</a></dt>
+<dd><p>разделы, в которые входит статья</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#mainapp.models.Article.tags" title="Ссылка на это определение">¶</a></dt>
+<dd><p>теги для статьи</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.title">
+<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#mainapp.models.Article.title" title="Ссылка на это определение">¶</a></dt>
+<dd><p>наименование статьи</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.models.Article.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#mainapp.models.Article.user" title="Ссылка на это определение">¶</a></dt>
+<dd><p>автор статьи</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mainapp.views">
+<span id="mainapp-views"></span><h2>mainapp.views<a class="headerlink" href="#module-mainapp.views" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Контроллеры (Views)</p>
+<p>Section - Разделы
+Article - Статьи</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForSearch">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mainapp.views.</span></span><span class="sig-name descname"><span class="pre">ArticlesForSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.ArticlesForSearch" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Просмотр списка статей для введенного в строку поиска текста,
+с учетом расширенного поиска, при котором добавляются отборы
+по дате изменения статьи и рейтингу статьи (при его активации)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForSearch.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.ArticlesForSearch.get_context_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Get the context for this view.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForSearch.get_queryset">
+<span class="sig-name descname"><span class="pre">get_queryset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.ArticlesForSearch.get_queryset" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Return the list of items for this view.</p>
+<p>The return value must be an iterable and may be an instance of
+<cite>QuerySet</cite> in which case <cite>QuerySet</cite> specific behavior will be enabled.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForSearch.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#mainapp.views.ArticlesForSearch.model" title="Ссылка на это определение">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#mainapp.models.Article" title="mainapp.models.Article"><code class="xref py py-class docutils literal notranslate"><span class="pre">mainapp.models.Article</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForSectionList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mainapp.views.</span></span><span class="sig-name descname"><span class="pre">ArticlesForSectionList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.ArticlesForSectionList" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Просмотр списка статей для выбранного раздела</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForSectionList.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.ArticlesForSectionList.get_context_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Insert the single object into the context dict.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForSectionList.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#mainapp.views.ArticlesForSectionList.model" title="Ссылка на это определение">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#mainapp.models.Section" title="mainapp.models.Section"><code class="xref py py-class docutils literal notranslate"><span class="pre">mainapp.models.Section</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForTagList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mainapp.views.</span></span><span class="sig-name descname"><span class="pre">ArticlesForTagList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.ArticlesForTagList" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Просмотр списка статей для выбранного тега</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForTagList.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.ArticlesForTagList.get_context_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Insert the single object into the context dict.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mainapp.views.ArticlesForTagList.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#mainapp.views.ArticlesForTagList.model" title="Ссылка на это определение">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="tags.html#tags.models.Tag" title="tags.models.Tag"><code class="xref py py-class docutils literal notranslate"><span class="pre">tags.models.Tag</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mainapp.views.article_detail_view">
+<span class="sig-prename descclassname"><span class="pre">mainapp.views.</span></span><span class="sig-name descname"><span class="pre">article_detail_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.article_detail_view" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Просмотр выбранной статьи и работа с комментариями</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mainapp.views.feedback">
+<span class="sig-prename descclassname"><span class="pre">mainapp.views.</span></span><span class="sig-name descname"><span class="pre">feedback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.feedback" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Форма обратной связи</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mainapp.views.main">
+<span class="sig-prename descclassname"><span class="pre">mainapp.views.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.main" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Главная страница</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mainapp.views.page_help">
+<span class="sig-prename descclassname"><span class="pre">mainapp.views.</span></span><span class="sig-name descname"><span class="pre">page_help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainapp.views.page_help" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Страница помощь</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Knackbook</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="run.html">KnackBook</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">mainapp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mainapp-models">mainapp.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-mainapp.views">mainapp.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authapp.html">authapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cabinetapp.html">cabinetapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commentapp.html">commentapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likeapp.html">likeapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notificationapp.html">notificationapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tags.html">tags</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="run.html" title="предыдущая глава">KnackBook</a></li>
+      <li>Next: <a href="authapp.html" title="следующая глава">authapp</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Evgenii, Galina, Alex.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/mainapp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

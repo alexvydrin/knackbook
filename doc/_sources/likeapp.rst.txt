@@ -1,0 +1,27 @@
+likeapp
+=======
+
+Приложение, которое отвечает за:
+
+* постановку и снятие лайков
+
+
+likeapp.models
+~~~~~~~~~~~~~~
+
+.. autoclass:: likeapp.models.LikeArticle
+    :members:
+
+.. autoclass:: likeapp.models.LikeComment
+    :members:
+
+.. autoclass:: likeapp.models.LikeUser
+    :members:
+
+
+
+likeapp.views
+~~~~~~~~~~~~~
+
+.. automodule:: likeapp.views
+    :members:

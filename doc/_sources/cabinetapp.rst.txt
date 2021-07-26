@@ -1,0 +1,23 @@
+cabinetapp
+==========
+
+Приложение, которое отвечает за:
+
+* личный кабинет
+* создание и редактирование статей
+* модерацию
+  и др
+
+
+cabinetapp.forms
+~~~~~~~~~~~~~~~~
+
+.. autoclass:: cabinetapp.forms.NewArticleForm
+    :members:
+
+
+cabinetapp.views
+~~~~~~~~~~~~~~~~
+
+.. automodule:: cabinetapp.views
+    :members:
