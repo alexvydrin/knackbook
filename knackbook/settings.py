@@ -21,15 +21,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Настройки в отдельном файле
 # if os.path.exists('knackbook/env.json'): #  файл с настройками должен существовать всегда
-with open('knackbook/env.json', 'r') as f:
-    ENV = json.load(f)
-    # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = ENV['SECRET_KEY']
-    DEBUG_MODE = ENV['DEBUG_MODE']
-    POSTGRE_DB = ENV['POSTGRE_DB']
-    POSTGRE_USER = ENV['POSTGRE_USER']
-    POSTGRE_PASSWORD = ENV['POSTGRE_PASSWORD']
-    EMAIL_PASSWORD = ENV['EMAIL_PASSWORD']
+# with open('knackbook/env.json', 'r') as f:
+#     ENV = json.load(f)
+#     # SECURITY WARNING: keep the secret key used in production secret!
+#     SECRET_KEY = ENV['SECRET_KEY']
+#     DEBUG_MODE = ENV['DEBUG_MODE']
+#     POSTGRE_DB = ENV['POSTGRE_DB']
+#     POSTGRE_USER = ENV['POSTGRE_USER']
+#     POSTGRE_PASSWORD = ENV['POSTGRE_PASSWORD']
+#     EMAIL_PASSWORD = ENV['EMAIL_PASSWORD']
+
+
+SECRET_KEY = "django-insecure-vl9of!^$&h=%jnti*^h-=xsgql@l=gt+!81yti&0q*=^m5je3-"
+DEBUG_MODE = True,
+POSTGRE_DB = "http://127.0.0.1:8000"
+POSTGRE_USER = ''
+POSTGRE_PASSWORD = ''
+EMAIL_PASSWORD = "2vsh9kxx"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if DEBUG_MODE == "True":  # Отладка

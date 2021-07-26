@@ -1,0 +1,25 @@
+commentapp
+==========
+
+Приложение, которое отвечает за:
+
+* создание и изменение комментариев
+
+
+commentapp.models
+~~~~~~~~~~~~~~~~~
+
+.. autoclass:: commentapp.models.Comment
+    :members:
+
+commentapp.forms
+~~~~~~~~~~~~~~~~
+
+.. autoclass:: commentapp.forms.CommentForm
+    :members:
+
+commentapp.views
+~~~~~~~~~~~~~~~~
+
+.. automodule:: commentapp.views
+    :members:

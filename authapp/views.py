@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from django.contrib import auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import PasswordChangeView
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -10,6 +11,7 @@ from django.urls import reverse, reverse_lazy
 from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, \
     UserEditAvatarForm
 from authapp.models import User
+from knackbook.settings import EMAIL_HOST_USER
 from mainapp.models import Section, Article
 from notificationapp.models import Notification
 from tags.models import Tag
@@ -72,6 +74,11 @@ def register(request):
             register_form.save()
             login_user = authenticate(username=username, password=password)
             login(request, login_user)
+            send_mail('Регистрация на KnackBook',
+                      f'Вы успешно зарегистрированы на KnackBook!\n',
+                      EMAIL_HOST_USER,
+                      [request.POST.get('email'), ]
+                      )
             return HttpResponseRedirect(request.session['next_url'])
     elif not request.user.is_authenticated:
         register_form = UserRegisterForm()
