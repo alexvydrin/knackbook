@@ -37,7 +37,7 @@ class Section(models.Model):
 
     @staticmethod
     def get_links_section_menu():
-        """Меню разделов"""
+        """Метод возвращает список разделов для главного меню"""
         links_section_menu = Section.objects.all()
         return links_section_menu
 
@@ -128,7 +128,7 @@ class Article(models.Model):
 
     @staticmethod
     def get_articles_five():
-        """Пять самых свежих статей по дате создания"""
+        """Метод возвращает пять самых свежих статей по дате создания"""
         # Получаем еще количество лайков для статьи
         likes_count = Count('likearticle', filter=Q(likearticle__is_active=True))
         articles = Article.objects.filter(
@@ -139,7 +139,7 @@ class Article(models.Model):
 
     @staticmethod
     def get_articles_for_section(section):
-        """Статьи в разделе"""
+        """Метод возвращает список статей в разделе"""
         # Получаем еще количество лайков для статьи
         likes_count = Count('likearticle', filter=Q(likearticle__is_active=True))
         articles = Article.objects.filter(
@@ -151,7 +151,7 @@ class Article(models.Model):
 
     @staticmethod
     def get_articles_for_tag(tag):
-        """Статьи для тега"""
+        """Метод возвращает список статей для тега"""
         # Получаем еще количество лайков для статьи
         likes_count = Count('likearticle', filter=Q(likearticle__is_active=True))
         articles = Article.objects.filter(

@@ -21,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Настройки в отдельном файле
 # if os.path.exists('knackbook/env.json'): #  файл с настройками должен существовать всегда
-with open('knackbook/env.json', 'r') as f:
+# with open('knackbook/env.json', 'r') as f:
+with open(BASE_DIR / 'knackbook/env.json', 'r') as f:
     ENV = json.load(f)
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = ENV['SECRET_KEY']

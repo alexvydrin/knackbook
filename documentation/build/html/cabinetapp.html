@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Приложение cabinetapp &#8212; документация KNACK BOOK 1.0</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Приложение notificationapp" href="notificationapp.html" />
+    <link rel="prev" title="Приложение authapp" href="authapp.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cabinetapp">
+<h1>Приложение cabinetapp<a class="headerlink" href="#cabinetapp" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Приложение, которое отвечает за:</p>
+<ul class="simple">
+<li><p>личный кабинет</p></li>
+<li><p>создание и редактирование статей</p></li>
+<li><p>модерацию
+и др</p></li>
+</ul>
+<section id="id1">
+<h2>Формы cabinetapp<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cabinetapp.forms.NewArticleForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cabinetapp.forms.</span></span><span class="sig-name descname"><span class="pre">NewArticleForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.forms.NewArticleForm" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Форма новой статьи</p>
+</dd></dl>
+
+</section>
+<section id="module-cabinetapp.views">
+<span id="id2"></span><h2>Контроллеры cabinetapp<a class="headerlink" href="#module-cabinetapp.views" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.delete_article">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">delete_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.delete_article" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Удаление статьи</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.edit_draft">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">edit_draft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.edit_draft" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Редактирование черновика</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.main">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.main" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Главная страница личного кабинета</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.moderation">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">moderation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.moderation" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Список статей на модерации</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.moderation_check">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">moderation_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.moderation_check" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Результат модерации</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.my_articles">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">my_articles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.my_articles" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Просмотр моих опубликованных статей</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.my_drafts">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">my_drafts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.my_drafts" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Просмотр черновиков</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.new_article">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">new_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.new_article" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Создание новой статьи</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.save_draft">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">save_draft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_article</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.save_draft" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сохранения черновика</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.update_article_data">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">update_article_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.update_article_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Обновление статьи в базе</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cabinetapp.views.update_is_reviewing">
+<span class="sig-prename descclassname"><span class="pre">cabinetapp.views.</span></span><span class="sig-name descname"><span class="pre">update_is_reviewing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_article</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cabinetapp.views.update_is_reviewing" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Отправление статьи на модерацию</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">KNACK BOOK</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Модели проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainapp.html">Основное приложение</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commentapp.html">Приложение commentapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likeapp.html">Приложение likeapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authapp.html">Приложение authapp</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Приложение cabinetapp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Формы cabinetapp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-cabinetapp.views">Контроллеры cabinetapp</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notificationapp.html">Приложение notificationapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Тесты</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="authapp.html" title="предыдущая глава">Приложение authapp</a></li>
+      <li>Next: <a href="notificationapp.html" title="следующая глава">Приложение notificationapp</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Galina, Evgeniy and  Alex.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/cabinetapp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,9 +1,7 @@
 """
 Контроллеры (Views)
-
-Section - Разделы
-Article - Статьи
 """
+
 import re
 from datetime import datetime
 
