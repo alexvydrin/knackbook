@@ -81,7 +81,7 @@ class Comment(models.Model):
 
     @staticmethod
     def get_for_article_level_1(article):
-        """Получить комментарии для статьи"""
+        """Получить комментарии первого уровня для статьи"""
         # Получаем еще количество ответов к комментарию
         answers_count = Count('comment_comment_level_1', filter=Q(comment_comment_level_1__is_active=True))
         comments = Comment.objects.filter(article=article, comment_to__isnull=True, is_active=True).annotate(

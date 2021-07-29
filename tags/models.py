@@ -28,6 +28,6 @@ class Tag(models.Model):
 
     @staticmethod
     def get_tags_menu():
-        """Список тегов"""
+        """Метод возвращает список тегов"""
         tags_menu = Tag.objects.all()
         return tags_menu

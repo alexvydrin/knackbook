@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Приложение commentapp &#8212; документация KNACK BOOK 1.0</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Приложение likeapp" href="likeapp.html" />
+    <link rel="prev" title="Основное приложение" href="mainapp.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="commentapp">
+<h1>Приложение commentapp<a class="headerlink" href="#commentapp" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Приложение, которое отвечает за:</p>
+<ul class="simple">
+<li><p>создание и изменение комментариев</p></li>
+</ul>
+<section id="id1">
+<h2>Формы commentapp<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="commentapp.forms.CommentForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">commentapp.forms.</span></span><span class="sig-name descname"><span class="pre">CommentForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">data=None</span></em>, <em class="sig-param"><span class="pre">files=None</span></em>, <em class="sig-param"><span class="pre">auto_id='id_%s'</span></em>, <em class="sig-param"><span class="pre">prefix=None</span></em>, <em class="sig-param"><span class="pre">initial=None</span></em>, <em class="sig-param"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></em>, <em class="sig-param"><span class="pre">label_suffix=None</span></em>, <em class="sig-param"><span class="pre">empty_permitted=False</span></em>, <em class="sig-param"><span class="pre">instance=None</span></em>, <em class="sig-param"><span class="pre">use_required_attribute=None</span></em>, <em class="sig-param"><span class="pre">renderer=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#commentapp.forms.CommentForm" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Форма для комментария</p>
+</dd></dl>
+
+</section>
+<section id="module-commentapp.views">
+<span id="id2"></span><h2>Контроллеры commentapp<a class="headerlink" href="#module-commentapp.views" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Контроллеры (Views)</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="commentapp.views.CommentDeleteView">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">commentapp.views.</span></span><span class="sig-name descname"><span class="pre">CommentDeleteView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#commentapp.views.CommentDeleteView" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Удаление комментария</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="commentapp.views.CommentDeleteView.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#commentapp.views.CommentDeleteView.delete" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Call the delete() method on the fetched object and then redirect to the
+success URL.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="commentapp.views.CommentDeleteView.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#commentapp.views.CommentDeleteView.get_context_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Insert the single object into the context dict.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="commentapp.views.CommentDeleteView.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#commentapp.views.CommentDeleteView.model" title="Ссылка на это определение">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="models.html#commentapp.models.Comment" title="commentapp.models.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">commentapp.models.Comment</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="commentapp.views.CommentUpdateView">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">commentapp.views.</span></span><span class="sig-name descname"><span class="pre">CommentUpdateView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#commentapp.views.CommentUpdateView" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Изменение комментария</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="commentapp.views.CommentUpdateView.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#commentapp.views.CommentUpdateView.get_context_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Insert the form into the context dict.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="commentapp.views.CommentUpdateView.get_success_url">
+<span class="sig-name descname"><span class="pre">get_success_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#commentapp.views.CommentUpdateView.get_success_url" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Return the URL to redirect to after processing a valid form.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="commentapp.views.CommentUpdateView.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#commentapp.views.CommentUpdateView.model" title="Ссылка на это определение">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="models.html#commentapp.models.Comment" title="commentapp.models.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">commentapp.models.Comment</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="commentapp.views.comment_create_for_comment">
+<span class="sig-prename descclassname"><span class="pre">commentapp.views.</span></span><span class="sig-name descname"><span class="pre">comment_create_for_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#commentapp.views.comment_create_for_comment" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Добавление нового комментария в ответ на другой комментарий</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">KNACK BOOK</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Модели проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainapp.html">Основное приложение</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Приложение commentapp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Формы commentapp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-commentapp.views">Контроллеры commentapp</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="likeapp.html">Приложение likeapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authapp.html">Приложение authapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cabinetapp.html">Приложение cabinetapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notificationapp.html">Приложение notificationapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Тесты</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="mainapp.html" title="предыдущая глава">Основное приложение</a></li>
+      <li>Next: <a href="likeapp.html" title="следующая глава">Приложение likeapp</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Galina, Evgeniy and  Alex.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/commentapp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

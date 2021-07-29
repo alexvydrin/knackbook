@@ -36,7 +36,7 @@ class LikeArticle(models.Model):
 
 
 class LikeComment(models.Model):
-    """Лайк комментария"""
+    """Лайк комментария (в данной версии пока не используется)"""
 
     comment = models.ForeignKey(
         Comment,
